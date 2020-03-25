@@ -10,13 +10,20 @@ const userSchema = new schema({
     type: String,
     required: true
   },
-  username: {
+  phone: {
+    type: String,
+    required: true
+  },
+  handle: {
     type: String,
     required: true
   },
   password: {
     type: String,
     required: true
+  },
+  password2: {
+    type: String,
   },
   avatar: {
     type: String,

@@ -1,5 +1,8 @@
+//import validatePhone from 'libphonenumber-js/mobile';
+
 const Validator = require('validator');
 const isEmpty = require('./isEmpty');
+//const phoneNumber = parsePhoneNumberFromString(data.phone);
 
 module.exports = function validateRegisterInput(data){
   const errors = {};
@@ -15,22 +18,31 @@ module.exports = function validateRegisterInput(data){
     errors.name = 'Name cannot be empty.';
   }
 
-  // Validate email
+//Validate Email
   if(!Validator.isEmail(data.email)){
-    errors.email = 'Enter a valid email.';
+    errors.email = 'Email not valid';
+}
+
+if(isEmpty(data.email)){
+  errors.email = 'Email cannot be empty';
+}
+
+  //Validate phone number
+  if(!Validator.isMobilePhone(data.phone)){
+      errors.phone = 'Phone number is not valid';
+  }
+  
+  if(isEmpty(data.phone)){
+    errors.phone = 'Phone number cannot be empty';
   }
 
-  if(isEmpty(data.email)){
-    errors.email = 'Email cannot be empty.';
+  // Validate handle
+  if(!Validator.isLength(data.handle, {min: 3, max: 20})){
+    errors.handle = 'Handle must be between 3 and 20 characters.';
   }
 
-  // Validate username
-  if(!Validator.isLength(data.username, {min: 3, max: 20})){
-    errors.username = 'Username must be between 3 and 20 characters.';
-  }
-
-  if(isEmpty(data.username)){
-    errors.username = 'Username cannot be empty';
+  if(isEmpty(data.handle)){
+    errors.handle = 'Handle cannot be empty';
   }
 
   // Validate Password
@@ -44,7 +56,7 @@ module.exports = function validateRegisterInput(data){
 
   // Validate Password 2
   if(!Validator.equals(data.password, data.password2)){
-    errors.password2 = 'passwords must match.';
+    errors.password2 = 'Passwords must match.';
   }
 
   if(isEmpty(data.password2)){

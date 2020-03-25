@@ -22,93 +22,109 @@ router.post('/test', (req, res) => res.json({msg: 'post route of users works!'})
 // @access  Public
 // @desc    Register a New User
 router.post('/register', (req, res) => {
+  
   // Validate Input
   const {errors, isValid} = validateRegisterInput(req.body);
   if(!isValid){
     return res.status(400).json(errors);
   }
-  
+
+  //Check if user with email or phone exists
   User.findOne({email: req.body.email})
       .then(user => {
         if(user){
-          res.json({email: 'User already exists'});
-        }else{
-          // Create an avatar
+          return res.json({email: 'User with email already exists!'});
+        }
+
+        // Check if phone number already exists
+        User.findOne({phone: req.body.phone})
+            .then(user => {
+              if(user){
+                return res.json({phone: 'Phone number already taken!'})
+              }
+
+        // Check if handle already taken
+        User.findOne({handle: req.body.handle})
+              .then(user => {
+                if(user){
+                  return res.json({handle: 'Handle already taken. Choose another handle'})
+                }
+        // Credentials are not yet taken. create newUser
+        // Create an avatar
           const avatar = gravatar.url(req.body.email, {
             s: '100',
             r: 'g',
             d: 'robohash'
           });
 
-          // Create a newUser object and populate it with data from html form
-          const newUser = new User({
-            name: req.body.name,
-            email: req.body.email,
-            username: req.body.username,
-            password: req.body.password,
-            avatar: avatar
-          });
+        // Create a newUser object and populate it with data from html form
+        const newUser = new User({
+          name: req.body.name,
+          email: req.body.email,
+          phone: req.body.phone,
+          handle: req.body.handle,
+          password: req.body.password,
+          avatar: avatar
+        });
 
-          console.log(`Success creating a new user: ${newUser}`);
+        console.log(`Success creating a new user: ${newUser}`);
 
-          // Check if the username is already taken
-          User.findOne({username: req.body.username})
-              .then(user => {
-                if(user){
-                  res.json({username: 'Username already taken. Choose another username'})
-                }else{
-                    // Gen a key for hashing the password
-                    bcrypt.genSalt(5)
-                          .then(salt => {
-                            if(salt){
-                              bcrypt.hash(newUser.password, salt)
-                                    .then(hash => {
-                                      if(hash){
-                                        console.log(`Hashed password: ${hash}`);
-                                        newUser.password = hash;
-                                        newUser.save()
-                                                .then(user => res.status(200).json(user))
-                                                .catch(err => console.log(err));
-                                      }
-                                    })
+        // Gen a key for hashing the password
+        bcrypt.genSalt(5)
+              .then(salt => {
+                if(salt){
+                  bcrypt.hash(newUser.password, salt)
+                        .then(hash => {
+                          if(hash){
+                            console.log(`Hashed password: ${hash}`);
+                            // ----- Working till here
+                            newUser.password = hash;
+                            newUser.save()
+                                    .then(user => res.status(200).json(user))
                                     .catch(err => console.log(err));
-                            }
-                          })
-                          .catch(err => console.log(err));
+                          }
+                        })
+                        .catch(err => console.log(err));
                 }
               })
               .catch(err => console.log(err));
-        }
-      })
-      .catch(err => console.log(err));
-})
+            })
+          });       
+      //.catch(err => console.log(err));
+  
+    });
+//       .catch(err => console.log(err));
+ })
 
 // @route   POST /api/users/login
 // @access  PUBLIC
 // desc     login registered users
 router.post('/login', (req, res) => {
-  // Validate whether username and password are provided
+  // Validate whether either (email or phone number) and password are provided
   const {errors, isValid} = validateLoginInput(req.body);
   if(!isValid){
     return res.status(400).json(errors);
   }
   
-  User.findOne({email: req.body.email})
+  User.find({email: req.body.email}, {phone: req.body.phone})
       .then(user => {
         if(!user){
           res.status(400).json({message: 'User does not exist'});
         }else{
-          // there is a user with the entered email in the database
+          // there is a user with the entered email or phone in the database
           // Check whether the hashed passwords match using bcryptjs.compare function
           bcrypt.compare(req.body.password, user.password)
                 .then(isMatch => {
                   if(isMatch){
                     // Paswords matched
                     console.log('Passwords matched!');
-                    
+                    // Get email or phone number, whichever was input by the user
+                    const userLogin = req.body.email ? req.body.email : req.body.phone;
+                    console.log(userLogin);
+
                     // Create a payload
                     const payload = {
-                      email: req.body.email,
+                      loginInfo: userLogin,
                       id: user.id,
                       avatar: user.avatar
                     }
@@ -141,7 +157,7 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
       name: req.user.name,
       id: req.user.id,
       email: req.user.email,
-      username: req.user.username
+      handle: req.body.handle
     })
   });
 
