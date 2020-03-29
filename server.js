@@ -7,6 +7,8 @@ const port = 8010;
 const app = express();
 const db = require('./config/keys').mongoURI;
 const users = require('./routes/api/users');
+const profiles = require('./routes/api/profiles');
+const posts = require('./routes/api/posts');
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({extended: false}));
@@ -20,8 +22,10 @@ require('./config/passport')(passport);
 // Test the first route
 app.get('/', (req, res) => res.send({msg: 'Server works!'}));
 
-// Test the users route
+// The routes
 app.use('/api/users', users);
+app.use('/api/profiles', profiles);
+app.use('/api/posts', posts);
 
 // Listening on port
 app.listen(port, () => console.log(`Successfully listening on port ${port}`));

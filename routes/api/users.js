@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -82,7 +83,30 @@ router.post('/register', (req, res) => {
                             // ----- Working till here
                             newUser.password = hash;
                             newUser.save()
-                                    .then(user => res.status(200).json(user))
+                                    .then(user => {
+                                      
+                                      // The moment a newUser is created, I want to create a new profile with the user details and upload it to the profile document in mongodb.
+
+                                      // Before creating a profile, check whether profile exists in profile document. In fact, it is not necessary since when a user is deleted, the profile is also deleted.
+                                      //populate('user', ['name', 'email', 'phone', 'avatar'])
+                                      // If not, then create profile
+                                      
+                                      const newProfile = new Profile({
+                                        user: user.id,
+                                        name: user.name,                                        email: user.email,
+                                        handle: user.handle,
+                                        phone: user.phone
+                                      })
+                                      newProfile.save()
+                                                .then(profile => {
+                                                  return res.status(200).json({
+                                                    msg: 'User created successfully',
+                                                    userDetails: user,
+                                                    profileDetails: profile
+                                                  });
+                                                })
+                                                .catch()
+                                    })
                                     .catch(err => console.log(err));
                           }
                         })
@@ -158,6 +182,26 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
     })
   })
 
+// @route   POST /api/users/delete
+// @access  PRIVATE
+// @desc     delete a registered user and all the posts/ profile/ setting info
+router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+  // Authentication performed
+  console.log('In delete a user route')
+  // Ask for password one more time to verify it is the correct user
+  // Ask reason for deleting - provide the options in a drop down list
+  // First delete profile and then delete user
+  Profile.findOneAndRemove({user: req.user.id})
+         .then(
+           // Profile successfully deleted
+           // Delete user
+           User.findOneAndRemove({_id: req.user.id})
+                .then(() => res.json({msg: 'Successfully deleted user and their profile from mongodb.'}))
+                .catch(err => console.log(err))
+         )
+         .catch(err => console.log(err))
+})
+
 
 // @route   POST /api/users/login/emailOrPhone
 // @access  PUBLIC
@@ -206,11 +250,8 @@ router.post('/login/emailOrPhone', (req, res) => {
                 // if(!isTokenEmpty){
                 //   return res.json({token});
                 // }
-                 
       })
       .catch(err => console.log(err));
 })
 
-
-  
 module.exports = router;
