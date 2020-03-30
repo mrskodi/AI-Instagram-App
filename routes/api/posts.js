@@ -2,6 +2,7 @@ const express = require('express');
 const Post = require('../../models/Post');
 const passport = require('passport');
 const validatePostInput = require('../../validations/post');
+const validateComment = require('../../validations/comment');
 const isEmpty = require('../../validations/isEmpty');
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     name: req.user.name,
     avatar: req.user.avatar,
     handle: req.user.handle,
+    text: req.body.text,
     imageOrVideo: req.body.imageOrVideo
   });
   console.log(`NewPost created. Post details - ${newPost.user}, ${newPost.name}, ${newPost.avatar}, ${newPost.imageOrVideo} `);
@@ -40,7 +42,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
       .catch(err => res.json({msg: 'No posts found'}));
 })
 
-// @route   GET /api/posts/:id
+// @route   GET /api/posts/id/:id
 // @access  PRIVATE
 // @desc    Get single post details based on postid
 router.get('/id/:postid', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -49,7 +51,7 @@ router.get('/id/:postid', passport.authenticate('jwt', {session: false}), (req, 
       .catch(err => res.json({msg: 'No post with that id found'}));
 })
 
-// @route   GET /api/posts/:handle
+// @route   GET /api/posts/handle/:handle
 // @access  PRIVATE
 // @desc    Get posts made by a user(unique handle)
 router.get('/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -58,7 +60,7 @@ router.get('/handle/:handle', passport.authenticate('jwt', {session: false}), (r
       .catch(err => res.json({msg: 'No post made by that user'}));
 })
 
-// @route   DELETE /api/posts/:id
+// @route   DELETE /api/posts/id/:id
 // @access  PRIVATE
 // @desc    Delete a post made by a user based on postid
 router.delete('/id/:postid', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -79,14 +81,14 @@ router.delete('/id/:postid', passport.authenticate('jwt', {session: false}), (re
 // @access  PRIVATE
 // @desc    Delete all posts made by the user(unique handle)
 router.delete('/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
-  Post.find({handle: req.params.handle})
+  Post.findOne({handle: req.params.handle})
       .then(post => {
-        console.log(`post details: name=${post.name}`)
+        
         if(post.handle != req.user.handle){
           return res.json({unAuthorizedUser: 'Not authorized to delete posts'})
         }
         post.remove()
-            .then(() => res.json({msg: 'All of your posts have been successfully deleted.'}))
+            .then(() => res.json({msg: 'Your post has been successfully deleted.'}))
             .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
@@ -100,11 +102,17 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
       .then(post => {
         // Loop through the likes array in the post collection
         // to check whether the user has liked the post before
-        if(post.likes.filter(like => like.user.toString() === req.user.id).length > 0){
+        if((post.likes.filter(like => like.user.toString() === req.user.id).length > 0) || 
+            (post.user.toString() === req.user.id)){
+          
           // User already liked the post, delete him from likes list
           const removeIndex = post.likes.map(like => like.user)
                                         .indexOf(req.user.id);
-          console.log(`removeindex: ${removeIndex}`);                             
+          console.log(`removeindex: ${removeIndex}`);  
+
+            if(removeIndex == -1){
+              return res.json({msg: 'User cannot be added to the likes list'})
+            }                           
 
           // User found, remove user from likes array
           post.likes.splice(removeIndex, 1);
@@ -125,20 +133,24 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
 // @desc      Comment on a post based on postId
 // @access    Private
 router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
-  const {errors, isValid} = validatePostInput(req.body);
+  //console.log(req.body.text);
+  
+  const {errors, isValid} = validateComment(req.body);
   if(!isValid){
     return res.json(errors);
   }
   Post.findById(req.params.id)
       .then(post => {
+        console.log(`Post found! ${post}`);
+        console.log('Creating a new comment');
         // Create a new comment object
         const newComment = {
           user: req.user.id,
           text: req.body.text,
-          name: req.body.name,
-          avatar: req.body.avatar
+          name: req.user.name,
+          avatar: req.user.avatar
         }
-
+        // console.log(newComment);
         // Append this comment to the comments array
         post.comments.unshift(newComment);
         // Save

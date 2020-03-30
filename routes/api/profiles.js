@@ -129,7 +129,60 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
            }
          })
          .catch(err => console.log(err));
-})
+});
+
+// @router  api/profiles/follow/handle/:handle
+// @access  Private
+// @desc    Following a user whose userhandle is passed in route
+router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+  // req.user is FOLLOWING user with req.params.handle
+    Profile.findOne({email: req.user.email})
+         .then(profile => {
+
+          // Check if following[] of req.user has req.params.handle
+          if((profile.following.filter(item => item.handle === req.params.handle).length > 0) ||
+             (req.params.handle === req.user.handle)){
+            // User already following the handle
+            return res.json({unsuccessful: `Add to following list Unsuccessful`});
+          }
+
+          profile.following.unshift({handle: req.params.handle});
+          profile.save()
+                  .then(() => res.json(profile))
+                  .catch(err => console.log(err));
+        })
+         .catch(err => console.log(err));
+});
+
+// @router  api/profiles/unfollow/handle/:handle
+// @access  Private
+// @desc    Following a user whose userhandle is passed in route
+router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
+  
+  // req.user is UNFOLLOWING user with req.params.handle
+    Profile.findOne({email: req.user.email})
+         .then(profile => {
+           
+          // Check if following[] of req.user has req.params.handle
+          if(profile.following.filter(item => item.handle === req.params.handle).length === 0){
+            // User not in the following array
+            return res.json({notfollowing: `${req.user.name} was not following ${req.params.handle}`});
+          }
+
+          // identify req.params, remove req.params from following[] of req.users
+          const removeIndex = profile.following.map(item => item.handle)
+                                               .indexOf(req.params.handle);
+          // Splice the array
+          profile.following.splice(removeIndex, 1);
+
+          // Save
+          profile.save()
+                  .then(() => res.json(profile))
+                  .catch(err => console.log(err));
+        })
+         .catch(err => console.log(err));
+});
 
 module.exports = router;
 

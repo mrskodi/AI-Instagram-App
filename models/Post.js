@@ -21,6 +21,7 @@ const postSchema = new schema({
   },
   text: {
     type: String,
+    required: true
   },
   likes: [{
     user: {

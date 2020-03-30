@@ -33,23 +33,6 @@ const userSchema = new schema({
     type: Date,
     default: Date.now
   },
-
-  
-  // New schema items
-  // Set user privacy settings
-  // isPrivate: {
-  //   type: Boolean,
-  //   default: false
-  // },
-  // Members the user is following.
-  // following: [{
-    
-  // }],
-  // // Followers of user
-  // followers: [{
-
-  // }],
-
 });
 
 module.exports = User = mongoose.model('users', userSchema);

@@ -38,7 +38,45 @@ const profileSchema = new schema({
     outdoorActivities: [String]
   },
 
-  
+  following: [{
+    user: {
+      type: schema.Types.ObjectId,
+      ref: 'users'
+    },
+    handle: {
+      type: String
+    },
+    name: {
+      type: String
+    },
+    avatar: {
+      type: String
+    },
+    dateCreated: {
+      type: Date,
+      default: Date.now()
+    }
+  }],
+
+  followers: [{
+    user: {
+      type: schema.Types.ObjectId,
+      ref: 'users'
+    },
+    handle: {
+      type: String
+    },
+    name: {
+      type: String
+    },
+    avatar: {
+      type: String
+    },
+    dateCreated: {
+      type: Date,
+      default: Date.now()
+    }
+  }]
   
 });
 
