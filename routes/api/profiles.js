@@ -78,7 +78,7 @@ router.get('/email/:useremail', passport.authenticate('jwt', {session: false}), 
 router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) => {
   const errors = {};
   // Find the user from the database
-  console.log(req.user);
+  
   Profile.find()
         .then(profile => {
           if(!profile){
@@ -136,7 +136,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 // @desc    Following a user whose userhandle is passed in route
 router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
 
-  // req.user is FOLLOWING user with req.params.handle
+  // Add req.params.handle to following[] of req.user
     Profile.findOne({email: req.user.email})
          .then(profile => {
 
@@ -144,13 +144,31 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
           if((profile.following.filter(item => item.handle === req.params.handle).length > 0) ||
              (req.params.handle === req.user.handle)){
             // User already following the handle
-            return res.json({unsuccessful: `Add to following list Unsuccessful`});
+            return res.json({invalid: 'invalid request'});
           }
 
           profile.following.unshift({handle: req.params.handle});
           profile.save()
                   .then(() => res.json(profile))
                   .catch(err => console.log(err));
+
+          // Add req.user to followers[] list of req.params.handle
+          Profile.findOne({handle: req.params.handle})
+                 .then(profile => {
+
+                  // Check if the follower of req.params.handle has req.user
+                  if((profile.followers.filter(item => item.handle === req.user.handle).length > 0) ||
+                      (req.user.handle === req.params.handle)){
+                    // Invalid addition to followers array of req.params.handle
+                    return res.json({invalid: 'invalid request'});
+                  }
+
+                  profile.followers.unshift({handle: req.user.handle});
+                  profile.save()
+                         .then(() => res.json(profile))
+                         .catch(err => console.log(err));
+                 })
+                 .catch(err => console.log(err));
         })
          .catch(err => console.log(err));
 });
@@ -160,17 +178,18 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
 // @desc    Following a user whose userhandle is passed in route
 router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
   
-  // req.user is UNFOLLOWING user with req.params.handle
+  // remove req.params.handle from following[] of req.user
     Profile.findOne({email: req.user.email})
          .then(profile => {
            
           // Check if following[] of req.user has req.params.handle
           if(profile.following.filter(item => item.handle === req.params.handle).length === 0){
             // User not in the following array
-            return res.json({notfollowing: `${req.user.name} was not following ${req.params.handle}`});
+            return res.json({inValid: 'Invalid request'});
           }
 
-          // identify req.params, remove req.params from following[] of req.users
+          // identify req.params index from the following[] array 
+          // remove req.params from following[] of req.users
           const removeIndex = profile.following.map(item => item.handle)
                                                .indexOf(req.params.handle);
           // Splice the array
@@ -180,6 +199,30 @@ router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: f
           profile.save()
                   .then(() => res.json(profile))
                   .catch(err => console.log(err));
+
+          // remove req.user from followers[] of req.params.handle
+          Profile.findOne({handle: req.params.handle})
+                 .then(profile => {
+                   // Check if followers[] of req.params.handle has req.user
+                   if(profile.followers.filter(item => item.handle === req.user.handle).length === 0){
+                     // req.user not in the followers[] of req.params.handle. cannot perform remove operation
+                     return res.json({inValid: 'InValid request'})
+                   }
+
+                   // identify the index of req.user from the followers[]
+                   // remove req.user from followers[] of req.params.handle
+                   const removeIndex = profile.followers.map(item => item.handle)
+                                                        .indexOf(req.user.handle);
+
+                   // Splice the array
+                   profile.followers.splice(removeIndex, 1);
+
+                   // Save
+                   profile.save()
+                          .then(() => res.json(profile))
+                          .catch(err => console.log(err));
+                 })
+                 .catch(err => console.log(err));
         })
          .catch(err => console.log(err));
 });

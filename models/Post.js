@@ -37,6 +37,9 @@ const postSchema = new schema({
     name: {
       type: String
     },
+    handle: {
+      type: String
+    },
     avatar: {
       type: String
     },

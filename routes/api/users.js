@@ -105,10 +105,7 @@ router.post('/register', (req, res) => {
               .catch(err => console.log(err));
             })
           });       
-      //.catch(err => console.log(err));
-  
     });
-//       .catch(err => console.log(err));
  })
 
 // @route   POST /api/users/login
@@ -180,16 +177,14 @@ router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) =>
   // Delete all user posts
   Post.deleteMany({user: req.user.id})
       .then(post => {
-        console.log(post);
         post.length = 0
-        console.log(post);
       })
       .catch(err => console.log(err))
   // Then delete profile and at last delete user
   Profile.findOneAndRemove({user: req.user.id})
          .then(() => {
                 User.findOneAndRemove({_id: req.user.id})
-                    .then(() => res.json({success: 'User deleted successfully'}))
+                    .then(() => res.json({success: 'User, his profile and all posts deleted successfully'}))
                     .catch(err => console.log(err));
                   }
          )

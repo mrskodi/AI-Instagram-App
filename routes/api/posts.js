@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   // Validation
   const {errors, isValid} = validatePostInput(req.body);
-  console.log('In the post route of posts');
+  
   if(!isValid){
     return res.json(errors);
   }
@@ -26,7 +26,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     text: req.body.text,
     imageOrVideo: req.body.imageOrVideo
   });
-  console.log(`NewPost created. Post details - ${newPost.user}, ${newPost.name}, ${newPost.avatar}, ${newPost.imageOrVideo} `);
+  
   newPost.save()
          .then(post => res.json(post))
          .catch(err => console.log(err));
@@ -108,8 +108,7 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
           // User already liked the post, delete him from likes list
           const removeIndex = post.likes.map(like => like.user)
                                         .indexOf(req.user.id);
-          console.log(`removeindex: ${removeIndex}`);  
-
+          
             if(removeIndex == -1){
               return res.json({msg: 'User cannot be added to the likes list'})
             }                           
@@ -133,24 +132,26 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
 // @desc      Comment on a post based on postId
 // @access    Private
 router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
-  //console.log(req.body.text);
   
   const {errors, isValid} = validateComment(req.body);
   if(!isValid){
     return res.json(errors);
   }
-  Post.findById(req.params.id)
+  Post.findOne({_id: req.params.id})
       .then(post => {
-        console.log(`Post found! ${post}`);
-        console.log('Creating a new comment');
+        if(!post){
+          return res.json({msg: 'Post not found. Check the post id.'})
+        }
+        
         // Create a new comment object
         const newComment = {
           user: req.user.id,
           text: req.body.text,
           name: req.user.name,
+          handle: req.user.handle,
           avatar: req.user.avatar
         }
-        // console.log(newComment);
+        
         // Append this comment to the comments array
         post.comments.unshift(newComment);
         // Save

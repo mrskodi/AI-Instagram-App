@@ -14,7 +14,6 @@ module.exports = function validateRegisterInput(data){
   }
 
   if(isEmpty(data.name)){
-    console.log(`Name is empty`);
     errors.name = 'Name cannot be empty.';
   }
 
