@@ -1,135 +1,186 @@
 const express = require('express');
 const Profile = require('../../models/Profile');
+const User = require('../../models/User');
 const passport = require('passport');
 const validateProfileInput = require('../../validations/profile');
 
 const router = express.Router();
 
-// @router  api/profiles/
-// @access  Private
-// @desc    get the profile details of a single user
+// @router  GET api/profiles
+// @access  PRIVATE
+// @desc    Get the profile details of a single user
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   const errors = {};
   // Find the user from the database
-  Profile.findOne({user: req.user.id})
+  Profile.findOne({ user: req.user.id })  
+        .populate('user', ['name', 'email', 'avatar'])
         .then(profile => {
           if(!profile){
             errors. noProfile = 'There is no profile for this user';
-            return res.json(errors)
+            return res.status(404).json(errors);
           }
-          return res.json(profile);
-        }
-        )
+          res.json(profile);
+        })
         .catch(err => console.log(err));
 });
 
 // @router api/profiles/handle: userhandle
 // @access PRIVATE
-// @desc   get the profile details based on handle name
+// @desc   Get the profile details based on handle name
 router.get('/handle/:userhandle', passport.authenticate('jwt', {session: false}), (req, res) => {
   const errors = {};
-  Profile.findOne({handle: req.params.userhandle})
-        .then(profile => {
-          if(!profile){
-            errors.noProfile = 'There is no profile with that handle';
-            return res.json(errors);
+  User.findOne({handle: req.params.userhandle})
+        .then(userFound => {
+          if(!userFound){
+            errors.noProfile = `There is no profile with handle : ${req.params.userhandle}`;
+            return res.status(404).json(errors);
           }
-          return res.json(profile);
+         
+          Profile.findOne({user: userFound.id})
+          .populate('user', ['name', 'email', 'avatar'])
+          .then(profileFound => {
+              if(!profileFound){
+                 errors.noprofile = `There is no profile with handle : ${req.params.userhandle}`;
+                 return res.status(404).json(errors);
+              }
+              res.json(profileFound);
+          })
+
         })
         .catch(err => console.log(err));
 })
 
 // @router api/profiles/name: username
 // @access PRIVATE
-// @desc   get the profile details based on name
-router.get('/name/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
-  const errors = {};
-  Profile.findOne({name: req.params.username})
-        .then(profile => {
-          if(!profile){
-            errors.noProfile = 'There is no profile with that name';
-            return res.json(errors);
-          }
-          return res.json(profile);
+// @desc   Get the profile details based on user name
+router.get(
+  '/name/:username', 
+  passport.authenticate('jwt', {session: false}), 
+  (req, res) => {
+    const errors = {};
+    User.findOne({ name: req.params.username })      
+        .then(userFound => {
+          if (!userFound) {
+            errors.noprofile = `There is no profile for user : ${req.params.username}`;
+            return res.status(404).json(errors);
+          }              
+
+          Profile.findOne({user: userFound.id})
+            .populate('user', ['name', 'email', 'avatar'])
+            .then(profileFound => {
+              if(!profileFound){
+                  errors.noprofile = `There is no profile for user : ${req.params.username}`;
+                  return res.status(404).json(errors);
+              }
+              res.json(profileFound);
+          })
         })
-        .catch(err => console.log(err));
-})
+        .catch(err => res.status(404).json(err));
+  })
 
 // @router api/profiles/email: useremail
 // @access PRIVATE
-// @desc   get the profile details based on email
-router.get('/email/:useremail', passport.authenticate('jwt', {session: false}), (req, res) => {
-  const errors = {};
-  Profile.findOne({email: req.params.useremail})
-        .then(profile => {
-          if(!profile){
-            errors.noProfile = 'There is no profile with that email';
-            return res.json(errors);
-          }
-          return res.json(profile);
-        })
-        .catch(err => console.log(err));
-})
+// @desc   Get the profile details based on user email
+router.get(
+  '/email/:useremail', 
+  passport.authenticate('jwt', {session: false}), 
+  (req, res) => {
+    const errors = {};
+    User.findOne({ email: req.params.useremail })      
+      .then(userFound => {
+        if (!userFound) {
+          errors.noprofile = `There is no profile for email : ${req.params.useremail}`;
+          return res.status(404).json(errors);
+        }  
+
+        Profile.findOne({user: userFound.id})
+         .populate('user', ['name', 'email', 'avatar'])
+         .then(profileFound => {
+             if(!profileFound){
+                errors.noprofile =  `There is no profile for email : ${req.params.useremail}`;
+                return res.status(404).json(errors);
+             }
+             res.json(profileFound);
+         })
+
+      })
+      .catch(err => res.status(404).json(err));
+  })
 
 
 // @router  api/profiles/all
 // @access  Private
-// @desc    get the profile details of a single user
-router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) => {
-  const errors = {};
-  // Find the user from the database
-  
-  Profile.find()
-        .then(profile => {
-          if(!profile){
-            errors. noProfile = 'There are no profiles';
-            return res.json(errors)
+// @desc    Get all profiles
+router.get(
+  '/all',
+   passport.authenticate('jwt', {session: false}), 
+   (req, res) => {
+    const errors = {};
+    // Find the user from the database
+    
+    Profile.find()
+          .populate('user', ['name', 'email', 'avatar'])
+          .then(profile => {
+            if(!profile){
+              errors. noProfile = 'There are no profiles';
+              return res.status(404).json(errors);
+            }
+            return res.json(profile);
           }
-          return res.json(profile);
-        }
-        )
-        .catch(err => console.log(err));
-});
+          )
+          .catch(err => console.log(err));
+  });
 
 // @router  api/profiles/edit
 // @access  Private
-// @desc    edit the profile page
-router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-  // Validations here.
-  const {errors, isValid} = validateProfileInput(req.body)
-  if(!isValid){
-    return res.status(400).json(errors);
-  }
+// @desc    Edit user profile
+router.post(
+  '/', 
+  passport.authenticate('jwt', {session: false}), 
+  (req, res) => {
+      // Validate profile inputs
+      const {errors, isValid} = validateProfileInput(req.body)
+      if(!isValid){
+        return res.status(400).json(errors);
+      }
 
-  const profileFields = {};
-  profileFields.user = req.user.id;
-  if(req.body.website) profileFields.website = req.body.website;
-  if(req.body.bio) profileFields.bio = req.body.bio;
-  if(req.body.gender) profileFields.gender = req.body.gender;
-  // Split hobbies into an array
-  if(typeof req.body.hobbies!== 'undefined'){
-    profileFields.hobbies = req.body.hobbies.split(',');
-  }
-  profileFields.favorites = {};
-  if(typeof req.body.books !== 'undefined') profileFields.favorites.books = req.body.books.split(',');
-  if(typeof req.body.movies !== 'undefined') profileFields.favorites.movies = req.body.movies.split(',');
-  if(typeof req.body.outdoorActivities !== 'undefined') profileFields.favorites.outdoorActivities = req.body.outdoorActivities.split(',');
+      //Get fields
+      const profileFields = {};
+      const userFields = {};
 
-  Profile.findOne({user: req.user.id})
-         .then(profile => {
-           if(profile){
-             // Profile exists, update profile
-              Profile.findOneAndUpdate(
-                {user: req.user.id},
-                {$set: profileFields},
-                {new: true}
-              )
-                    .then(profile => res.json(profile))
-                    .catch(err => console.log(err));
-           }
-         })
-         .catch(err => console.log(err));
-});
+      profileFields.user = req.user.id;
+      userFields.name = req.body.name;
+      userFields.email = req.body.email;
+      userFields.phone = req.body.phone;
+      if(req.body.website) profileFields.website = req.body.website;
+      if(req.body.bio) profileFields.bio = req.body.bio;
+      if(req.body.gender) profileFields.gender = req.body.gender;
+      // Split hobbies into an array
+      if(typeof req.body.hobbies!== 'undefined'){
+        profileFields.hobbies = req.body.hobbies.split(',');
+      }
+      profileFields.favorites = {};
+      if(typeof req.body.books !== 'undefined') profileFields.favorites.books = req.body.books.split(',');
+      if(typeof req.body.movies !== 'undefined') profileFields.favorites.movies = req.body.movies.split(',');
+      if(typeof req.body.outdoorActivities !== 'undefined') profileFields.favorites.outdoorActivities = req.body.outdoorActivities.split(',');
+
+      Profile.findOneAndUpdate(
+        {user: req.user.id},
+        {$set: profileFields},
+        {new: true}
+    ). then(profile => {
+        res.json(profile);
+
+        //Update users model also if name/email is updated here      
+        User.findByIdAndUpdate(
+            req.user.id, 
+            {$set: userFields})
+              .then()
+              .catch(err => console.log(err))
+          }
+        )           
+      .catch(errUpdatingProfile=> console.log(errUpdatingProfile));
+    });
 
 // @router  api/profiles/follow/handle/:handle
 // @access  Private
@@ -140,12 +191,12 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
     Profile.findOne({email: req.user.email})
          .then(profile => {
 
-          // Check if following[] of req.user has req.params.handle
+          // Check if following[] of req.user has req.params.handle        
           if((profile.following.filter(item => item.handle === req.params.handle).length > 0) ||
-             (req.params.handle === req.user.handle)){
+            (req.params.handle === req.user.handle)){
             // User already following the handle
             return res.json({invalid: 'invalid request'});
-          }
+          }        
 
           profile.following.unshift({handle: req.params.handle});
           profile.save()
@@ -226,6 +277,7 @@ router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: f
         })
          .catch(err => console.log(err));
 });
+  
 
 module.exports = router;
 

@@ -82,8 +82,7 @@ router.delete('/id/:postid', passport.authenticate('jwt', {session: false}), (re
 // @desc    Delete all posts made by the user(unique handle)
 router.delete('/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
   Post.findOne({handle: req.params.handle})
-      .then(post => {
-        
+      .then(post => {        
         if(post.handle != req.user.handle){
           return res.json({unAuthorizedUser: 'Not authorized to delete posts'})
         }
@@ -97,69 +96,103 @@ router.delete('/handle/:handle', passport.authenticate('jwt', {session: false}),
 // @router    POST /api/posts/like/:id
 // @desc      Like a post based on postId
 // @access    Private
-router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
-  Post.findById(req.params.id)
-      .then(post => {
-        // Loop through the likes array in the post collection
-        // to check whether the user has liked the post before
-        if((post.likes.filter(like => like.user.toString() === req.user.id).length > 0) || 
-            (post.user.toString() === req.user.id)){
-          
-          // User already liked the post, delete him from likes list
-          const removeIndex = post.likes.map(like => like.user)
-                                        .indexOf(req.user.id);
-          
-            if(removeIndex == -1){
-              return res.json({msg: 'User cannot be added to the likes list'})
-            }                           
+router.post('/like/:postId', passport.authenticate('jwt', {session: false}), (req, res) => {
+  Post.findById(req.params.postId)
+  .then(post => {
+      if(post){
+            if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+                return res.status(400).json({ alreadyliked: 'User already liked this post' });
+            }  
+             //Check if used alreday disliked the post. If yes, remove user from dislikes array
+            if(post.dislikes.filter(dislike => dislike.user.toString() === req.user.id).length > 0){
+                // Get remove index
+                const removeIndex = post.dislikes
+                .map(item => item.user.toString())
+                .indexOf(req.user.id);
 
-          // User found, remove user from likes array
-          post.likes.splice(removeIndex, 1);
+                // Splice out of array
+                post.dislikes.splice(removeIndex, 1);
+            }        
+            //Add user id to likes array
+            post.likes.unshift({ user: req.user.id });
+            //Save post
+            post.save().then(post => res.json(post));
         }
-        else{
-        // User has not liked the post yet, add userid to the likes array
-          post.likes.unshift({user: req.user.id});
-        }
-        // Save
-        post.save()
-            .then(post => res.json(post))
-            .catch(err => console.log(err));
-      })
-      .catch(err => res.json({msg: 'Could not like the post'}));
+     })
+     .catch(err => console.log(err)); 
 })
+
+// @route   POST api/posts/unlike/:postId
+// @desc    Dislike post for given postId
+// @access  Private
+router.post(
+  '/dislike/:postId',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {     
+      Post.findById(req.params.postId)
+        .then(post => {        
+            if(post){
+                //Check if user alreday disliked the post.
+               if (post.dislikes.filter(dislike => dislike.user.toString() === req.user.id).length > 0) {
+                  return res.status(400).json({ alreadydisliked: 'User already disliked this post' });
+               }
+               //Check if used alreday liked the post. If yes, remove user from likes array
+               if(post.likes.filter(like => like.user.toString() === req.user.id).length > 0){
+                   // Get remove index
+                  const removeIndex = post.likes
+                  .map(item => item.user.toString())
+                  .indexOf(req.user.id);
+
+                  // Splice out of array
+                  post.likes.splice(removeIndex, 1);
+               }  
+               
+               //Put user in dislikes array
+               post.dislikes.unshift({ user: req.user.id });
+
+              // Save
+              post.save().then(post => res.json(post));
+          }   
+        })
+        .catch(err => console.log(err));    
+  }
+);
 
 // @router    POST /api/posts/comment/:id
 // @desc      Comment on a post based on postId
 // @access    Private
-router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
-  
-  const {errors, isValid} = validateComment(req.body);
-  if(!isValid){
-    return res.json(errors);
-  }
-  Post.findOne({_id: req.params.id})
-      .then(post => {
-        if(!post){
-          return res.json({msg: 'Post not found. Check the post id.'})
-        }
-        
-        // Create a new comment object
-        const newComment = {
-          user: req.user.id,
-          text: req.body.text,
-          name: req.user.name,
-          handle: req.user.handle,
-          avatar: req.user.avatar
-        }
-        
-        // Append this comment to the comments array
-        post.comments.unshift(newComment);
-        // Save
-        post.save()
-            .then(post => res.json(post))
-            .catch(err => console.log(arr));
-      })
-      .catch(err => console.log(err));
+router.post(
+  '/comment/:id', 
+  passport.authenticate('jwt', {session: false}), 
+  (req, res) => {  
+    const {errors, isValid} = validateComment(req.body);
+    if(!isValid){
+      return res.json(errors);
+    }
+    Post.findOne({_id: req.params.id})
+        .then(post => {
+          if(!post){
+            return res.json({msg: 'Post not found. Check the post id.'})
+          }
+          
+          // Create a new comment object
+          const newComment = {
+            user: req.user.id,
+            text: req.body.text,
+            name: req.user.name,
+            handle: req.user.handle,
+            avatar: req.user.avatar
+          }
+          
+          // Append this comment to the comments array
+          post.comments.unshift(newComment);
+          
+          // Save
+          post.save()
+              .then(post => res.json(post))
+              .catch(err => console.log(arr));
+        })
+        .catch(err => console.log(err));
 })
 
 // @router    DELETE /api/posts/comment/:post_id/:comment_id

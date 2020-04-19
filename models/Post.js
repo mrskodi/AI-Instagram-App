@@ -16,14 +16,19 @@ const postSchema = new schema({
     type: String
   },
   imageOrVideo: {
-    type: String,
-    required: true
+    type: String    
   },
   text: {
     type: String,
     required: true
   },
   likes: [{
+    user: {
+      type: schema.Types.ObjectId,
+      ref: 'users'
+    }
+  }],
+  dilikes: [{
     user: {
       type: schema.Types.ObjectId,
       ref: 'users'
@@ -47,12 +52,12 @@ const postSchema = new schema({
       type: String,
       required: true
     },
-    date: {
+    commentDate: {
       type: Date,
       default: Date.now
     }
   }],
-  date: {
+  postDate: {
     type: Date,
     default: Date.now
   }
