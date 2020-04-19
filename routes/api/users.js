@@ -16,13 +16,13 @@ const validateLoginInput = require('../../validations/login');
 // @desc    Register a New User
 router.post('/register', (req, res) => {
   
-  // Validate Input
+  // Validate register input
   const {errors, isValid} = validateRegisterInput(req.body);
   if(!isValid){
     return res.status(400).json(errors);
   }
 
-  //Check if user with email or phone exists
+  //Check if user email exists
   User.findOne({email: req.body.email})
       .then(user => {
         if(user){
@@ -33,7 +33,7 @@ router.post('/register', (req, res) => {
         User.findOne({phone: req.body.phone})
             .then(user => {
               if(user){
-                return res.json({phone: 'Phone number already taken!'})
+                return res.json({phone: 'Phone number already exists!'})
               }
 
         // Check if handle already taken
@@ -58,9 +58,7 @@ router.post('/register', (req, res) => {
           handle: req.body.handle,
           password: req.body.password,
           avatar: avatar
-        });
-
-        console.log(`Success creating a new user: ${newUser}`);
+        });       
 
         // Gen a key for hashing the password
         bcrypt.genSalt(5)
@@ -68,24 +66,21 @@ router.post('/register', (req, res) => {
                 if(salt){
                   bcrypt.hash(newUser.password, salt)
                         .then(hash => {
-                          if(hash){
-                            console.log(`Hashed password: ${hash}`);
+                          if(hash){                       
                             // ----- Working till here
                             newUser.password = hash;
                             newUser.save()
                                     .then(user => {
-                                      
+                                      console.log(`Success creating a new user: ${newUser}`);
+
+                                      res.json(user);
                                       // The moment a newUser is created, I want to create a new profile with the user details and upload it to the profile document in mongodb.
 
                                       // Before creating a profile, check whether profile exists in profile document. In fact, it is not necessary since when a user is deleted, the profile is also deleted.
                                                                            
                                       const newProfile = new Profile({
-                                        user: user.id,
-                                        name: user.name,                                        
-                                        email: user.email,
-                                        handle: user.handle,
-                                        phone: user.phone
-                                      })
+                                        user: user.id                                     
+                                      });
                                       newProfile.save()
                                                 .then(profile => {
                                                   return res.status(200).json({
@@ -112,7 +107,8 @@ router.post('/register', (req, res) => {
 // @access  PUBLIC
 // desc     login registered users
 router.post('/login', (req, res) => {
-  // Validate emailid and password 
+
+  //Validate login inputs
   const {errors, isValid} = validateLoginInput(req.body);
   if(!isValid){ // validation not passed
     return res.json(errors);
@@ -122,7 +118,7 @@ router.post('/login', (req, res) => {
   User.findOne({email: req.body.email})
       .then(user => {
         if(!user){
-          return res.json({msg: 'user does not exist'});
+          return res.json({msg: 'Invalid email. Please provide valid email'});
         }
         // User exists
         // compare passwords
@@ -133,7 +129,8 @@ router.post('/login', (req, res) => {
             const payload = {
               id: user.id,
               email: user.email,
-              avatar: user.avatar
+              avatar: user.avatar,
+              handle: user.handle
             }
             // Sign the token and generate a bearer token
             jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
@@ -149,7 +146,7 @@ router.post('/login', (req, res) => {
             })
 
           }else{
-            return res.json({password: 'Password did not match'});
+            return res.json({password: 'Invalid password. Please provide valid password'});
           } 
         })
       })
@@ -159,36 +156,41 @@ router.post('/login', (req, res) => {
 // @route   GET /api/users/current
 // @access  Private
 // @desc    Return the information of the current user
-router.get('/currentUser', passport.authenticate('jwt', {session: false}), (req, res) => {
-    return res.json({
+router.get(
+  '/current', 
+  passport.authenticate('jwt', {session: false}), 
+  (req, res) => {
+      res.json({
       name: req.user.name,
       id: req.user.id,
       email: req.user.email,
-      handle: req.body.handle
+      handle: req.user.handle
     })
   })
 
 // @route   POST /api/users/delete
 // @access  PRIVATE
 // @desc     delete a registered user and all the posts/ profile/ setting info
-router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-  // Authentication performed
-  
-  // Delete all user posts
-  Post.deleteMany({user: req.user.id})
-      .then(post => {
-        post.length = 0
-      })
-      .catch(err => console.log(err))
-  // Then delete profile and at last delete user
-  Profile.findOneAndRemove({user: req.user.id})
-         .then(() => {
-                User.findOneAndRemove({_id: req.user.id})
-                    .then(() => res.json({success: 'User, his profile and all posts deleted successfully'}))
-                    .catch(err => console.log(err));
-                  }
-         )
-          .catch(err => console.log(err));
+router.delete(
+  '/delete', 
+  passport.authenticate('jwt', {session: false}), 
+  (req, res) => {
+    // Authentication performed    
+    // Delete all user posts
+    Post.deleteMany({user: req.user.id})
+        .then(post => {
+          post.length = 0
+        })
+        .catch(err => console.log(err))
+    // Then delete profile and at last delete user
+    Profile.findOneAndRemove({user: req.user.id})
+          .then(() => {
+                  User.findOneAndRemove({_id: req.user.id})
+                      .then(() => res.json({success: 'User, user profile and user posts deleted successfully'}))
+                      .catch(err => console.log(err));
+                    }
+          )
+            .catch(err => console.log(err));
   })              
 
 module.exports = router;
