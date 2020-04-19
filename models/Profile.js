@@ -5,20 +5,7 @@ const profileSchema = new schema({
   user: {
     type: schema.Types.ObjectId,
     ref: 'users'
-  },
-  name: {
-    type: String
-  },
-  handle: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String
-  },
-  phone: {
-    type: String
-  },
+  }, 
   website: {
     type: String,
   },
