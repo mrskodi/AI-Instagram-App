@@ -1,5 +1,5 @@
 package-lock.json
 node_modules
 /config/keys.js
-/client/node-modules
+/client/node_modules
 /client/package-lock.json
