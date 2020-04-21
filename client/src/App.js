@@ -6,20 +6,24 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
 
+import { Provider } from 'react-redux';
+import store from './store';
 
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-         <Navbar/>    
-        <Route exact path="/" component= {Landing}></Route>
-        <Route exact path="/register" component={Register} ></Route>
-        <Route exact path="/login" component={Login} ></Route>
-        <Footer/>    
-      </div>
-    </Router>
+    <Provider store = {store}>    
+      <Router>
+        <div className="App">
+          <Navbar/>    
+          <Route exact path="/" component= {Landing}></Route>
+          <Route exact path="/register" component={Register} ></Route>
+          <Route exact path="/login" component={Login} ></Route>
+          <Footer/>    
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

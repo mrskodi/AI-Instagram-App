@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { loginUser } from '../../action/authActions';
 
 class Login extends Component {
   constructor() {
@@ -26,10 +28,14 @@ class Login extends Component {
       password: this.state.password
     };
 
-    axios
-      .post('/api/users/login', user)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({ errors: err.response.data }));   
+    // axios
+    //   .post('/api/users/login', user)
+    //   .then(res => console.log(res.data))
+    //   .catch(err => this.setState({ errors: err.response.data }));
+
+    // loginUser is now added to the property bag of Login component
+    // Send the user data to loginUser function
+    this.props.loginUser(user);
   }
 
   render() {
@@ -59,4 +65,5 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+export default connect(null, { loginUser })(Login);
