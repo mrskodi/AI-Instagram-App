@@ -21,7 +21,6 @@ class Register extends Component {
 
     onChange(eventInfo){
         this.setState({[eventInfo.target.name]: eventInfo.target.value})
-
     }
 
     onSubmit(eventInfo){
