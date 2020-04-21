@@ -7,32 +7,31 @@ const isEmpty = require('./isEmpty');
 module.exports = function validateRegisterInput(data){
   const errors = {};
 
-  // Validate name field
-  
+  // Validate name field  
   if(!Validator.isLength(data.name, {min: 2, max: 30})){
     errors.name = 'Name must be between 2 and 30 characters.';
   }
 
   if(isEmpty(data.name)){
-    errors.name = 'Name cannot be empty.';
+    errors.name = 'Please provide name';
   }
 
 //Validate Email
   if(!Validator.isEmail(data.email)){
-    errors.email = 'Email not valid';
+    errors.email = 'Email is invalid. Please provide valid email ';
 }
 
 if(isEmpty(data.email)){
-  errors.email = 'Email cannot be empty';
+  errors.email = 'Please provide email';
 }
 
   //Validate phone number
   if(!Validator.isMobilePhone(data.phone)){
-      errors.phone = 'Phone number is not valid';
+      errors.phone = 'Phone number is invalid. Please provide valid phone number';
   }
   
   if(isEmpty(data.phone)){
-    errors.phone = 'Phone number cannot be empty';
+    errors.phone = 'Please provide phone number';
   }
 
   // Validate handle
@@ -41,7 +40,7 @@ if(isEmpty(data.email)){
   }
 
   if(isEmpty(data.handle)){
-    errors.handle = 'Handle cannot be empty';
+    errors.handle = 'Please provide handle';
   }
 
   // Validate Password
@@ -50,16 +49,16 @@ if(isEmpty(data.email)){
   }
 
   if(isEmpty(data.password)){
-    errors.password = 'Password cannot be empty.';
+    errors.password = 'Please provide password';
   }
 
   // Validate Password 2
   if(!Validator.equals(data.password, data.password2)){
-    errors.password2 = 'Passwords must match.';
+    errors.password2 = 'Passwords must match';
   }
 
   if(isEmpty(data.password2)){
-    errors.password2 = 'Confirm password cannot be empty.';
+    errors.password2 = 'Please confirm password';
   }
 
   return{

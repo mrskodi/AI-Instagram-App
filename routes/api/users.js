@@ -112,17 +112,18 @@ router.post('/register', (req, res) => {
 // @access  PUBLIC
 // desc     login registered users
 router.post('/login', (req, res) => {
-  // Validate emailid and password 
+
+  // Validate login input
   const {errors, isValid} = validateLoginInput(req.body);
-  if(!isValid){ // validation not passed
-    return res.json(errors);
+  if(!isValid){ // validation not passed  
+    return res.status(400).json(errors);   
   }
 
   // Check if user exists
   User.findOne({email: req.body.email})
       .then(user => {
         if(!user){
-          return res.json({msg: 'user does not exist'});
+          return res.json({msg: 'User does not exist'});
         }
         // User exists
         // compare passwords

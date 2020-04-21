@@ -1,23 +1,22 @@
 //import validatePhone from 'libphonenumber-js/mobile';
 const validator = require('validator');
-
 const isEmpty = require('./isEmpty');
 
 module.exports = function validateLoginInput(data){
-  errors = {};
+  const errors = {};
 
   // Validate email
-  if(isEmpty(data.email)){
-    errors.email = 'Enter email id';
+  if(!validator.isEmail(data.email)){
+    errors.email = 'Email is invalid. Please provide valid email';
   }
 
-  if(!validator.isEmail(data.email)){
-    errors.email = 'Email not valid';
-  }
+  if(isEmpty(data.email)){
+    errors.email = 'Please provide email';
+  } 
   
   // Validate password
   if(isEmpty(data.password)){
-    errors.password = 'Password cannot be empty';
+    errors.password = 'Please provide password';
   }
 
   return{
