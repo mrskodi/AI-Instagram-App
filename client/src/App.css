@@ -4,16 +4,20 @@ img {
 
 .landing {
   position: relative;
-  background: url('./img/2018-04-30.jpg') no-repeat;
+  background: url('./img/2018-08-19.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  height: 86vh;
+  height: 90vh;
   margin-top: -24px;
   margin-bottom: -50px;
 }
 
 .landing-inner {
   padding-top: 80px;
+}
+
+.lead {
+  padding-bottom: 1rem;
 }
 
 .dark-overlay {
@@ -40,27 +44,40 @@ img {
 
 .btn-info {
   color: #fff;
-  background-color: #8a3c3b;
-  border-color: #8a3c3b;
+  background-color: #408DBD;
+  border-color: #408DBD;
 }
 
 .btn-info:hover {
   color: #fff;
-  background-color: #702d2d;
-  border-color: #702d2d;
+  background-color: #1B5070;
+  border-color: #1B5070;
 }
 
 .btn-info:focus {
   color: #fff;
-  background-color: #8a3c3b;
-  border-color: #8a3c3b;
-  box-shadow: 0 0 0 0.2rem rgba(138,60,59,.5);
+  background-color: #408DBD;
+  border-color: #408DBD;
+  box-shadow: 0 0 0 0.2rem rgba(64,141,189,.5);
 }
 
-.bg-rust {
-  background-color: #572323;
+.btn-light {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
 }
 
-.bg-brick {
-  background-color: #BD4B4B;
+.btn-light:hover {
+  color: #212529;
+  background-color: #cecece;
+  border-color: #dae0e5;
 }
+
+.bg-main {
+  background-color: #5495bd;
+}
+
+.bg-sec {
+  background-color: #303030;
+}
+
