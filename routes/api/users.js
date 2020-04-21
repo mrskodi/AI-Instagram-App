@@ -26,21 +26,21 @@ router.post('/register', (req, res) => {
   User.findOne({email: req.body.email})
       .then(user => {
         if(user){
-          return res.json({email: 'User with email already exists!'});
+          return res.status(400).json({email: 'User with this email already exists!'})          
         }
 
         // Check if phone number already exists
         User.findOne({phone: req.body.phone})
             .then(user => {
               if(user){
-                return res.json({phone: 'Phone number already taken!'})
+                return res.status(400).json({phone: 'User with this phone number already exists!'})             
               }
 
         // Check if handle already taken
         User.findOne({handle: req.body.handle})
               .then(user => {
                 if(user){
-                  return res.json({handle: 'Handle already taken. Choose another handle'})
+                  return res.status(400).json({handle: 'User with this handle already exists! Please choose another handle'})                
                 }
         // Credentials are not yet taken. create newUser
         // Create an avatar
@@ -123,7 +123,7 @@ router.post('/login', (req, res) => {
   User.findOne({email: req.body.email})
       .then(user => {
         if(!user){
-          return res.json({msg: 'User does not exist'});
+          return res.status(400).json({email: 'Email does not exists'});        
         }
         // User exists
         // compare passwords
@@ -150,7 +150,7 @@ router.post('/login', (req, res) => {
             })
 
           }else{
-            return res.json({password: 'Password did not match'});
+            return res.status(400).json({password: 'Password did not match'});            
           } 
         })
       })

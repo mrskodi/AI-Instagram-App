@@ -15,7 +15,7 @@ class Register extends Component {
             handle:'',           
             errors:{}
         }
-        //with below assignment we ca have just onChange={this.onChange} for all textboxes below
+        //with below assignment we can write just onChange={this.onChange} for all textboxes below
         //this.onChange = this.onChange.bind(this);
     }
 
@@ -34,7 +34,7 @@ class Register extends Component {
             phone:this.state.phone,
             handle:this.state.handle           
         };
-
+       
         axios.post('api/users/register', newUser)
             .then(res=> {                
                 console.log(res.data)
@@ -60,7 +60,7 @@ class Register extends Component {
                              {errors.name && (<div className="invalid-feedback">{errors.name}</div>)}
                             </div>
                             <div className="form-group">
-                            <input type="email" className={classnames("form-control form-control-lg", {'is-invalid': errors.email})} placeholder="Email Address" name="email" value={this.state.email} onChange={this.onChange.bind(this)} />
+                            <input type="text" className={classnames("form-control form-control-lg", {'is-invalid': errors.email})} placeholder="Email" name="email" value={this.state.email} onChange={this.onChange.bind(this)} />
                             {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                             <small className="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
                             </div>
@@ -73,7 +73,7 @@ class Register extends Component {
                             {errors.password2 && (<div className="invalid-feedback">{errors.password2}</div>)}
                             </div>
                             <div className="form-group">
-                            <input type="phone" className= {classnames("form-control form-control-lg", {'is-invalid': errors.phone})} placeholder="Phone" name="phone" value={this.state.phone} onChange={this.onChange.bind(this)}/>
+                            <input type="text" className= {classnames("form-control form-control-lg", {'is-invalid': errors.phone})} placeholder="Phone number" name="phone" value={this.state.phone} onChange={this.onChange.bind(this)}/>
                             {errors.phone && (<div className="invalid-feedback">{errors.phone}</div>)}
                             </div>
                             <div className="form-group">
