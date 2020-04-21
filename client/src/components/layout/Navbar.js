@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom'
 class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-brick mb-4">
+      <nav className="navbar navbar-expand-sm navbar-dark mb-4 bg-main">
         <div className="container">
-          <Link className="navbar-brand" to="/">Photo App</Link>          
+          <Link className="navbar-brand" to="/">Photo App</Link>    
+          <a className="navbar-brand" href="landing.html">Wander</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
             <span className="navbar-toggler-icon"></span>
           </button>
