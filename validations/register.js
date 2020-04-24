@@ -1,5 +1,5 @@
 //import validatePhone from 'libphonenumber-js/mobile';
-
+const User = require('../models/User')
 const Validator = require('validator');
 const isEmpty = require('./isEmpty');
 //const phoneNumber = parsePhoneNumberFromString(data.phone);
@@ -7,7 +7,7 @@ const isEmpty = require('./isEmpty');
 module.exports = function validateRegisterInput(data){
   const errors = {};
 
-  // Validate name field  
+  // VALIDATE NAME
   if(!Validator.isLength(data.name, {min: 2, max: 30})){
     errors.name = 'Name must be between 2 and 30 characters.';
   }
@@ -16,16 +16,16 @@ module.exports = function validateRegisterInput(data){
     errors.name = 'Please provide name';
   }
 
-//Validate Email
+  //VALIDATE EMAIL
   if(!Validator.isEmail(data.email)){
     errors.email = 'Email is invalid. Please provide valid email ';
-}
+  }
 
-if(isEmpty(data.email)){
-  errors.email = 'Please provide email';
-}
+  if(isEmpty(data.email)){
+    errors.email = 'Please provide email';
+  }
 
-  //Validate phone number
+  //VALIDATE PHONE NUMBER
   if(!Validator.isMobilePhone(data.phone)){
       errors.phone = 'Phone number is invalid. Please provide valid phone number';
   }
@@ -34,7 +34,7 @@ if(isEmpty(data.email)){
     errors.phone = 'Please provide phone number';
   }
 
-  // Validate handle
+  // VALIDATE HANDLE
   if(!Validator.isLength(data.handle, {min: 3, max: 20})){
     errors.handle = 'Handle must be between 3 and 20 characters.';
   }
