@@ -17,15 +17,6 @@ if(localStorage.jwtToken){
   // decode the token
   const decoded = jwt_decode(localStorage.jwtToken);
 
-  // // Check for expiry of the token
-  // const currentTime = Date.now() / 1000;
-  // if(decoded < currentTime){
-  //   // Token has expired, user should be logged out
-  //   store.dispatch(logoutUser());
-  //   // Redirect user to login
-  //   window.location.href('/login');
-  // }
-
   // set auth header
   setAuthToken(localStorage.jwtToken);
   
