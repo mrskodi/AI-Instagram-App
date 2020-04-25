@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { registerUser } from '../../action/authActions';
@@ -48,8 +47,7 @@ class Register extends Component {
   }
 
   render() {
-    const { errors } = this.state;  
-    const { user } = this.props.auth
+    const { errors } = this.state;     
     // Another way to write above statement using deconstruction  
     //const {errors} = this.state;
 
