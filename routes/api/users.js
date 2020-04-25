@@ -39,9 +39,9 @@ router.post('/register', (req, res) => {
             if(user.phone === req.body.phone){
               errors.phone = 'Phone number already taken';
             }
-            console.log(errors);
-            return res.status(400).json(errors);
           })
+          console.log(errors);
+          return res.status(400).json(errors);
         }
         else{
           // User with the details does not exist yet
@@ -147,7 +147,7 @@ router.post('/login', (req, res) => {
             })
 
           }else{
-            return res.status(400).json({password: 'Password did not match'});            
+            return res.status(400).json({password: 'Incorrect password'});            
           } 
         })
       })

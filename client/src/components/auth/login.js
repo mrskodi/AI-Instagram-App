@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { loginUser } from '../../action/authActions';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
   constructor() {
@@ -28,14 +29,23 @@ class Login extends Component {
       password: this.state.password
     };
 
-    // axios
-    //   .post('/api/users/login', user)
-    //   .then(res => console.log(res.data))
-    //   .catch(err => this.setState({ errors: err.response.data }));
-
-    // loginUser is now added to the property bag of Login component
-    // Send the user data to loginUser function
+    // Call loginUser action
     this.props.loginUser(user);
+  }
+
+  componentDidMount(){
+    if(this.props.auth.isAuthenticated){
+      this.props.history.push('/dashboard');
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.auth.isAuthenticated){
+      this.props.history.push('/dashboard');
+    }
+    if(nextProps.errors){
+      this.setState({errors: nextProps.errors});
+    }
   }
 
   render() {
@@ -68,4 +78,15 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { loginUser })(Login);
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

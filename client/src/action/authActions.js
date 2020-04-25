@@ -24,20 +24,27 @@ export const loginUser = (userData) => dispatch => {
       .post('/api/users/login', userData)
       .then( res => {
         // Login successful
-        // Get token back from api
+        // Get token as response back from api
         const {token} = res.data;
         // save the token to local storage
-        localStorage.setItem('jwt-token', token);
+        localStorage.setItem('jwtToken', token);
         // set the token to axios auth header
         setAuthToken(token);
         // decode the token to get user id, name and avatar
-        const decodedUserData = jwt_decode(token);
+        const decoded = jwt_decode(token);
         // Dispatch SET_CURRENT_USER with payload = decoded user information
         dispatch({
           type: SET_CURRENT_USER,
-          payload: decodedUserData
+          payload: decoded
         })
        }
       )
-      .catch()
+      .catch(err => {
+        // errors received as response from api call
+        // dispatch GET-ERRORS
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        }); 
+      })
 }
