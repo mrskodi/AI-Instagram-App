@@ -48,3 +48,18 @@ export const loginUser = (userData) => dispatch => {
         }); 
       })
 }
+
+//Logout user action - gets called when user clicks on logout on the UI and when token is expired
+export const logoutUser = () => 
+  dispatch => {
+    //Remove from localstorage
+    localStorage.removeItem('jwtToken');
+    //Remove from auth header
+    setAuthToken(false);
+    //Clean up from redux store
+    dispatch({
+      type: SET_CURRENT_USER,
+      payload: {}
+    })
+  }
+
