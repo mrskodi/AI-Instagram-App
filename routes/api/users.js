@@ -147,7 +147,7 @@ router.post('/login', (req, res) => {
             })
 
           }else{
-            return res.status(400).json({password: 'Password did not match'});
+            return res.status(400).json({password: 'Password did not match'});            
           } 
         })
       })

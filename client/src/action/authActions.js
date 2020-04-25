@@ -1,7 +1,21 @@
-import { SET_CURRENT_USER } from './dispatchTypes';
+import { SET_CURRENT_USER, GET_ERRORS } from './dispatchTypes';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
+
+//Register user
+export const registerUser = (userData, history) => 
+dispatch => {
+  axios
+    .post('api/users/register', userData)
+    .then(res => history.push('/login'))
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+} 
 
 //Login user
 export const loginUser = (userData) => dispatch => {

@@ -41,7 +41,8 @@ class Login extends Component {
   render() {
     const  errors = this.state.errors;
     return (
-      <div className="login">
+      <div className="login ">
+        <div className="dark-overlay landing-inner text-light">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -49,7 +50,7 @@ class Login extends Component {
               <p className="lead text-center">Log in to your account</p>
               <form onSubmit={this.onSubmit.bind(this)}>
                 <div className="form-group">
-                  <input type="email" className={classnames("form-control form-control-lg", {"is-invalid": errors.email})} placeholder="Email Address" name="email" value={this.state.email} onChange={this.onChange.bind(this)} />
+                  <input type="text" className={classnames("form-control form-control-lg", {"is-invalid": errors.email})} placeholder="Email" name="email" value={this.state.email} onChange={this.onChange.bind(this)} />
                   {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                 </div>                
                 <div className="form-group">
@@ -60,6 +61,7 @@ class Login extends Component {
               </form>
             </div>
           </div>
+        </div>
         </div>
       </div>
     );
