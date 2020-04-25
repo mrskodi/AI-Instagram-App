@@ -11,6 +11,8 @@ const passport = require('passport');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 
+const isEmpty = require('../../validations/isEmpty');
+
 // @route   POST /api/users/register
 // @access  Public
 // @desc    Register a New User
@@ -22,34 +24,35 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  //Check if user with email or phone exists
-  User.findOne({email: req.body.email})
-      .then(user => {
-        if(user){
-          return res.status(400).json({email: 'User with this email already exists!'})          
+  // Validate if the data entered by user is already taken - query mongodb
+  User.find({$or: [{email: req.body.email}, {handle: req.body.handle}, {phone: req.body.phone}]})
+      .then(users => {
+        if(users.length > 0){
+          
+          users.forEach(user => {
+            if(user.email === req.body.email){
+              errors.email = 'Email already taken';
+            }
+            if(user.handle === req.body.handle){
+              errors.handle = 'Handle already taken';
+            }
+            if(user.phone === req.body.phone){
+              errors.phone = 'Phone number already taken';
+            }
+            console.log(errors);
+            return res.status(400).json(errors);
+          })
         }
-
-        // Check if phone number already exists
-        User.findOne({phone: req.body.phone})
-            .then(user => {
-              if(user){
-                return res.status(400).json({phone: 'User with this phone number already exists!'})             
-              }
-
-        // Check if handle already taken
-        User.findOne({handle: req.body.handle})
-              .then(user => {
-                if(user){
-                  return res.status(400).json({handle: 'User with this handle already exists! Please choose another handle'})                
-                }
-        // Credentials are not yet taken. create newUser
-        // Create an avatar
+        else{
+          // User with the details does not exist yet
+          // Create an avatar
+          
           const avatar = gravatar.url(req.body.email, {
             s: '100',
             r: 'g',
             d: 'robohash'
           });
-
+        
         // Create a newUser object and populate it with data from html form
         const newUser = new User({
           name: req.body.name,
@@ -59,9 +62,7 @@ router.post('/register', (req, res) => {
           password: req.body.password,
           avatar: avatar
         });
-
-        console.log(`Success creating a new user: ${newUser}`);
-
+  
         // Gen a key for hashing the password
         bcrypt.genSalt(5)
               .then(salt => {
@@ -69,16 +70,12 @@ router.post('/register', (req, res) => {
                   bcrypt.hash(newUser.password, salt)
                         .then(hash => {
                           if(hash){
-                            console.log(`Hashed password: ${hash}`);
-                            // ----- Working till here
                             newUser.password = hash;
                             newUser.save()
-                                    .then(user => {
-                                      
-                                      // The moment a newUser is created, I want to create a new profile with the user details and upload it to the profile document in mongodb.
-
-                                      // Before creating a profile, check whether profile exists in profile document. In fact, it is not necessary since when a user is deleted, the profile is also deleted.
-                                                                           
+                                   .then(user => {
+                                    
+                                      // The moment a newUser is saved in mongodb, create a profile with the user details and upload it to the profile document in mongodb.
+  
                                       const newProfile = new Profile({
                                         user: user.id,
                                         name: user.name,                                        
@@ -103,9 +100,9 @@ router.post('/register', (req, res) => {
                 }
               })
               .catch(err => console.log(err));
-            })
-          });       
-    });
+        }
+      })
+      .catch(err => console.log(err));
  })
 
 // @route   POST /api/users/login
@@ -123,7 +120,7 @@ router.post('/login', (req, res) => {
   User.findOne({email: req.body.email})
       .then(user => {
         if(!user){
-          return res.status(400).json({email: 'Email does not exists'});        
+          return res.status(400).json({msg: 'User does not exist'});
         }
         // User exists
         // compare passwords
