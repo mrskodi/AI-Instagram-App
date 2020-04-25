@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
   User.find({$or: [{email: req.body.email}, {handle: req.body.handle}, {phone: req.body.phone}]})
       .then(users => {
         if(users.length > 0){
-          console.log('Details have already been taken.Validation needs to be done')
+          
           users.forEach(user => {
             if(user.email === req.body.email){
               errors.email = 'Email already taken';
@@ -46,13 +46,13 @@ router.post('/register', (req, res) => {
         else{
           // User with the details does not exist yet
           // Create an avatar
-          console.log('in the else loop!')
+          
           const avatar = gravatar.url(req.body.email, {
             s: '100',
             r: 'g',
             d: 'robohash'
           });
-        console.log(`Avatar created!`);
+        
         // Create a newUser object and populate it with data from html form
         const newUser = new User({
           name: req.body.name,
@@ -63,8 +63,6 @@ router.post('/register', (req, res) => {
           avatar: avatar
         });
   
-        console.log(`Success creating a new user: ${newUser}`);
-  
         // Gen a key for hashing the password
         bcrypt.genSalt(5)
               .then(salt => {
@@ -72,7 +70,6 @@ router.post('/register', (req, res) => {
                   bcrypt.hash(newUser.password, salt)
                         .then(hash => {
                           if(hash){
-                            //console.log(`Hashed password: ${hash}`);
                             newUser.password = hash;
                             newUser.save()
                                    .then(user => {
@@ -103,7 +100,6 @@ router.post('/register', (req, res) => {
                 }
               })
               .catch(err => console.log(err));
-
         }
       })
       .catch(err => console.log(err));
