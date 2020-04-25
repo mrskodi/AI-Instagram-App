@@ -41,7 +41,8 @@ class Login extends Component {
   render() {
     const  errors = this.state.errors;
     return (
-      <div className="login">
+      <div className="login ">
+        <div className="dark-overlay landing-inner text-light">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -60,6 +61,7 @@ class Login extends Component {
               </form>
             </div>
           </div>
+        </div>
         </div>
       </div>
     );

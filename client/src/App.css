@@ -7,13 +7,34 @@ img {
   background: url('./img/2018-08-19.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  height: 90vh;
+  min-height: calc(100vh - 126px);
   margin-top: -24px;
   margin-bottom: -50px;
 }
 
 .landing-inner {
   padding-top: 80px;
+  padding-bottom: 20px;
+}
+
+.login {
+  min-height: calc(100vh - 126px);
+  position: relative;
+  background: url('./img/2016-09-16.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin-top: -24px;
+  margin-bottom: -50px;
+}
+
+.register {
+  min-height: calc(100vh - 126px);
+  position: relative;
+  background: url('./img/2018-05-02.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin-top: -24px;
+  margin-bottom: -50px;
 }
 
 .lead {
@@ -81,3 +102,10 @@ img {
   background-color: #303030;
 }
 
+small.form-text.text-muted {
+  color: #c5c6c7!important;
+}
+
+.btn {
+  margin-bottom: 20px;
+}
