@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
           const avatar = gravatar.url(req.body.email, {
             s: '100',
             r: 'g',
-            d: 'robohash'
+            d: 'mm'
           });
         
         // Create a newUser object and populate it with data from html form
