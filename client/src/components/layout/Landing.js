@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import login from '../auth/login';
+import { connect } from 'react-redux';
 
 class Landing extends Component {
+
   render() {
     return (
       <div className="landing">
@@ -22,4 +26,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing
+export default Landing;

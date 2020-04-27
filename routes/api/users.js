@@ -131,7 +131,9 @@ router.post('/login', (req, res) => {
             const payload = {
               id: user.id,
               email: user.email,
-              avatar: user.avatar
+              avatar: user.avatar,
+              handle: user.handle,
+              phone: user.phone
             }
             // Sign the token and generate a bearer token
             jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {

@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { registerUser } from '../../action/authActions';
 import PropTypes from 'prop-types';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Register extends Component {
 
@@ -61,70 +62,59 @@ class Register extends Component {
                 <p className="lead text-center">Create your account</p>
                 <form onSubmit={this.onSubmit.bind(this)}>
                 <div className="form-group">
-                  <input 
-                    type="text" 
-                    className={classnames("form-control form-control-lg", {'is-invalid': errors.name})} 
-                    placeholder="Name" 
-                    name="name" 
-                    value={this.state.name} 
-                    onChange={this.onChange.bind(this)}
-                  />                        
-                  {errors.name && (<div className="invalid-feedback">{errors.name}</div>)}
+                  <TextFieldGroup name="name"
+                                  type="text"
+                                  placeholder="Name"
+                                  value={this.state.name}
+                                  onChange={this.onChange.bind(this)}
+                                  error={errors.name}
+                  />
                 </div>
                 <div className="form-group">
-                  <input 
-                    type="text" 
-                    className={classnames("form-control form-control-lg", {'is-invalid': errors.email})} 
-                    placeholder="Email" 
-                    name="email" 
-                    value={this.state.email} 
-                    onChange={this.onChange.bind(this)} 
+                  <TextFieldGroup name="email"
+                                  type="email"
+                                  placeholder="Email"
+                                  value={this.state.email}
+                                  onChange={this.onChange.bind(this)}
+                                  info="This site uses Gravatar. To upload a profile image please provide a Gravatar email."
                   />
-                    {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
-                    <small className="form-text text-muted">This site uses Gravatar. To upload a profile image please provide a Gravatar email.</small>
                 </div>
                 <div className="form-group">
-                  <input 
-                    type="password" 
-                    className= {classnames("form-control form-control-lg", {'is-invalid': errors.password})}
-                    placeholder="Password" name="password" 
-                    value={this.state.password} 
-                    onChange={this.onChange.bind(this)}
+                  <TextFieldGroup name="password"
+                                  type="password"
+                                  placeholder="Password"
+                                  value={this.state.password}
+                                  onChange={this.onChange.bind(this)}
+                                  error={errors.password}
                   />
-                  {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
                 </div>
                 <div className="form-group">
-                  <input 
-                    type="password" 
-                    className= {classnames("form-control form-control-lg", {'is-invalid': errors.password2})} 
-                    placeholder="Confirm Password" 
-                    name="password2" 
-                    value={this.state.password2} 
-                    onChange={this.onChange.bind(this)}
+                  <TextFieldGroup name="password2"
+                                  type="password"
+                                  placeholder="Confirm Password"
+                                  value={this.state.password2}
+                                  onChange={this.onChange.bind(this)}
+                                  error={errors.password2}
                   />
-                  {errors.password2 && (<div className="invalid-feedback">{errors.password2}</div>)}
                 </div>
                 <div className="form-group">
-                  <input 
-                    type="text" 
-                    className= {classnames("form-control form-control-lg", {'is-invalid': errors.phone})} 
-                    placeholder="Phone number" 
-                    name="phone" 
-                    value={this.state.phone} 
-                    onChange={this.onChange.bind(this)}
+                  <TextFieldGroup name="phone"
+                                  type="text"
+                                  placeholder="Phone"
+                                  value={this.state.phone}
+                                  onChange={this.onChange.bind(this)}
+                                  error={errors.phone}
                   />
-                  {errors.phone && (<div className="invalid-feedback">{errors.phone}</div>)}
                 </div>
                 <div className="form-group">
-                  <input 
-                    type="handle" 
-                    className= {classnames("form-control form-control-lg", {'is-invalid': errors.handle})} 
-                    placeholder="Handle" 
-                    name="handle" 
-                    value={this.state.handle} 
-                    onChange={this.onChange.bind(this)}
+                  <TextFieldGroup name="handle"
+                                  type="text"
+                                  placeholder="handle"
+                                  value={this.state.handle}
+                                  onChange={this.onChange.bind(this)}
+                                  error={errors.handle}
+                                  info="A unique handle for your account. You will be identified with this handle througout the app."
                   />
-                  {errors.handle && (<div className="invalid-feedback">{errors.handle}</div>)}
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" value="Sign Up" />
                 </form>

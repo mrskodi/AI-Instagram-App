@@ -65,7 +65,7 @@ class Navbar extends Component {
 
 //Define the component dependencies that should be available to load component and run successfully
 Navbar.propTypes = {
-  loginUlogoutUserser : PropTypes.func.isRequired,
+  logoutUser : PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired  
 }
 

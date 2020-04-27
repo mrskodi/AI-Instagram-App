@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { loginUser } from '../../action/authActions';
 import PropTypes from 'prop-types';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Login extends Component {
   constructor() {
@@ -60,12 +60,22 @@ class Login extends Component {
               <p className="lead text-center">Log in to your account</p>
               <form onSubmit={this.onSubmit.bind(this)}>
                 <div className="form-group">
-                  <input type="text" className={classnames("form-control form-control-lg", {"is-invalid": errors.email})} placeholder="Email" name="email" value={this.state.email} onChange={this.onChange.bind(this)} />
-                  {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
+                  <TextFieldGroup name="email" 
+                                  placeholder="Email" 
+                                  value={this.state.email} 
+                                  type="email" 
+                                  onChange={this.onChange.bind(this)} 
+                                  error={errors.email}
+                  />
                 </div>                
                 <div className="form-group">
-                  <input type="password" className={classnames("form-control form-control-lg", {"is-invalid": errors.password})} placeholder="Password" name="password" value={this.state.password} onChange={this.onChange.bind(this)}/>
-                  {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
+                  <TextFieldGroup name="password"
+                                  placeholder="Password"
+                                  value={this.state.password}
+                                  type="password"
+                                  onChange={this.onChange.bind(this)}
+                                  error={errors.password}
+                  />
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" value="Log In" />
               </form>

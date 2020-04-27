@@ -52,6 +52,8 @@ export const loginUser = (userData) => dispatch => {
 //Logout user action - gets called when user clicks on logout on the UI and when token is expired
 export const logoutUser = () => 
   dispatch => {
+    //Redirect user login
+    window.location.href = '/login';
     //Remove from localstorage
     localStorage.removeItem('jwtToken');
     //Remove from auth header
@@ -60,6 +62,6 @@ export const logoutUser = () =>
     dispatch({
       type: SET_CURRENT_USER,
       payload: {}
-    })
+    });
   }
 
