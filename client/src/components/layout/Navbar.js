@@ -33,7 +33,7 @@ class Navbar extends Component {
             </a>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/feed">Post Feed</Link>              
+          <Link className="nav-link" to="/post">Add Post</Link>              
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">Dashboard</Link>              
