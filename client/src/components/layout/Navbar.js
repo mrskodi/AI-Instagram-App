@@ -13,7 +13,7 @@ class Navbar extends Component {
   render() {
     const {isAuthenticated, user} = this.props.auth;
     const guestLinks = (    
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto">      
         <li className="nav-item">
           <Link className="nav-link" to="/register">Sign Up</Link>              
         </li>
@@ -25,16 +25,21 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <a className="nav-link" href="profiles.html"> 
+              <img className="rounded-circle" src={user.avatar} alt={user.name} style={{width: '25px', marginRight: '5px'}} 
+                title="You must have a gravatar connected to your email to display an image">             
+              </img>
+              Profile
+            </a>
+        </li>
+        <li className="nav-item">
           <Link className="nav-link" to="/feed">Post Feed</Link>              
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">Dashboard</Link>              
         </li>
         <li className="nav-item">
-         <a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">
-           <img className="rounded-circle" src={user.avatar} alt={user.name} style={{width: '25px', marginRight: '5px'}} 
-           title="You must have a gravatar connected to your email to display an image">             
-           </img>
+         <a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">          
          Logout</a>           
         </li>
       </ul>
@@ -50,10 +55,7 @@ class Navbar extends Component {
 
           <div className="collapse navbar-collapse" id="mobile-nav">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <a className="nav-link" href="profiles.html"> Profile
-                </a>
-              </li>
+            
             </ul>
             {isAuthenticated ? authLinks : guestLinks}   
           </div>
