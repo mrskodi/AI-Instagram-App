@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
+import Dashboard from './components/dashboard/dashboard';
 import { Provider } from 'react-redux';
 import store from './store';
 import setAuthToken from '././utils/setAuthToken';
@@ -13,6 +14,9 @@ import { SET_CURRENT_USER } from './action/dispatchTypes';
 import jwt_decode from 'jwt-decode';
 import { logoutUser } from './action/authActions';
 import { Component } from 'react';
+import PostForm from './components/posts/PostForm';
+import Post from './components/posts/Post';
+import Posts from './components/posts/Posts';
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
@@ -48,6 +52,9 @@ class App extends Component {
             <Route exact path="/" component= {Landing}></Route>
             <Route exact path="/register" component={Register} ></Route>
             <Route exact path="/login" component={Login} ></Route>
+            <Route exact path="/postForm" component={PostForm}></Route>
+            <Route exact path="/post/id/:id" component={Post}></Route>
+            <Route exact path="/dashboard" component={Dashboard}></Route>
             <Footer/>    
           </div>
         </Router>

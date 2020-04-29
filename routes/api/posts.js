@@ -15,7 +15,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   const {errors, isValid} = validatePostInput(req.body);
   
   if(!isValid){
-    return res.json(errors);
+    return res.status(400).json(errors);
   }
 
   const newPost = new Post({
@@ -48,7 +48,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 router.get('/id/:postid', passport.authenticate('jwt', {session: false}), (req, res) => {
   Post.findById(req.params.postid)
       .then(post => res.json(post))
-      .catch(err => res.json({msg: 'No post with that id found'}));
+      .catch(err => res.status(400).json({msg: 'No post with that id found'}));
 })
 
 // @route   GET /api/posts/handle/:handle
@@ -57,7 +57,7 @@ router.get('/id/:postid', passport.authenticate('jwt', {session: false}), (req, 
 router.get('/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
   Post.find({handle: req.params.handle})
       .then(post => res.json(post))
-      .catch(err => res.json({msg: 'No post made by that user'}));
+      .catch(err => res.status(400).json({msg: 'No post made by that user'}));
 })
 
 // @route   DELETE /api/posts/id/:id
@@ -68,11 +68,11 @@ router.delete('/id/:postid', passport.authenticate('jwt', {session: false}), (re
       .then(post => {
         // check if the user is the author of the post
         if(post.user.toString() != req.user.id){
-          return res.json({unAuthorizedUser: 'Not authorized to delete post'});
+          return res.status(400).json({unAuthorizedUser: 'Not authorized to delete post'});
         }
         post.remove()
             .then(() => res.json({msg: 'The requested post has been deleted successfully'}))
-            .catch(err => res.json({msg: 'Post not found'}));
+            .catch(err => res.status(400).json({msg: 'Post not found'}));
       })
       .catch(err => console.log(err));
 })

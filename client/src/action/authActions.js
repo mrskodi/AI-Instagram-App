@@ -1,14 +1,24 @@
-import { SET_CURRENT_USER, GET_ERRORS } from './dispatchTypes';
+import { SET_CURRENT_USER, GET_ERRORS, CLEAR_ERRORS } from './dispatchTypes';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
+import store from '../store';
+import isEmpty from '../utils/isEmpty';
 
 //Register user
 export const registerUser = (userData, history) => 
 dispatch => {
   axios
     .post('api/users/register', userData)
-    .then(res => history.push('/login'))
+    .then(res => {
+    // If there is error in the redux store, then clear errors
+       const state = store.getState();
+       if(!isEmpty(state.errors)){
+        dispatch(clearErrors());
+      }
+    // Register successful. Send user to login page    
+      history.push('/login');
+    })
     .catch(err => 
       dispatch({
         type: GET_ERRORS,
@@ -23,7 +33,12 @@ export const loginUser = (userData) => dispatch => {
   axios
       .post('/api/users/login', userData)
       .then( res => {
+        const state = store.getState();
         // Login successful
+        // Clear errors from redux store
+        if(!isEmpty(state.errors)){
+           dispatch(clearErrors());
+        }
         // Get token as response back from api
         const {token} = res.data;
         // save the token to local storage
@@ -65,3 +80,9 @@ export const logoutUser = () =>
     });
   }
 
+// Clear errors
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
+}
