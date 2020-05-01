@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {logoutUser} from '../../action/authActions';
+import profileReducer from '../../reducers/profileReducer';
 
 class Navbar extends Component {
   onLogoutClick(eventInfo){
@@ -25,18 +26,18 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a className="nav-link" href="profiles.html"> 
-              <img className="rounded-circle" src={user.avatar} alt={user.name} style={{width: '25px', marginRight: '5px'}} 
-                title="You must have a gravatar connected to your email to display an image">             
-              </img>
-              Profile
-            </a>
+          <Link className="nav-link" to={`/profiles/${user.handle}`}>
+          <img className="rounded-circle" src={user.avatar} alt={user.name} style={{width: '25px', marginRight: '5px'}} 
+            title="You must have a gravatar connected to your email to display an image.">             
+          </img>
+          {user.handle}
+        </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/postForm">Add Post</Link>              
+          <Link className="nav-link" to="/postForm"><i className="fas fa-plus"></i></Link>              
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/dashboard">Dashboard</Link>              
+          <Link className="nav-link" to="/dashboard"><i className="fas fa-map-marked"></i></Link>              
         </li>
         <li className="nav-item">
          <a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">          

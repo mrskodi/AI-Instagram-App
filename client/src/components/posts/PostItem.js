@@ -14,15 +14,16 @@ class PostItem extends Component{
       <div className="card card-body mb-3">
         <div className="row">
           <div className="col-md-3">
-            <Link to="/profile">
-              <img className="rounded-circle d-none d-md-block"
+            <p>
+              <Link to="/profile">
+              <img className="rounded-circle d-none d-md-inline"
                 src={post.avatar}
-                style={{width: '50px'}}
+                style={{width: '80px'}}
                 alt=""
               />
-            </Link>
-          
-            <p className="text-left" style={{fontweight:"bold"}}>{post.handle}</p>
+              </Link>
+              <span className="post-handle">{post.handle}</span>
+            </p>
           </div>
           <div className="col-md-10">
             

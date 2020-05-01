@@ -5,7 +5,7 @@ module.exports = function validateComment(data){
   const errors = {};
   
   if(isEmpty(data.text)){
-    errors.comments = 'Comment cannot be empty';
+    errors.comments = 'Comment cannot be empty.';
   }
 
   return {

@@ -12,23 +12,23 @@ module.exports = function validateRegisterInput(data){
     errors.name = 'Name must be between 2 and 30 characters.';
   }
   if(isEmpty(data.name)){
-    errors.name = 'Please provide name';
+    errors.name = 'Please provide a name.';
   }
 
   //Validate email
   if(!Validator.isEmail(data.email)){
-    errors.email = 'Email is invalid. Please provide valid email ';
+    errors.email = 'Email is invalid. Please provide a valid email. ';
   }
   if(isEmpty(data.email)){
-  errors.email = 'Please provide email';
+  errors.email = 'Please provide an email.';
   }
 
   //VALIDATE PHONE NUMBER
   if(!Validator.isMobilePhone(data.phone)){
-      errors.phone = 'Phone number is invalid. Please provide valid phone number';
+      errors.phone = 'Phone number is invalid. Please provide a valid phone number.';
   }  
   if(isEmpty(data.phone)){
-    errors.phone = 'Please provide phone number';
+    errors.phone = 'Please provide a phone number.';
   }
 
   // VALIDATE HANDLE
@@ -36,7 +36,7 @@ module.exports = function validateRegisterInput(data){
     errors.handle = 'Handle must be between 3 and 20 characters.';
   }
   if(isEmpty(data.handle)){
-    errors.handle = 'Please provide handle';
+    errors.handle = 'Please provide a handle.';
   }
 
   //Validate Password
@@ -44,15 +44,15 @@ module.exports = function validateRegisterInput(data){
     errors.password = 'Password must be between 6 and 30 characters.';
   }
   if(isEmpty(data.password)){
-    errors.password = 'Please provide password';
+    errors.password = 'Please provide a password.';
   }
 
   //Validate Password 2
   if(!Validator.equals(data.password, data.password2)){
-    errors.password2 = 'Passwords must match';
+    errors.password2 = 'Passwords must match.';
   }
   if(isEmpty(data.password2)){
-    errors.password2 = 'Please confirm password';
+    errors.password2 = 'Please confirm password.';
   }
 
   return{

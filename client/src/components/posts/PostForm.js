@@ -45,35 +45,37 @@ class PostForm extends Component{
     const { errors } = this.state;
 
     return(
-      <div className="post-form mb-3">
-        <div className="col-md-8 m-auto">
-          <div className="card card-info">
-            <div className="card-header text-black">Ready to share a picture or a video? Enter details below...</div>
-            <div className="card-body">
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  
-                  <TextFieldGroup
-                    placeholder="Paste the url of your image/video"
-                    name="imageOrVideo"
-                    value={this.state.imageOrVideo}
-                    onChange={this.onChange}
-                    error={errors.imageOrVideo}
-                  />
-                </div>
-                <div className="form-group">  
-                  <TextFieldGroup
-                    placeholder="add title or text for your post"
-                    name="text"
-                    value={this.state.text}
-                    onChange={this.onChange.bind(this)}
-                    error={errors.text}
-                  />
-                </div>
-                <button type="submit" className="btn btn-dark">
-                  Submit
-                </button>
-              </form>
+      <div className="page-content">
+        <div className="post-form mb-3">
+          <div className="col-md-8 m-auto">
+            <div className="card card-info">
+              <div className="card-header">Share your latest adventure.</div>
+              <div className="card-body">
+                <form onSubmit={this.onSubmit}>
+                  <div className="form-group">
+                    
+                    <TextFieldGroup
+                      placeholder="Paste the url of your image/video"
+                      name="imageOrVideo"
+                      value={this.state.imageOrVideo}
+                      onChange={this.onChange}
+                      error={errors.imageOrVideo}
+                    />
+                  </div>
+                  <div className="form-group">  
+                    <TextFieldGroup
+                      placeholder="add title or text for your post"
+                      name="text"
+                      value={this.state.text}
+                      onChange={this.onChange.bind(this)}
+                      error={errors.text}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-dark">
+                    Submit
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

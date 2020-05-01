@@ -7,16 +7,16 @@ module.exports = function validateLoginInput(data){
 
   // Validate email
   if(!validator.isEmail(data.email)){
-    errors.email = 'Email is invalid. Please provide valid email';
+    errors.email = 'Email is invalid. Please provide a valid email.';
   }
 
   if(isEmpty(data.email)){
-    errors.email = 'Please provide email';
+    errors.email = 'Please provide an email.';
   } 
   
   // Validate password
   if(isEmpty(data.password)){
-    errors.password = 'Please provide password';
+    errors.password = 'Please provide a password.';
   }
 
   return{

@@ -14,7 +14,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   Profile.findOne({user: req.user.id})
         .then(profile => {
           if(!profile){
-            errors. noProfile = 'There is no profile for this user';
+            errors. noProfile = 'There is no profile for this user.';
             return res.json(errors)
           }
           return res.json(profile);
@@ -31,7 +31,7 @@ router.get('/handle/:userhandle', passport.authenticate('jwt', {session: false})
   Profile.findOne({handle: req.params.userhandle})
         .then(profile => {
           if(!profile){
-            errors.noProfile = 'There is no profile with that handle';
+            errors.noProfile = 'There is no profile with that handle.';
             return res.json(errors);
           }
           return res.json(profile);
@@ -47,7 +47,7 @@ router.get('/name/:username', passport.authenticate('jwt', {session: false}), (r
   Profile.findOne({name: req.params.username})
         .then(profile => {
           if(!profile){
-            errors.noProfile = 'There is no profile with that name';
+            errors.noProfile = 'There is no profile with that name.';
             return res.json(errors);
           }
           return res.json(profile);
@@ -63,7 +63,7 @@ router.get('/email/:useremail', passport.authenticate('jwt', {session: false}), 
   Profile.findOne({email: req.params.useremail})
         .then(profile => {
           if(!profile){
-            errors.noProfile = 'There is no profile with that email';
+            errors.noProfile = 'There is no profile with that email.';
             return res.json(errors);
           }
           return res.json(profile);
@@ -82,7 +82,7 @@ router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) =>
   Profile.find()
         .then(profile => {
           if(!profile){
-            errors. noProfile = 'There are no profiles';
+            errors. noProfile = 'There are no profiles.';
             return res.json(errors)
           }
           return res.json(profile);
