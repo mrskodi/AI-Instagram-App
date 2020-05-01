@@ -37,8 +37,7 @@ export const loginUser = (userData) => dispatch => {
           type: SET_CURRENT_USER,
           payload: decoded
         })
-       }
-      )
+       })
       .catch(err => {
         // errors received as response from api call
         // dispatch GET-ERRORS

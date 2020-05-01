@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
 import { Provider } from 'react-redux';
@@ -13,6 +13,12 @@ import { SET_CURRENT_USER } from './action/dispatchTypes';
 import jwt_decode from 'jwt-decode';
 import { logoutUser } from './action/authActions';
 import { Component } from 'react';
+
+import PrivateRoute from './components/common/PrivateRoute';
+import Dashboard from './components/dashboard/Dashboard';
+import EditProfile from './components/edit-profile/EditProfile';
+import Profiles from './components/profiles/Profiles';
+
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
@@ -47,7 +53,18 @@ class App extends Component {
             <Navbar/>    
             <Route exact path="/" component= {Landing}></Route>
             <Route exact path="/register" component={Register} ></Route>
-            <Route exact path="/login" component={Login} ></Route>
+            <Route exact path="/login" component={Login} ></Route> 
+            <Route exact path="/profiles" component={Profiles} />          
+            <switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
+            </switch>
+            <Switch>
+                <PrivateRoute
+                  exact
+                  path="/edit-profile"
+                  component={EditProfile}
+                />
+              </Switch>
             <Footer/>    
           </div>
         </Router>
