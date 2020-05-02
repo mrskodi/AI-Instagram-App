@@ -52,6 +52,7 @@ export const getPosts = () => dispatch => {
 
 // Get a single Post
 export const getPost = id => dispatch => {
+  dispatch(clearErrors());
   axios.get(`/api/posts/id/${id}`)
       .then(res => {
         console.log(res.data);

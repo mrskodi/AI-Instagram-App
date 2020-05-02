@@ -86,10 +86,10 @@ router.delete('/handle/:handle', passport.authenticate('jwt', {session: false}),
       .then(post => {
         
         if(post.handle != req.user.handle){
-          return res.json({unAuthorizedUser: 'Not authorized to delete posts'})
+          return res.status(400).json({unAuthorizedUser: 'Not authorized to delete posts'})
         }
         post.remove()
-            .then(() => res.json({msg: 'Your post has been successfully deleted.'}))
+            .then(() => res.status(400).json({msg: 'Your post has been successfully deleted.'}))
             .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
@@ -99,6 +99,7 @@ router.delete('/handle/:handle', passport.authenticate('jwt', {session: false}),
 // @desc      Like a post based on postId
 // @access    Private
 router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+
   Post.findById(req.params.id)
       .then(post => {
         // Loop through the likes array in the post collection
@@ -114,7 +115,7 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
                                         .indexOf(req.user.id);
           
             if(removeIndex == -1){
-              return res.json({msg: 'User cannot be added to the likes list'})
+              return res.status(400).json({likeError: 'cannot like post'})
             }                           
 
           //User found, remove user from likes array
@@ -129,7 +130,7 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
             .then(post => res.json(post))
             .catch(err => console.log(err));
       })
-      .catch(err => res.json({msg: 'Could not like the post'}));
+      .catch(err => res.status(400).json({msg: 'Could not like the post'}));
 })
 
 // @router    POST /api/posts/unlike/:id
@@ -205,7 +206,7 @@ router.delete('/comment/:post_id/:comment_id', passport.authenticate('jwt', {ses
         if(post.comments
           .filter(comment => comment._id.toString() === req.params.comment_id)
           .length === 0){
-            return res.json({commentUnavailable: 'No comment to be deleted'});
+            return res.status(400).json({commentUnavailable: 'No comment to be deleted'});
         }
         // Comment exists, identify the index of the comment to be deleted 
         const removeIndex = post.comments

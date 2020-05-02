@@ -8,7 +8,6 @@ import ReactPlayer from 'react-player';
 import { getPost, deletePost } from '../../action/postActions';
 import classnames from 'classnames';
 import { addLike } from '../../action/postActions';
-import TextFieldGroup from '../common/TextFieldGroup';
 
 class PostItem extends Component{
   onClick(e){
@@ -27,11 +26,11 @@ class PostItem extends Component{
 
   findUserLike(likes){
     const { auth } = this.props;
-    if(likes>0){
+    //if(likes>0){
     if(likes.filter(like => like.user === auth.user.id).length > 0){
       return true;
       }
-    }
+    //}
     else{
       return false;
     }
@@ -39,7 +38,7 @@ class PostItem extends Component{
 
   render(){
 
-    const { post, auth, showActions } = this.props;
+    const { post, auth, showActions, errors } = this.props;
     let postContent;
 
     if(post.isImageOrVideo === 'Image'){
@@ -77,8 +76,10 @@ class PostItem extends Component{
                   {postContent}
               </Link>
             </div>
-            
           </div>
+          <Link to={`/post/id/${post._id}`}>
+              <span className="text-info"> {post.text}</span>
+          </Link>
           <br></br>
           {showActions ? (
             <span>
@@ -87,6 +88,7 @@ class PostItem extends Component{
                     onClick={this.onLikeClick.bind(this, post._id)}>
               <i className={classnames('far fa-heart', 
                                         {'text-danger': this.findUserLike(post.likes)})}
+                                        
               />
             </button>
             <Link to={`/post/id/${post._id}`} className="btn btn-light mr-1">
@@ -102,30 +104,18 @@ class PostItem extends Component{
             ) : (null)}
 
             <br/>
-
+            {errors && (<p className="text-danger badge dadge-light">{errors.likeError}</p>)}
+            <br/>
             <Link to='/allPeopleWhoHaveLikedThePost'>
               <p className="badge badge-light">{post.likes.length} likes</p>
             </Link>
-            <br/>
-            <div>
-            <Link to='/profileOfTheUser'>
-              <span className="text-dark font-weight-bold text-primary">{post.handle}</span>
-            </Link>
-            <Link to={`/post/id/${post._id}`}>
-              <span className="text-info"> {post.text}</span>
-            </Link>
-            
-            {/* OPTIONAL -only if there are comments in the comments[], View comments link should be shown.*/}
-            {post.comments.length > 2 ? (
+            {post.comments.length > 0 ? (
               <Link to={`/post/id/${post._id}`}>
-              <p>View all {post.comments.length} comments</p>
-            </Link>
+              <p className="badge badge-light">View {post.comments.length} comments</p>
+              </Link>
             ): null }
-            {/* DISPLAY the last 2 Comments by default always */}
-            </div>
           </span>
           ) : null}
-            
         </div>
     )
   }
@@ -140,11 +130,13 @@ PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   getPost: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
-  addLike: PropTypes.func.isRequired
+  addLike: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect( mapStateToProps, { getPost, deletePost, addLike })(PostItem);
