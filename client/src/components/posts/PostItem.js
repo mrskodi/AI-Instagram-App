@@ -25,7 +25,7 @@ class PostItem extends Component{
               <span className="post-handle">{post.handle}</span>
             </p>
           </div>
-          <div className="col-md-10">
+          <div className="col-md-11">
             
             <img src={post.imageOrVideo}/>
             
