@@ -4,6 +4,7 @@ import isEmpty from '../../validation/is-empty';
 class ProfileHeader extends Component {
   render() {
     const { profile } = this.props;
+    console.log('Inside profile header');
     console.log(profile);
     return (
       <div className="row">
@@ -19,7 +20,7 @@ class ProfileHeader extends Component {
               </div>
             </div>
             <div className="text-center">
-              <h1 className="display-4 text-center">{profile.user.name}</h1>         
+              <h1 className="display-4 text-center">{profile.name}</h1>         
               <p>
                 {isEmpty(profile.website) ? null : (
                   <a

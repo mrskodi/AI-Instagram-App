@@ -23,6 +23,8 @@ class Profile extends Component {
 
   render() {
     const { profile, loading } = this.props;
+    console.log('Inside profile');
+    console.log(profile);
     let profileContent;
 
     if (profile === null || loading) {
