@@ -29,6 +29,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 router.get('/handle/:userhandle', passport.authenticate('jwt', {session: false}), (req, res) => {
   const errors = {};
   Profile.findOne({handle: req.params.userhandle})
+  .populate("user", ["name", "avatar"])
         .then(profile => {
           if(!profile){
             errors.noProfile = 'There is no profile with that handle.';
