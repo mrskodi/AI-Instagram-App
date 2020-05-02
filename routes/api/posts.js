@@ -24,7 +24,8 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     avatar: req.user.avatar,
     handle: req.user.handle,
     text: req.body.text,
-    imageOrVideo: req.body.imageOrVideo
+    imageOrVideoLink: req.body.imageOrVideoLink,
+    isImageOrVideo: req.body.isImageOrVideo
   });
   
   newPost.save()
@@ -106,14 +107,17 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
             (post.user.toString() === req.user.id)){
           
           // User already liked the post, delete him from likes list
-          const removeIndex = post.likes.map(like => like.user)
+            // The below sentence does not enable a user who has liked a post to like it again.
+            // return res.status(400).json({msg: 'Already liked the post. Cannot relike.'})
+
+            const removeIndex = post.likes.map(like => like.user)
                                         .indexOf(req.user.id);
           
             if(removeIndex == -1){
               return res.json({msg: 'User cannot be added to the likes list'})
             }                           
 
-          // User found, remove user from likes array
+          //User found, remove user from likes array
           post.likes.splice(removeIndex, 1);
         }
         else{
@@ -128,6 +132,34 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
       .catch(err => res.json({msg: 'Could not like the post'}));
 })
 
+// @router    POST /api/posts/unlike/:id
+// @desc      Unlike a post based on postId
+// @access    Private
+router.post('/unlike/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  // Get the post to be unliked
+  Post.findById(req.params.id)
+      .then(post => {
+        console.log(`UserId: ${req.user.id}`);
+        // Check if user has already liked the post
+        if(post.likes.filter(like => (like.user.toString() === req.user.id))
+                    .length === 0){
+          // User has not yet liked the post
+          return res.status(400).json({notLiked: 'You have not yet liked this post'});
+        }else{
+        // User has liked it, dislike the post
+        // Get removeIndex
+        const removeIndex = post.likes.map(item => item.user.toString())
+                                      .indexOf(req.user.id);
+        // Splice the removeIndex element out of the likes array
+        post.likes.splice(removeIndex, 1);
+        // Save the post
+        post.save().then(post => res.json(post))
+                   .catch(err => console.log(err));
+        }
+      })
+      .catch(err => res.status(400).json({postNotFound: 'Post Not Found'}));
+});
+
 // @router    POST /api/posts/comment/:id
 // @desc      Comment on a post based on postId
 // @access    Private
@@ -140,7 +172,7 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
   Post.findOne({_id: req.params.id})
       .then(post => {
         if(!post){
-          return res.json({msg: 'Post not found. Check the post id.'})
+          return res.status(400).json({errors: 'Post not found. Check the post id.'})
         }
         
         // Create a new comment object
@@ -157,7 +189,7 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
         // Save
         post.save()
             .then(post => res.json(post))
-            .catch(err => console.log(arr));
+            .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
 })

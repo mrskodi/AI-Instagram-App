@@ -8,8 +8,9 @@ class PostForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      imageOrVideo: '',
+      imageOrVideoLink: '',
       text: '',
+      isImageOrVideo: '',
       errors: {}
     };
 
@@ -27,8 +28,10 @@ class PostForm extends Component{
     e.preventDefault();
     //const { user } = this.props.auth;
     const newPost = {
-      imageOrVideo: this.state.imageOrVideo,
+      imageOrVideoLink: this.state.imageOrVideoLink,
+      isImageOrVideo: this.state.isImageOrVideo,
       text: this.state.text,
+      
       // name: user.name,
       // handle: user.handle,
       // avatar: user.avatar
@@ -50,15 +53,21 @@ class PostForm extends Component{
           <div className="card card-info">
             <div className="card-header text-black">Ready to share a picture or a video? Enter details below...</div>
             <div className="card-body">
-              <form onSubmit={this.onSubmit}>
+              <form id="addPost-form" onSubmit={this.onSubmit}>
                 <div className="form-group">
+                  <label style={{margin: '7px'}} for="imageOrVideo">Choose whether sharing a video or an image </label>
+                  <select id="imageOrVideo" className="form-group" name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}>
+                    <option>-----</option>
+                    <option>Video</option>
+                    <option>Image</option>
+                  </select>
                   
                   <TextFieldGroup
                     placeholder="Paste the url of your image/video"
-                    name="imageOrVideo"
-                    value={this.state.imageOrVideo}
+                    name="imageOrVideoLink"
+                    value={this.state.imageOrVideoLink}
                     onChange={this.onChange}
-                    error={errors.imageOrVideo}
+                    error={errors.imageOrVideoLink}
                   />
                 </div>
                 <div className="form-group">  
