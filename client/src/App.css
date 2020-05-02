@@ -2,6 +2,15 @@ img {
   width: 100%;
 }
 
+h1 {
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.hide {
+  display: none;
+}
+
 .landing {
   position: relative;
   background: url('./img/2018-08-19.jpg') no-repeat;
@@ -79,6 +88,17 @@ img {
   opacity: 0.9;
 }
 
+.bg-info-profile {
+  background-color: #353535;
+  background: url('./img/Marquee_2018-08-15.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-heading {
+  font-size: 1.5rem;
+}
+
 .latest-profiles-img {
   width: 40px;
   height: 40px;
@@ -96,8 +116,14 @@ img {
 
 .btn-info:hover {
   color: #fff;
-  background-color: #1B5070;
-  border-color: #1B5070;
+  background-color: #33739a;
+  border-color: #33739a;
+}
+
+.btn-info:active {
+  color: #fff;
+  background-color: #33739a!important;
+  border-color: #33739a!important;
 }
 
 .btn-info:focus {

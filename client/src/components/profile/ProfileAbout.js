@@ -41,39 +41,15 @@ class ProfileAbout extends Component {
       <div className="row">
         <div className="col-md-12">
           <div className="card card-body bg-light mb-3">
-            <h3 className="text-center text-info">{firstName}'s Bio</h3>
-            <p className="lead">
-              {isEmpty(profile.bio) ? (<span>{firstName} does not have a bio</span>) : (<span>{profile.bio}</span>)}
-            </p>
-            <hr />           
-          </div>
-        </div>
-        <div className="col-md-12">
-          <div className="card card-body bg-light mb-3">
-            <h3 className="text-center text-info">{firstName}'s details</h3>
-            <p className="lead">
-              {!isEmpty(profile.gender) ? (<span>Gender : {profile.gender}</span>) : (<span>Gender : </span>)}
-            </p>
-            <p className="lead">
-              {!isEmpty(profile.phone) ? (<span>Phone : {profile.phone}</span>) : (<span>Phone : </span>)}
-            </p>
-            <p className="lead">
-              {!isEmpty(profile.website) ? (<span>Website : {profile.website}</span>) : (<span>Website : </span>)}
-            </p>
-            <p className="lead">
-               <span>Hobbies : {hobbies}</span>
-            </p>
-            <p className="lead">
-               <span>Favorite books : {books}</span>
-            </p>
-            <p className="lead">
-               <span>Favorite movies : {movies}</span>
-            </p>
-            <p className="lead">
-               <span>Favorite outdoor activities : {outdoorActivities}</span>
-            </p>
-                
-            <hr />           
+            {isEmpty(profile.bio) ? (<p className="hide">{firstName} does not have a bio.</p>) : (<p>{profile.bio}</p>) }
+            <hr />
+            {!isEmpty(profile.gender) ? (<p>Gender: {profile.gender}</p>) : (<p className="hide">Gender: </p>)}
+            {!isEmpty(profile.phone) ? (<p>Phone: {profile.phone}</p>) : (<p className="hide">Phone: </p>)}
+            {!isEmpty(profile.website) ? (<p>Website: {profile.website}</p>) : (<p className="hide">Website: </p>)}
+            {!isEmpty(profile.hobbies) ? (<p>Hobbies: {profile.hobbies}</p>) : (<p className="hide">Hobbies: {hobbies}</p>)}
+            {!isEmpty(profile.books) ? (<p>Favorite books: {books}</p>) : (<p className="hide">Favorite books: {books}</p>)}
+            {!isEmpty(profile.movies) ? (<p>Favorite movies : {movies}</p>) : (<p className="hide">Favorite movies: {movies}</p>)}
+            {!isEmpty(profile.outdoorActivities) ? (<p>Favorite outdoor activities: {outdoorActivities}</p>) : (<p className="hide">Favorite outdoor activities: {outdoorActivities}</p>)}         
           </div>
         </div>
       </div>
