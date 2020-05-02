@@ -16,9 +16,6 @@ import { logoutUser } from './action/authActions';
 import { Component } from 'react';
 import PostForm from './components/posts/PostForm';
 import Post from './components/posts/Post';
-import Posts from './components/posts/Posts';
-import Profile from './components/profile/Profile';
-import CommentForm from './components/posts/CommentForm';
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
@@ -57,8 +54,6 @@ class App extends Component {
             <Route exact path="/postForm" component={PostForm}></Route>
             <Route exact path="/post/id/:id" component={Post}></Route>
             <Route exact path="/dashboard" component={Dashboard}></Route>
-            
-            {/*<Route exact path="/profile" component={Profile}></Route>*/}
             <Footer/>    
           </div>
         </Router>
