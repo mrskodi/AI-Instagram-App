@@ -149,7 +149,7 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
           if((profile.following.filter(item => item.handle === req.params.handle).length > 0) ||
              (req.params.handle === req.user.handle)){
             // User already following the handle
-            return res.json({invalid: 'invalid request'});
+            return res.status(400).json({error: 'invalid request'});
           }
 
           profile.following.unshift({handle: req.params.handle});
