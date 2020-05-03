@@ -64,12 +64,7 @@ module.exports = function validateRegisterInput(data){
   if(isEmpty(passwordStrengthChecker(data.password, /[^A-Za-z0-9\s]/g))){
     errors.password = 'Provide at least one special character'
   }
-  // Check password strength
-  // errors.password = passwordStrengthChecker(data.password, /[a-z]/g, 'lowercase');
-  // errors.password = passwordStrengthChecker(data.password, /[A_Z]/g, 'uppercase');
-  // errors.password = passwordStrengthChecker(data.password, /[0-9]/g, 'digit');
-  // errors.password = passwordStrengthChecker(data.password, /[^a-zA-Z0-9\s]/g, 'special'); 
-
+  
   //Validate Password 2
   if(!Validator.equals(data.password, data.password2)){
     errors.password2 = 'Passwords must match.';
