@@ -81,6 +81,7 @@ router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) =>
   // Find the user from the database
   
   Profile.find()
+  .populate("user", ["name", "avatar"])
         .then(profile => {
           if(!profile){
             errors. noProfile = 'There are no profiles.';
