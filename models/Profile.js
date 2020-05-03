@@ -35,9 +35,11 @@ const profileSchema = new schema({
   hobbies: {
     type: [String]
   },
+  countries: {
+    type: [String]
+  },
   favorites: {
-    books:[String],
-    movies: [String],
+    places:[String],
     outdoorActivities: [String]
   },
 

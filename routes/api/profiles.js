@@ -110,9 +110,12 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   if(typeof req.body.hobbies!== 'undefined'){
     profileFields.hobbies = req.body.hobbies.split(',');
   }
+  // Split countries visites into an array
+  if(typeof req.body.countries !== 'undefined'){
+    profileFields.countries = req.body.countries.split(',');
+  }
   profileFields.favorites = {};
-  if(typeof req.body.books !== 'undefined') profileFields.favorites.books = req.body.books.split(',');
-  if(typeof req.body.movies !== 'undefined') profileFields.favorites.movies = req.body.movies.split(',');
+  if(typeof req.body.places !== 'undefined') profileFields.favorites.places = req.body.places.split(',');
   if(typeof req.body.outdoorActivities !== 'undefined') profileFields.favorites.outdoorActivities = req.body.outdoorActivities.split(',');
 
   Profile.findOne({user: req.user.id})
