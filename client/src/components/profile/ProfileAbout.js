@@ -16,17 +16,17 @@ class ProfileAbout extends Component {
       </div>
     ));
 
-     // Favorite books
-     const books = profile.favorites.books.map((book, index) => (
+     //  Countries visited
+     const countries = profile.countries.map((countries, index) => (
       <div key={index} className="p-3">
-        <i className="fa" /> {book}
+        <i className="fa" /> {countries}
       </div>
     ));
 
-     //  Favorite movies
-     const movies = profile.favorites.movies.map((movie, index) => (
+     // Favorite places
+     const places = profile.favorites.places.map((book, index) => (
       <div key={index} className="p-3">
-        <i className="fa" /> {movie}
+        <i className="fa" /> {places}
       </div>
     ));
 
@@ -47,8 +47,8 @@ class ProfileAbout extends Component {
             {!isEmpty(profile.phone) ? (<p>Phone: {profile.phone}</p>) : (<p className="hide">Phone: </p>)}
             {!isEmpty(profile.website) ? (<p>Website: {profile.website}</p>) : (<p className="hide">Website: </p>)}
             {!isEmpty(profile.hobbies) ? (<p>Hobbies: {profile.hobbies}</p>) : (<p className="hide">Hobbies: {hobbies}</p>)}
-            {!isEmpty(profile.books) ? (<p>Favorite books: {books}</p>) : (<p className="hide">Favorite books: {books}</p>)}
-            {!isEmpty(profile.movies) ? (<p>Favorite movies : {movies}</p>) : (<p className="hide">Favorite movies: {movies}</p>)}
+            {!isEmpty(profile.places) ? (<p>Favorite places: {places}</p>) : (<p className="hide">Favorite places: {places}</p>)}
+            {!isEmpty(profile.countries) ? (<p>Favorite countries : {countries}</p>) : (<p className="hide">Favorite countries: {countries}</p>)}
             {!isEmpty(profile.outdoorActivities) ? (<p>Favorite outdoor activities: {outdoorActivities}</p>) : (<p className="hide">Favorite outdoor activities: {outdoorActivities}</p>)}         
           </div>
         </div>
