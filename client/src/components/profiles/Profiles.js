@@ -33,7 +33,7 @@ class Profiles extends Component {
             <div className="col-md-12">
               <h1 className="display-5 text-center">Suggestions for you</h1>
               <p className="lead text-center">
-                Connect with people
+                Connect with travelers!
               </p>
               {profileItems}
             </div>

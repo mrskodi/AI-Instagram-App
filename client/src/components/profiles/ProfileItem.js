@@ -2,10 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
+import { connect } from 'react-redux';
+import { followUserByHandle } from '../../action/profileActions'; 
+import { unFollowUserByHandle } from '../../action/profileActions'; 
 
-class ProfileItem extends Component {
+
+class ProfileItem extends Component {  
+
+    onFollowClick(e){        
+      this.props.followUserByHandle(this.props.profile.handle);      
+    }
+
+    onUnFollowClick(e){
+      this.props.unFollowUserByHandle(this.props.profile.handle);    
+    }
+  
   render() {
-    const { profile } = this.props;
+    const { profile } = this.props;  
 
     return (
       <div className="card card-body bg-light mb-3">
@@ -21,7 +34,11 @@ class ProfileItem extends Component {
             <p>{profile.email}</p>           
             <Link to={`/profiles/${profile.handle}`} className="btn btn-info">
               View Profile
-            </Link>
+            </Link>          
+            <p>
+              <span> <button className="btn btn-info" onClick={this.onFollowClick.bind(this)}>Follow</button></span>
+              <span> <button className="btn btn-info" onClick={this.onUnFollowClick.bind(this)}>Unfollow</button></span>             
+            </p>
           </div>         
         </div>
       </div>
@@ -30,7 +47,9 @@ class ProfileItem extends Component {
 }
 
 ProfileItem.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  followUserByHandle: PropTypes.func.isRequired,
+  unFollowUserByHandle: PropTypes.func.isRequired
 };
 
-export default ProfileItem;
+export default connect(null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);

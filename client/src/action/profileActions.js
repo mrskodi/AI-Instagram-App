@@ -6,6 +6,8 @@ import {
   SET_CURRENT_USER,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
+  FOLLOW_USER,
+  UNFOLLOW_USER
 } from "./dispatchTypes"
 
 // Get current profile
@@ -97,4 +99,28 @@ export const clearCurrentProfile = () => {
   return {
     type: CLEAR_CURRENT_PROFILE
   };
+};
+
+// Follow user provided user handle
+export const followUserByHandle = handle => dispatch => { 
+  axios
+  .post(`/api/profiles/follow/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: FOLLOW_USER,
+        payload: res.data,
+      }) 
+    )  
+};
+
+// Unfollow user provided user handle
+export const unFollowUserByHandle = handle => dispatch => { 
+  axios
+  .post(`/api/profiles/unfollow/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: UNFOLLOW_USER,
+        payload: res.data,
+      }) 
+    )  
 };

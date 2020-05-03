@@ -2,7 +2,9 @@ import {
   GET_PROFILE, 
   GET_PROFILES, 
   PROFILE_LOADING, 
-  CLEAR_CURRENT_PROFILE 
+  CLEAR_CURRENT_PROFILE,
+  FOLLOW_USER,
+  UNFOLLOW_USER
 } from "../action/dispatchTypes";
 
 const initialState = {
@@ -35,6 +37,16 @@ export default function(state = initialState, action){
        ...state,
        profile: null
      };
+     case FOLLOW_USER:
+      return{
+        ...state,       
+        loading: false
+      };
+      case UNFOLLOW_USER:
+      return{
+        ...state,       
+        loading: false
+      };
      default:
        return state;
   }
