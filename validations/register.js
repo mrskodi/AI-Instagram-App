@@ -2,6 +2,7 @@
 const User = require('../models/User')
 const Validator = require('validator');
 const isEmpty = require('./isEmpty');
+const passwordStrengthChecker = require('./passwordStrength');
 //const phoneNumber = parsePhoneNumberFromString(data.phone);
 
 module.exports = function validateRegisterInput(data){
@@ -46,6 +47,28 @@ module.exports = function validateRegisterInput(data){
   if(isEmpty(data.password)){
     errors.password = 'Please provide a password.';
   }
+
+  // Password strength check
+  if(isEmpty(passwordStrengthChecker(data.password, /[a-z]/g))){
+    errors.password = 'Provide at least 1 lowercase character';
+  }
+
+  if(isEmpty(passwordStrengthChecker(data.password, /[A-Z]/g))){
+    errors.password = 'Provide at least 1 uppercase character';
+  }
+
+  if(isEmpty(passwordStrengthChecker(data.password, /[0-9]/g))){
+    errors.password = 'Provide at least 1 digit';
+  }
+
+  if(isEmpty(passwordStrengthChecker(data.password, /[^A-Za-z0-9\s]/g))){
+    errors.password = 'Provide at least one special character'
+  }
+  // Check password strength
+  // errors.password = passwordStrengthChecker(data.password, /[a-z]/g, 'lowercase');
+  // errors.password = passwordStrengthChecker(data.password, /[A_Z]/g, 'uppercase');
+  // errors.password = passwordStrengthChecker(data.password, /[0-9]/g, 'digit');
+  // errors.password = passwordStrengthChecker(data.password, /[^a-zA-Z0-9\s]/g, 'special'); 
 
   //Validate Password 2
   if(!Validator.equals(data.password, data.password2)){

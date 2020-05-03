@@ -16,7 +16,6 @@ class PostItem extends Component{
   }
 
   onLikeClick(id){
-    console.log(`Id of Post that is being liked: ${id}`);
     this.props.addLike(id);
   }
 
@@ -106,7 +105,7 @@ class PostItem extends Component{
             <br/>
             {errors && (<p className="text-danger badge dadge-light">{errors.likeError}</p>)}
             <br/>
-            <Link to='Get all users who have liked the post'>
+            <Link to='/likesProfiles'>
               <p className="badge badge-light">{post.likes.length} likes</p>
             </Link>
             {post.comments.length > 0 ? (

@@ -18,6 +18,7 @@ import PostForm from './components/posts/PostForm';
 import Post from './components/posts/Post';
 import Profile from './components/profile/Profile';
 import Profiles from './components/profiles/Profiles';
+import LikesProfiles from './components/profiles/LikesProfiles';
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
@@ -58,6 +59,7 @@ class App extends Component {
             <Route exact path="/dashboard" component={Dashboard}></Route>
             <Route exact path="/profiles/:handle" component={Profile}></Route>
             <Route exact path="/profiles" component={Profiles}></Route>
+            <Route exact path="/likesProfiles" component={LikesProfiles}></Route>
             <Footer/>    
           </div>
         </Router>

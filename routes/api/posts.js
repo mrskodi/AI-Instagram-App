@@ -123,7 +123,13 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
         }
         else{
         // User has not liked the post yet, add userid to the likes array
-          post.likes.unshift({user: req.user.id});
+          const newLike = {
+            user: req.user.id,
+            name: req.user.name,
+            handle: req.user.handle,
+            avatar: req.user.avatar
+          }
+          post.likes.unshift(newLike);
         }
         // Save
         post.save()
