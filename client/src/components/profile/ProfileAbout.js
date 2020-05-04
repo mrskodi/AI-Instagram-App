@@ -6,9 +6,6 @@ class ProfileAbout extends Component {
   render() {
     const { profile } = this.props;
 
-    // Get first name
-    const firstName = profile.name.trim().split(' ')[0];   
-
     // Hobbies List
     const hobbies = profile.hobbies.map((hobby, index) => (
       <div key={index} className="profile-block">      

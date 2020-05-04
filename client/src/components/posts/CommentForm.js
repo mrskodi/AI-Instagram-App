@@ -47,9 +47,6 @@ class CommentForm extends Component {
       <div>
         <div className="mb-3">
           <div className="card card-info">
-            <div className="card-header bg-light text-dark">
-              Make a comment...
-            </div>
             <div className="card-body">
               <form onSubmit={this.onSubmit.bind(this)}>
                 <div className="form-group">
@@ -60,8 +57,8 @@ class CommentForm extends Component {
                                       error={errors.text}
                   />
                 </div>
-                <button type="submit" className="btn btn-dark">
-                  Submit
+                <button type="submit" className="btn btn-info">
+                  Comment
                 </button>
               </form>
             </div>

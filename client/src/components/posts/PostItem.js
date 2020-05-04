@@ -54,20 +54,15 @@ class PostItem extends Component{
     }
 
     return(
-        <div className="card card-body mb-3">
+      <div className="card card-body mb-3">
           <div className="row">
             <div className="col-md-3">
-              <Link to={`/profiles/${post.handle}`}>
-                <span>
-                  <img className="rounded-circle d-none d-md-block"
+              <Link className="handle-link" to={`/profiles/${post.handle}`}>
+                  <img className="rounded-circle d-none d-md-inline avatar-80"
                     src={post.avatar}
-                    style={{width: '50px'}}
                     alt=""
                 />
-                </span>
-                <span>
-                  <p className="text-left font-weight-bold text-dark">{post.handle}</p>
-                </span>
+                  <span className="post-handle">{post.handle}</span>
               </Link>
               
             </div>
@@ -77,17 +72,17 @@ class PostItem extends Component{
               </Link>
             </div>
           </div>
-          <Link to={`/post/id/${post._id}`}>
-              <span className="text-info"> {post.text}</span>
+          <Link className="post-caption" to={`/post/id/${post._id}`}>
+              {post.text}
           </Link>
           <br></br>
           {showActions ? (
             <span>
             <button type="button" 
-                    className="btn btn-light mr-1"
+                    className="btn btn-light mr-3"
                     onClick={this.onLikeClick.bind(this, post._id)}>
               <i className={classnames('far fa-heart', 
-                                        {'text-danger': this.findUserLike(post.likes)})}
+                                        {'fas text-danger': this.findUserLike(post.likes)})}
                                         
               />
             </button>

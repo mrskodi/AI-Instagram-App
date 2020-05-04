@@ -36,6 +36,11 @@ class EditProfile extends Component {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
     
+      // Bring arrays back to CSV
+      const hobbiesCSV = profile.hobbies.join(',');
+      const countriesCSV = profile.countries.join(',');
+      const placesCSV = profile.places.join(',');
+
       // If profile field doesnt exist, make empty string
       profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
       profile.phone = !isEmpty(profile.phone) ? profile.phone : '';
@@ -51,9 +56,9 @@ class EditProfile extends Component {
         phone: profile.phone,
         website: profile.website,
         location: profile.location,
-        hobbies: profile.hobbies,
-        countries: profile.countries,
-        places: profile.places,
+        hobbies: hobbiesCSV,
+        countries: countriesCSV,
+        places: placesCSV,
       });
     }
   }
@@ -85,7 +90,7 @@ class EditProfile extends Component {
         <div className="container">
           <div className="row">
             <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
-              <Link className="btn btn-light" to={`/profiles/`}>
+              <Link className="btn btn-light" to={`/profiles/${profile.handle}`}>
                 Go Back
               </Link>
               <h1 className="text-center">Edit Profile</h1>

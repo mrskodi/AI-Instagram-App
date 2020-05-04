@@ -12,7 +12,7 @@ class ProfileItem extends Component {
         <div className="row">
           <div className="col-2">
 
-            <img src={profile.avatar} style={{width: '100px'}} alt="" className="rounded-circle" />
+            <img src={profile.avatar} alt="" className="rounded-circle avatar-100" />
 
           </div>
           <div className="col-lg-6 col-md-4 col-8">

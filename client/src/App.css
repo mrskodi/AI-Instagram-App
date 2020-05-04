@@ -86,10 +86,41 @@ hr.charcoal {
   height: 100%;
 }
 
+.comment-handle {
+  padding-left: 10px;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #1d1d1d;
+  text-decoration: none;
+}
+
+.delete-cmt {
+  padding: .175rem .5rem;
+  float: right;
+}
+
 .post-handle {
   padding-left: 10px;
   font-weight: 600;
   font-size: 1.4rem;
+  color: #1d1d1d;
+  text-decoration: none;
+}
+
+.post-caption {
+  margin-top: .5rem;
+  color: #1d1d1d;
+  text-decoration: none;
+}
+
+.post-caption:hover {
+  margin-top: .5rem;
+  color: #1d1d1d;
+  text-decoration: none;
+}
+
+a.post-handle:hover {
+  text-decoration: none;
 }
 
 .card-form {
@@ -112,6 +143,31 @@ hr.charcoal {
   height: 40px;
 }
 
+.dropdown-text {
+  margin: 7px;
+  font-size: 1rem;
+}
+
+.dropdown-btn {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  height: calc(1.5em + 1rem + 2px);
+}
+
+.avatar-80 {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.avatar-100 {
+  width: 100px;
+}
+
+.handle-link:hover {
+  color: #1d1d1d;
+  text-decoration: none;
+}
+
 .profile-icon {
   padding-right: 10px;
 }
@@ -119,6 +175,10 @@ hr.charcoal {
 .profile-block {
   padding-right: 1rem;
   display: inline;
+}
+
+.divider {
+  padding: 0 10px;
 }
 
 .form-control::placeholder {

@@ -16,26 +16,26 @@ class CommentItem extends Component{
       <div className="card card-body mb-3">
         <div className="row">
           <div className="col-md-2">
-            <Link to='/getProfileByhandleOfUserWhoMadeTheComment'>
-              <img className="rounded-circle d-none d-md-block"
+            <Link to={`/Profiles/${comment.handle}`}>
+              <img className="rounded-circle d-none d-md-inline"
                     src={comment.avatar}
                     style={{width: '50px'}}
                     alt="">
               </img>
-              <br/>
-              <p className="text-left font-weight-bold text-dark">{comment.handle}</p>
+              <span className="text-left text-dark comment-handle">{comment.handle}</span>
             </Link>
           </div>
           <div className="col-md-10">
-            <p className="lead">{comment.text}</p>
+            <p className="lead">{comment.text}
             {comment.user === auth.user.id ? (
               <button onClick={this.onDeleteClick.bind(this, postId, comment._id)}
                       type="button"
-                      className="btn btn-danger mr-1"
+                      className="btn btn-danger ml-3 delete-cmt"
               >
                 <i className="fas fa-times"></i>
               </button>
             ): null}
+            </p>
           </div>
         </div>
       </div>
