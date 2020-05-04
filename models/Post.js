@@ -15,7 +15,11 @@ const postSchema = new schema({
   handle: {
     type: String
   },
-  imageOrVideo: {
+  imageOrVideoLink: {
+    type: String,
+    required: true
+  },
+  isImageOrVideo: {
     type: String,
     required: true
   },

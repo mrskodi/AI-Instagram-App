@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import { getPost } from '../../action/postActions';
 import isEmpty from '../../utils/isEmpty';
+import CommentForm from './CommentForm';
+import CommentFeed from './CommentFeed';
 
 class Post extends Component {
 
@@ -15,6 +17,7 @@ class Post extends Component {
 
   render(){
     const { post, loading } = this.props.post;
+    //console.log(post._id);
     let postContent;
 
     if(post === null || loading || isEmpty(post)){
@@ -23,6 +26,8 @@ class Post extends Component {
       postContent = (
         <div>
           <PostItem post={post} showActions={false}></PostItem>
+          <CommentForm postId={post._id}></CommentForm>
+          <CommentFeed postId={post._id} comments={post.comments}></CommentFeed>
         </div>
       );      
     }

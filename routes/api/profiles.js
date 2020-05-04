@@ -28,8 +28,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 // @desc   get the profile details based on handle name
 router.get('/handle/:userhandle', passport.authenticate('jwt', {session: false}), (req, res) => {
   const errors = {};
-  Profile.findOne({handle: req.params.userhandle})
-  .populate("user", ["name", "avatar"])
+  Profile.findOne({handle: req.params.userhandle}) 
         .then(profile => {
           if(!profile){
             errors.noProfile = 'There is no profile with that handle.';
@@ -80,8 +79,7 @@ router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) =>
   const errors = {};
   // Find the user from the database
   
-  Profile.find()
-  .populate("user", ["name", "avatar"])
+  Profile.find() 
         .then(profile => {
           if(!profile){
             errors. noProfile = 'There are no profiles.';
@@ -150,7 +148,7 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
           if((profile.following.filter(item => item.handle === req.params.handle).length > 0) ||
              (req.params.handle === req.user.handle)){
             // User already following the handle
-            return res.json({invalid: 'invalid request'});
+            return res.status(400).json({error: 'invalid request'});
           }
 
           profile.following.unshift({handle: req.params.handle});

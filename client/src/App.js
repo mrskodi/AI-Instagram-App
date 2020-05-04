@@ -16,7 +16,6 @@ import { logoutUser } from './action/authActions';
 import { Component } from 'react';
 import PostForm from './components/posts/PostForm';
 import Post from './components/posts/Post';
-import Posts from './components/posts/Posts';
 import Profile from './components/profile/Profile';
 import Profiles from './components/profiles/Profiles';
 import EditProfile from './components/edit-profile/Edit-Profile';

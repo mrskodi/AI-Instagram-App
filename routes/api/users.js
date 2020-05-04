@@ -78,7 +78,8 @@ router.post('/register', (req, res) => {
   
                                       const newProfile = new Profile({
                                         user: user.id,
-                                        name: user.name,                                        
+                                        name: user.name,    
+                                        avatar: user.avatar,                                    
                                         email: user.email,
                                         handle: user.handle,
                                         phone: user.phone

@@ -9,9 +9,15 @@ const profileSchema = new schema({
   name: {
     type: String
   },
+  avatar: {
+    type: String    
+  },
   handle: {
     type: String,
     required: true
+  },
+  avatar: {
+    type: String
   },
   email: {
     type: String
