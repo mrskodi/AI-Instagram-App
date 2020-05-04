@@ -6,6 +6,7 @@ import PostForm from './PostForm';
 import Spinner from '../common/Spinner';
 import PostItem from './PostItem';
 import { Link } from 'react-router-dom';
+import Post from './Post';
 
 class Posts extends Component {
 
