@@ -1,4 +1,5 @@
 const passwordStrength = (password, regex) => {
+  
   return password.match(regex);
 }
 

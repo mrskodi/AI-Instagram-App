@@ -1,21 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Spinner } from '../common/Spinner';
+import Spinner from '../common/Spinner';
 import ProfileItem from '../profiles/ProfileItem';
+import { getProfilesByLikes } from '../../action/profileActions';
 
 class LikesProfiles extends Component{
+  
+  componentDidMount(){
+    
+    // Get the posts[]
+    // For each post in posts[], get the likes[]
+    // For each user/like in the likes[], call getProfileByHandle(like.handle)
+    // this.props.posts.map(
+    //   post => post.likes.map(
+    //     like => this.props.getProfilesByLikes(like.handle)
+    //   )
+    // );
+
+    // Pass the post.likes[] to getProfilesByLikes action
+    // this.props.getProfilesByLikes(post.likes);
+    
+  }
+
+  componentWillReceiveProps(newProps){
+    if(newProps.post){
+      this.props.getProfilesByHandle(post.likes)
+  //     this.props.posts.map(
+  //       post => post.likes.map(
+  //         like => this.props.getProfileByHandle(like.handle)
+  //       )
+  //     );
+    }
+  }
    
   render(){
-    const {posts, auth} = this.props.posts;  
-    let likeProfileItems;
-    
-    if(posts === null || loading){
-      likeProfileItems = <Spinner/>;
+    const { profile, loading } = this.props.profile;
+    let profileItem;
+    if(profile === null || loading){
+      profileItem = <Spinner/>;
     }else{
-      if(posts.length > 0){
-        likeProfileItems = posts.likes.map(like => <ProfileItem></ProfileItem>)
-      }
+      profileItem = <ProfileItem profile={profile}></ProfileItem>
     }
     
     return(
@@ -24,8 +49,7 @@ class LikesProfiles extends Component{
           <div className="row">
             <div className="col-md-12">
               <h3 className="display-10 text-center">Users who have liked the post you are viewing now...</h3>
-              
-              Hey there!
+              {profileItem}
             </div>
           </div>
         </div>
@@ -35,15 +59,18 @@ class LikesProfiles extends Component{
 }
 
 LikesProfiles.propTypes = {
-  posts: PropTypes.array.isRequired,
+  post: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  getProfilesByHandle: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  posts: state.post.posts,
+  post: state.post.post,
+  profile: state.profile,
   errors: state.errors,
   auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(LikesProfiles);
+export default connect(mapStateToProps, { getProfilesByLikes })(LikesProfiles);

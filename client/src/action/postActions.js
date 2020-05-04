@@ -69,7 +69,7 @@ export const getPost = id => dispatch => {
       });
 }
 
-// Add likes - add to the likes array of a post and get the updated posts list
+// Add likes - adds a user to the likes array of a post and get the updated posts list
 export const addLike = id => dispatch => {
   axios.post(`/api/posts/like/${id}`)
       .then(res => {
@@ -83,6 +83,20 @@ export const addLike = id => dispatch => {
         })
       });
 }
+
+// // Get liked post - write to redux
+// export const getLikedPost = postId => dispatch => {
+//   axios.post(`api/posts/id/${postId}`)
+//       .then(res => {
+
+//       })
+//       .catch(err => {
+//         dispatch({
+//           type: GET_ERRORS,
+//           payload: err.response.data
+//         });
+//       })
+// }
 
 // Add Comment
 export const addComment = (postId, commentData) => dispatch => {

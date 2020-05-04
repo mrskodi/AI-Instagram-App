@@ -3,9 +3,11 @@ import {
   GET_ERRORS,
   GET_PROFILE,
   GET_PROFILES,
+  GET_PROFILES_BY_LIKES,
   SET_CURRENT_USER,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
+  CLEAR_CURRENT_PROFILES
 } from "./dispatchTypes"
 
 // Get current profile
@@ -29,6 +31,7 @@ export const getCurrentProfile = () => dispatch => {
 
 // Get profile by handle
 export const getProfileByHandle = handle => dispatch => {
+  
   dispatch(setProfileLoading());
   axios
   .get(`/api/profiles/handle/${handle}`)
@@ -46,8 +49,34 @@ export const getProfileByHandle = handle => dispatch => {
     );
 };
 
+// Get Profiles by likes
+export const getProfilesByLikes = likes =>
+	dispatch => {
+		let likedProfiles = [];
+		// Make the axios call multiple times - as many user handles are there
+		likes.map(like => {
+			axios.get(`/api/profiles/handle/${like.handle}`)
+				.then(res => {
+					if(res.data){
+						likedProfiles.push(res.data);
+					}
+				})
+				.catch(err => {
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				})
+			})
+		})
+		dispatch({
+		type: GET_PROFILES_BY_LIKES,
+		payload: likedProfiles
+		})
+	}
+
 // Get all profiles
 export const getProfiles = () => dispatch => {
+  dispatch(clearCurrentProfile());
   dispatch(setProfileLoading());
   axios
     .get('/api/profiles/all')
@@ -98,3 +127,10 @@ export const clearCurrentProfile = () => {
     type: CLEAR_CURRENT_PROFILE
   };
 };
+
+// Clear current profiles[]
+export const clearCurrentProfiles = () => {
+  return {
+    type: CLEAR_CURRENT_PROFILES
+  }
+}

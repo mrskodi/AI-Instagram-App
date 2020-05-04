@@ -23,6 +23,10 @@ class PostItem extends Component{
     this.props.deletePost(postId);
   }
 
+  getLikedPost(postId){
+    this.props.getPost(postId);
+  }
+
   findUserLike(likes){
     const { auth } = this.props;
     //if(likes>0){
@@ -105,7 +109,7 @@ class PostItem extends Component{
             <br/>
             {errors && (<p className="text-danger badge dadge-light">{errors.likeError}</p>)}
             <br/>
-            <Link to='/likesProfiles'>
+            <Link to='/likesProfiles' onClick={this.getLikedPost.bind(this, post._id)}>
               <p className="badge badge-light">{post.likes.length} likes</p>
             </Link>
             {post.comments.length > 0 ? (

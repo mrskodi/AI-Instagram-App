@@ -47,7 +47,7 @@ module.exports = function validateRegisterInput(data){
   if(isEmpty(data.password)){
     errors.password = 'Please provide a password.';
   }
-
+  
   // Password strength check
   if(isEmpty(passwordStrengthChecker(data.password, /[a-z]/g))){
     errors.password = 'Provide at least 1 lowercase character';
