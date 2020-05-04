@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {logoutUser} from '../../action/authActions';
@@ -24,10 +24,7 @@ class Navbar extends Component {
      </ul>);
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">      
-          <Link className="nav-link" to="/profiles">Connect with people</Link>
-        </li>      
+      <ul className="navbar-nav ml-auto">  
         <li className="nav-item">
           <Link className="nav-link" to={`/profiles/${user.handle}`}>
           <img className="rounded-circle" src={user.avatar} alt={user.name} style={{width: '25px', marginRight: '5px'}} 
@@ -42,6 +39,9 @@ class Navbar extends Component {
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard"><i className="fas fa-map-marked"></i></Link>              
         </li>
+        <li className="nav-item">      
+          <Link className="nav-link" to="/profiles"><i className="fas fa-user-friends"></i></Link>
+        </li>    
         <li className="nav-item">
          <a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">          
          Logout</a>           

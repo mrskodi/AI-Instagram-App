@@ -26,7 +26,7 @@ const profileSchema = new schema({
     type: String,
     max: 300
   },
-  gender: {
+  location: {
     type: String
   },
   hobbies: {
@@ -35,9 +35,8 @@ const profileSchema = new schema({
   countries: {
     type: [String]
   },
-  favorites: {
-    places:[String],
-    outdoorActivities: [String]
+  places: {
+    type: [String]
   },
 
   following: [{

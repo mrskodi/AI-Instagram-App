@@ -46,6 +46,20 @@ export const getProfileByHandle = handle => dispatch => {
     );
 };
 
+// Edit Profile
+export const editProfile = (profileData, history) => dispatch => {
+  axios
+    .post('/api/profiles', profileData)
+    .then(res => history.push('/dashboard'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+
 // Get all profiles
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());

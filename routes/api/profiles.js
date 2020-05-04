@@ -107,18 +107,19 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   profileFields.user = req.user.id;
   if(req.body.website) profileFields.website = req.body.website;
   if(req.body.bio) profileFields.bio = req.body.bio;
-  if(req.body.gender) profileFields.gender = req.body.gender;
+  if(req.body.location) profileFields.location = req.body.location;
   // Split hobbies into an array
-  if(typeof req.body.hobbies!== 'undefined'){
+  if(typeof req.body.hobbies !== 'undefined'){
     profileFields.hobbies = req.body.hobbies.split(',');
   }
-  // Split countries visites into an array
+  // Split countries visited into an array
   if(typeof req.body.countries !== 'undefined'){
     profileFields.countries = req.body.countries.split(',');
   }
-  profileFields.favorites = {};
-  if(typeof req.body.places !== 'undefined') profileFields.favorites.places = req.body.places.split(',');
-  if(typeof req.body.outdoorActivities !== 'undefined') profileFields.favorites.outdoorActivities = req.body.outdoorActivities.split(',');
+   // Split favorite places into an array
+  if(typeof req.body.places !== 'undefined') { 
+    profileFields.places = req.body.places.split(','); 
+  }
 
   Profile.findOne({user: req.user.id})
          .then(profile => {

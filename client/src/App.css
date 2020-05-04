@@ -11,6 +11,14 @@ h1 {
   display: none;
 }
 
+hr.charcoal {
+  border: solid #d0d0d0; 
+  border-width: 1px 0 0; 
+  clear: both;
+  height: 0;
+  margin: 10px 0;
+}
+
 .landing {
   position: relative;
   background: url('./img/2018-08-19.jpg') no-repeat;
@@ -102,6 +110,15 @@ h1 {
 .latest-profiles-img {
   width: 40px;
   height: 40px;
+}
+
+.profile-icon {
+  padding-right: 10px;
+}
+
+.profile-block {
+  padding-right: 1rem;
+  display: inline;
 }
 
 .form-control::placeholder {
