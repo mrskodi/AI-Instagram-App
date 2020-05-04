@@ -3,36 +3,33 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import ProfileItem from '../profiles/ProfileItem';
-import { getProfilesByLikes } from '../../action/profileActions';
+import { getProfileByHandle } from '../../action/profileActions';
+import isEmpty from '../../utils/isEmpty';
 
 class LikesProfiles extends Component{
   
-  componentDidMount(){
+  // componentDidMount(){
     
-    // Get the posts[]
-    // For each post in posts[], get the likes[]
-    // For each user/like in the likes[], call getProfileByHandle(like.handle)
-    // this.props.posts.map(
-    //   post => post.likes.map(
-    //     like => this.props.getProfilesByLikes(like.handle)
-    //   )
-    // );
+  //   if(!isEmpty(this.props.postLikes)){
+  //     console.log(`People who have liked the post: ${this.props.postLikes}`);
+  //     // this.props.getProfilesByLikes(this.props.postLikes);
+  //   }else{
+  //     console.log('no one has liked the post yet');
+  //   }
+  //   // Get the posts[]
+  //   // For each post in posts[], get the likes[]
+  //   // For each user/like in the likes[], call getProfileByHandle(like.handle)
+  //   // this.props.posts.map(
+  //   //   post => post.likes.map(
+  //   //     like => this.props.getProfilesByLikes(like.handle)
+  //   //   )
+  //   // );
 
-    // Pass the post.likes[] to getProfilesByLikes action
-    // this.props.getProfilesByLikes(post.likes);
+  //   // Pass the post.likes[] to getProfilesByLikes action
+  //   // this.props.getProfilesByLikes(post.likes);
+
     
-  }
-
-  componentWillReceiveProps(newProps){
-    if(newProps.post){
-      this.props.getProfilesByHandle(post.likes)
-  //     this.props.posts.map(
-  //       post => post.likes.map(
-  //         like => this.props.getProfileByHandle(like.handle)
-  //       )
-  //     );
-    }
-  }
+  // }
    
   render(){
     const { profile, loading } = this.props.profile;
@@ -60,17 +57,19 @@ class LikesProfiles extends Component{
 
 LikesProfiles.propTypes = {
   post: PropTypes.object.isRequired,
+  postLikes: PropTypes.array.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  getProfilesByHandle: PropTypes.func.isRequired
+  getProfileByHandle: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
   post: state.post.post,
+  postLikes: state.post.post.likes,
   profile: state.profile,
   errors: state.errors,
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getProfilesByLikes })(LikesProfiles);
+export default connect(mapStateToProps, { getProfileByHandle })(LikesProfiles);

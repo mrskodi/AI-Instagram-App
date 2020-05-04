@@ -1,5 +1,6 @@
 const express = require('express');
 const Post = require('../../models/Post');
+const Profile = require('../../models/Profile');
 const passport = require('passport');
 const validatePostInput = require('../../validations/post');
 const validateComment = require('../../validations/comment');
@@ -41,6 +42,21 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
       .sort({date: -1})
       .then(posts => res.json(posts))
       .catch(err => res.json({msg: 'No posts found'}));
+})
+
+// @route   GET /api/posts/likedUsers/post_id
+// @access  PRIVATE
+// @desc    Get all the likedUser profiles of a post
+router.get('/likedUsers/:post_id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  Post.findById(req.params.post_id)
+      .then(post => {
+        
+        if(!isEmpty(post.likes)){
+          res.json(post.likes);
+          // console.log(post.likes.map(like => Profile.findOne({handle: like.handle})));
+        }
+      })
+      .catch(err => console.log(err));
 })
 
 // @route   GET /api/posts/id/:id

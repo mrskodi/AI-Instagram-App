@@ -10,8 +10,7 @@ import classnames from 'classnames';
 import { addLike } from '../../action/postActions';
 
 class PostItem extends Component{
-  onClick(e){
-    // Call the getPost(pass the e.target.value) and display in a new page called post
+  onClick(){
     this.props.getPost(this.props.post._id);
   }
 
