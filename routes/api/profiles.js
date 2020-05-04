@@ -230,5 +230,48 @@ router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: f
          .catch(err => console.log(err));
 });
 
+
+
+// @router  api/profiles/following/handle/:handle
+// @access  Private
+// @desc    get the following list given user handle
+router.get('/following/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const errors = {};
+    // Find the user from the database
+    
+    Profile.findOne({handle: req.user.handle})
+          .then(profile => {
+            if(!profile){
+              errors. noProfile = 'There are no profiles.';
+              return res.json(errors)
+            }
+            return res.json(profile.following);
+          }
+          )
+          .catch(err => console.log(err));
+  });
+
+// @router  api/profiles/followers/handle/:handle
+// @access  Private
+// @desc    get the followers list given user handle
+router.get('/followers/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const errors = {};
+    // Find the user from the database
+    
+    Profile.findOne({handle: req.user.handle})
+          .then(profile => {
+            if(!profile){
+              errors. noProfile = 'There are no profiles.';
+              return res.json(errors)
+            }
+            console.log('Inside followers api..............')
+            console.log(profile.handle)
+            console.log(profile.followers);
+            return res.json(profile.followers);
+          }
+          )
+          .catch(err => console.log(err));
+  });
+
 module.exports = router;
 
