@@ -73,9 +73,9 @@ export const getPosts = () => dispatch => {
 // Get a single Post
 export const getPost = id => dispatch => {
   dispatch(clearErrors());
+  dispatch(postLoading());
   axios.get(`/api/posts/id/${id}`)
       .then(res => {
-        console.log(res.data);
           dispatch({
             type: GET_POST,
             payload: res.data
@@ -179,7 +179,7 @@ export const deletePost = (postId) => dispatch => {
       });
 }
 
-export const postLoading = () => dispatch => {
+export const postLoading = () => {
   return {
     type: POST_LOADING
   };

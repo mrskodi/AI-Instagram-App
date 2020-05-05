@@ -7,6 +7,7 @@ import Spinner from '../common/Spinner';
 import PostItem from './PostItem';
 import { Link } from 'react-router-dom';
 import Post from './Post';
+import isEmpty from '../../utils/isEmpty';
 
 class Posts extends Component {
 
@@ -20,9 +21,13 @@ class Posts extends Component {
     const {posts, loading } = this.props.post;
     let postContent;
 
-    if(posts === null || loading){
+    if(isEmpty(posts)){
+      postContent = <h3>There are no posts yet. Click on the
+        <i className="fas fa-plus fa-fw"></i> 
+        on the navbar and make the first post!</h3>
+    } else if(loading){
       postContent = <Spinner/>;
-    }else{
+    } else{
       postContent = posts.map(post => <PostItem post={post}/>);
     }
 

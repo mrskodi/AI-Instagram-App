@@ -7,6 +7,7 @@ import { getPost } from '../../action/postActions';
 import { getProfileByHandle } from '../../action/profileActions';
 import isEmpty from '../../utils/isEmpty';
 import LikeProfileItem from './LikeProfileItem';
+import { Link } from 'react-router-dom';
 
 class LikesProfiles extends Component{
   
@@ -17,21 +18,35 @@ class LikesProfiles extends Component{
   render(){
 
     const { postLikes } = this.props;
-    const { loading } = this.props.profile;
+    const { loading } = this.props.post;
     let profileItems;
-    if(isEmpty(postLikes)){
-      profileItems = "No one has liked this post yet..."
-    }else if(loading){
+    if(loading){
       profileItems = <Spinner/>
-    }else {
-      // There are valid users in the likes[]
-        profileItems = postLikes.map(postLike => (
+    }
+    else if(!isEmpty(postLikes)){
+      profileItems = postLikes.map(postLike => (
         // Pass the profile handle to likeProfileItem
         <LikeProfileItem postLikeHandle= {postLike.handle}
         postLikeAvatar= {postLike.avatar} postLikeName={postLike.name}/>
         // Once you have the user profile, pass it onto profileItem
       ))
+    } else{
+      profileItems = "No one has liked this post yet..."
     }
+    
+    
+    
+    // else if(isEmpty(postLikes)){
+    //   profileItems = "No one has liked this post yet..."
+    // }else {
+    //   // There are valid users in the likes[]
+    //     profileItems = postLikes.map(postLike => (
+    //     // Pass the profile handle to likeProfileItem
+    //     <LikeProfileItem postLikeHandle= {postLike.handle}
+    //     postLikeAvatar= {postLike.avatar} postLikeName={postLike.name}/>
+    //     // Once you have the user profile, pass it onto profileItem
+    //   ))
+    // }
     {/*else{
       profileItem = <ProfileItem profile={profile}></ProfileItem>
 
@@ -51,7 +66,12 @@ class LikesProfiles extends Component{
           <div className="row">
             <div className="col-md-12">
               <h3 className="display-10 text-center">Users who have liked the post you are viewing now...</h3>
+              <div className="col-md-12">
+                <Link to="/dashboard" className="btn btn-light mb-3">
+                  Back to dashboard
+                </Link>
                 <h4>{profileItems}</h4>
+              </div>
             </div>
           </div>
         </div>

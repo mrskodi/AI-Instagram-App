@@ -13,11 +13,15 @@ class LikeProfileItem extends Component{
           <img src={postLikeAvatar} style={{width: '100px'}} alt=""
           className="rounded-circle"/>
         </div>
-        <div className="col-lg-6 col-md-4 col-8">
-          {postLikeHandle}
-        </div>
-        <div className="col-lg-6 col-md-4 col-8">
-          {postLikeName}
+        <div>
+          <span className="col-lg-6 col-md-4 col-8">
+            {postLikeHandle}
+          </span>
+          <br/>
+          <br/>
+          <span className="col-lg-6 col-md-4 col-8">
+            {postLikeName}
+          </span>
         </div>
         </div>
       </div>

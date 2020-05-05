@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import { connect } from 'react-redux';
-import { addPost } from '../../action/postActions'
+import { addPost } from '../../action/postActions';
+import classnames from 'classnames';
 
 class PostForm extends Component{
   constructor(props){
@@ -56,12 +57,14 @@ class PostForm extends Component{
               <form id="addPost-form" onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <label style={{margin: '7px'}} for="imageOrVideo">Choose whether sharing a video or an image </label>
-                  <select id="imageOrVideo" className="form-group" name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}>
+                  <select id="imageOrVideo" className={classnames("form-control form-control-lg", {'is-invalid': errors.isImageOrVideo})} name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}>
                     <option>-----</option>
                     <option>Video</option>
                     <option>Image</option>
                   </select>
-                  
+
+                  {errors.isImageOrVideo && (<div className="invalid-feedback">{errors.isImageOrVideo}</div>)}
+                  <br/>
                   <TextFieldGroup
                     placeholder="Paste the url of your image/video"
                     name="imageOrVideoLink"
