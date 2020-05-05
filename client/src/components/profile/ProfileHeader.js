@@ -20,7 +20,18 @@ class ProfileHeader extends Component {
               <div className="text-center">
                 <h1 className="text-center">{profile.name}</h1>           
                 <p>{profile.email}</p>
-                <p className="display-5"><span>Following : {profile.following.length}</span> <span>Followers : {profile.followers.length}</span></p>            
+                <p className="display-5">
+                  <span>
+                    {isEmpty(profile.following) ? (<p className="hide">not following anyone</p>) : (<p>{profile.following}</p>) }
+                  </span>
+                  {/*Following : {profile.following.length}</span>*/}
+                  <span>
+                    {isEmpty(profile.followers) ? (<p className="hide">no followers yet</p>) : (
+                      <p>{profile.followers}</p>
+                    )}
+                  {/*Followers : {profile.followers.length} */}  
+                  </span>
+                </p>        
               </div>
             </div>
           </div>

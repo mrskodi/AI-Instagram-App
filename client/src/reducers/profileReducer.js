@@ -32,12 +32,12 @@ export default function(state = initialState, action){
         profiles: action.payload,
         loading: false
       };
-    case GET_PROFILES_BY_LIKES:
-      return {
-        // add action.payload to the profiles[] in state.
-        ...state,
+    // case GET_PROFILES_BY_LIKES:
+    //   return {
+    //     // add action.payload to the profiles[] in state.
+    //     ...state,
         
-      };
+    //   };
     case CLEAR_CURRENT_PROFILE:
      return {
        ...state,

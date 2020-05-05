@@ -1,4 +1,4 @@
-import { ADD_POST, GET_POST, GET_POSTS, POST_LOADING, CLEAR_ERRORS, GET_ERRORS } from './dispatchTypes';
+import { ADD_POST, GET_POST, GET_POSTS, POST_LOADING, CLEAR_ERRORS, GET_ERRORS, GET_LIKED_USERS } from './dispatchTypes';
 import axios from 'axios';
 import store from '../store';
 import isEmpty from '../utils/isEmpty';
@@ -50,6 +50,26 @@ export const getPosts = () => dispatch => {
       });
 }
 
+// Get liked users of a post given the postId
+// export const getLikedUsers = postId =>
+// 	dispatch => {
+		
+// 		// Make the axios call 
+		
+// 		axios.get(`/api/profiles/likedUsers/${postId}`)
+// 				.then(res => dispatch({
+//           type: GET_LIKED_USERS,
+//           payload: res.data
+//         }))
+// 				.catch(err => {
+// 				dispatch({
+// 					type: GET_ERRORS,
+// 					payload: err.response.data
+// 				})
+// 			})
+// 	}
+
+
 // Get a single Post
 export const getPost = id => dispatch => {
   dispatch(clearErrors());
@@ -97,6 +117,18 @@ export const addLike = id => dispatch => {
 //         });
 //       })
 // }
+
+// Remove Like
+export const removeLike = id => dispatch => {
+  axios.post(`api/posts/unlike/${id}`)
+      .then(res => dispatch(getPosts()))
+      .catch(err => {
+        dispatch ({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      })
+};
 
 // Add Comment
 export const addComment = (postId, commentData) => dispatch => {

@@ -59,7 +59,7 @@ class App extends Component {
             <Route exact path="/dashboard" component={Dashboard}></Route>
             <Route exact path="/profiles/:handle" component={Profile}></Route>
             <Route exact path="/profiles" component={Profiles}></Route>
-            <Route exact path="/likesProfiles" component={LikesProfiles}></Route>
+            <Route exact path="/likesProfiles/:id" component={LikesProfiles}></Route>
             <Footer/>    
           </div>
         </Router>

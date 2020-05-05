@@ -32,6 +32,9 @@ const postSchema = new schema({
       type: schema.Types.ObjectId,
       ref: 'users'
     },
+    name: {
+      type: String
+    },
     handle: {
       type: String
     },
