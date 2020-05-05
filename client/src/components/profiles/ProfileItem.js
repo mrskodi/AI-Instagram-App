@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { followUserByHandle } from '../../action/profileActions'; 
 import { unFollowUserByHandle } from '../../action/profileActions';
 
+
 class ProfileItem extends Component {
     
     onFollowClick(e){  
@@ -29,11 +30,11 @@ class ProfileItem extends Component {
             <img src={profile.avatar} style={{width: '100px'}} alt="" className="rounded-circle" />
           </div>
           <div className="col-lg-6 col-md-4 col-8">
-            <h3>{profile.name}</h3>
+            <h3>{profile.handle}</h3>
             <p>
             {isEmpty(profile.bio) ? (<span></span>) : (<span>{profile.bio}</span>)}
             </p>            
-            <p>{profile.email}</p>           
+            {/* <p>{profile.user.name}</p>            */}
             <Link to={`/profiles/${profile.handle}`} className="btn btn-info">
               View Profile
             </Link>          

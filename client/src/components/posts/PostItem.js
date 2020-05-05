@@ -7,17 +7,19 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { getPost, deletePost } from '../../action/postActions';
 import classnames from 'classnames';
-import { addLike } from '../../action/postActions';
+import { addLike, removeLike } from '../../action/postActions';
 
 class PostItem extends Component{
-  onClick(e){
-    // Call the getPost(pass the e.target.value) and display in a new page called post
+  onClick(){
     this.props.getPost(this.props.post._id);
   }
 
   onLikeClick(id){
-    console.log(`Id of Post that is being liked: ${id}`);
     this.props.addLike(id);
+  }
+
+  onUnlikeClick(id){
+    this.props.removeLike(id);
   }
 
   onDeleteClick(postId){
@@ -47,7 +49,7 @@ class PostItem extends Component{
                       src={post.imageOrVideoLink}/>
     }
     if(post.isImageOrVideo === 'Video'){
-      // the html tag should be a video tag
+      // the html tag should be a ReactPlayer
       postContent = <ReactPlayer 
                       controls 
                       url={post.imageOrVideoLink}/>
@@ -91,6 +93,12 @@ class PostItem extends Component{
                                         
               />
             </button>
+            <button type="button"
+                    className="btn btn-light mr-1"
+                    onClick={this.onUnlikeClick.bind(this, post._id)}>
+              <i className="text-secondary fas fa-thumbs-down"></i>
+
+            </button>
             <Link to={`/post/id/${post._id}`} className="btn btn-light mr-1">
               Comments
             </Link>
@@ -106,7 +114,7 @@ class PostItem extends Component{
             <br/>
             {errors && (<p className="text-danger badge dadge-light">{errors.likeError}</p>)}
             <br/>
-            <Link to='Get all users who have liked the post'>
+            <Link to={`/likesProfiles/${post._id}`}>
               <p className="badge badge-light">{post.likes.length} likes</p>
             </Link>
             {post.comments.length > 0 ? (
@@ -131,6 +139,7 @@ PostItem.propTypes = {
   getPost: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
+  removeLike: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 }
 
@@ -139,4 +148,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect( mapStateToProps, { getPost, deletePost, addLike })(PostItem);
+export default connect( mapStateToProps, { getPost, deletePost, addLike, removeLike })(PostItem);

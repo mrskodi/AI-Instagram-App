@@ -9,6 +9,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER
 } from "./dispatchTypes"
+//import { bindActionCreators } from "redux";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -31,6 +32,7 @@ export const getCurrentProfile = () => dispatch => {
 
 // Get profile by handle
 export const getProfileByHandle = handle => dispatch => {
+  
   dispatch(setProfileLoading());
   axios
   .get(`/api/profiles/handle/${handle}`)
@@ -50,6 +52,7 @@ export const getProfileByHandle = handle => dispatch => {
 
 // Get all profiles
 export const getProfiles = () => dispatch => {
+  dispatch(clearCurrentProfile());
   dispatch(setProfileLoading());
   axios
     .get('/api/profiles/all')
@@ -124,3 +127,9 @@ export const unFollowUserByHandle = handle => dispatch => {
       }) 
     )  
 };
+// // Clear current profiles[]
+// export const clearCurrentProfiles = () => {
+//   return {
+//     type: CLEAR_CURRENT_PROFILES
+//   }
+// }

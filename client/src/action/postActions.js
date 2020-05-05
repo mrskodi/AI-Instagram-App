@@ -33,6 +33,7 @@ export const addPost = (postData, history) => dispatch => {
 
 // Get all posts
 export const getPosts = () => dispatch => {
+  //dispatch(postLoading());
   axios.get('/api/posts')
       .then(res => {
         // add posts to redux store
@@ -52,10 +53,10 @@ export const getPosts = () => dispatch => {
 
 // Get a single Post
 export const getPost = id => dispatch => {
-  dispatch(clearErrors());
+  //dispatch(clearErrors());
+  dispatch(postLoading());
   axios.get(`/api/posts/id/${id}`)
       .then(res => {
-        console.log(res.data);
           dispatch({
             type: GET_POST,
             payload: res.data
@@ -64,12 +65,12 @@ export const getPost = id => dispatch => {
       .catch(err => {
           dispatch({
             type: GET_ERRORS,
-            payload: err.response.data
+            payload: [null]
           })
       });
 }
 
-// Add likes - add to the likes array of a post and get the updated posts list
+// Add likes - adds a user to the likes array of a post and get the updated posts list
 export const addLike = id => dispatch => {
   axios.post(`/api/posts/like/${id}`)
       .then(res => {
@@ -83,6 +84,18 @@ export const addLike = id => dispatch => {
         })
       });
 }
+
+// Remove Like
+export const removeLike = id => dispatch => {
+  axios.post(`api/posts/unlike/${id}`)
+      .then(res => dispatch(getPosts()))
+      .catch(err => {
+        dispatch ({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      })
+};
 
 // Add Comment
 export const addComment = (postId, commentData) => dispatch => {
@@ -122,7 +135,7 @@ export const deleteComment = (postId, commentId) => dispatch => {
 export const deletePost = (postId) => dispatch => {
   axios.delete(`/api/posts/id/${postId}`)
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         dispatch(getPosts());
       })
       .catch(err => {
@@ -133,7 +146,7 @@ export const deletePost = (postId) => dispatch => {
       });
 }
 
-export const postLoading = () => dispatch => {
+export const postLoading = () => {
   return {
     type: POST_LOADING
   };

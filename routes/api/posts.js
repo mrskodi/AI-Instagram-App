@@ -1,5 +1,6 @@
 const express = require('express');
 const Post = require('../../models/Post');
+const Profile = require('../../models/Profile');
 const passport = require('passport');
 const validatePostInput = require('../../validations/post');
 const validateComment = require('../../validations/comment');
@@ -41,6 +42,21 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
       .sort({date: -1})
       .then(posts => res.json(posts))
       .catch(err => res.json({msg: 'No posts found'}));
+})
+
+// @route   GET /api/posts/likedUsers/post_id
+// @access  PRIVATE
+// @desc    Get all the likedUser profiles of a post
+router.get('/likedUsers/:post_id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  Post.findById(req.params.post_id)
+      .then(post => {
+        
+        if(!isEmpty(post.likes)){
+          res.json(post.likes);
+          // console.log(post.likes.map(like => Profile.findOne({handle: like.handle})));
+        }
+      })
+      .catch(err => res.json({msg: 'No one has liked this post yet'}));
 })
 
 // @route   GET /api/posts/id/:id
@@ -104,8 +120,7 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
       .then(post => {
         // Loop through the likes array in the post collection
         // to check whether the user has liked the post before
-        if((post.likes.filter(like => like.user.toString() === req.user.id).length > 0) || 
-            (post.user.toString() === req.user.id)){
+        if((post.likes.filter(like => like.user.toString() === req.user.id).length > 0)){
           
           // User already liked the post, delete him from likes list
             // The below sentence does not enable a user who has liked a post to like it again.
@@ -115,15 +130,21 @@ router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req, r
                                         .indexOf(req.user.id);
           
             if(removeIndex == -1){
-              return res.status(400).json({likeError: 'cannot like your own post'})
+              return res.status(400).json({likeError: 'Already liked the post'})
             }                           
 
-          //User found, remove user from likes array
-          post.likes.splice(removeIndex, 1);
+          // //User found, remove user from likes array
+          // post.likes.splice(removeIndex, 1);
         }
         else{
         // User has not liked the post yet, add userid to the likes array
-          post.likes.unshift({user: req.user.id});
+          const newLike = {
+            user: req.user.id,
+            name: req.user.name,
+            handle: req.user.handle,
+            avatar: req.user.avatar
+          }
+          post.likes.unshift(newLike);
         }
         // Save
         post.save()
@@ -140,7 +161,6 @@ router.post('/unlike/:id', passport.authenticate('jwt', {session: false}), (req,
   // Get the post to be unliked
   Post.findById(req.params.id)
       .then(post => {
-        console.log(`UserId: ${req.user.id}`);
         // Check if user has already liked the post
         if(post.likes.filter(like => (like.user.toString() === req.user.id))
                     .length === 0){
