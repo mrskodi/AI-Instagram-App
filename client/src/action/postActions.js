@@ -1,4 +1,4 @@
-import { ADD_POST, GET_POST, GET_POSTS, POST_LOADING, CLEAR_ERRORS, GET_ERRORS, GET_LIKED_USERS } from './dispatchTypes';
+import { ADD_POST, GET_POST, GET_POSTS, POST_LOADING, CLEAR_ERRORS, GET_ERRORS } from './dispatchTypes';
 import axios from 'axios';
 import store from '../store';
 import isEmpty from '../utils/isEmpty';
@@ -50,30 +50,10 @@ export const getPosts = () => dispatch => {
       });
 }
 
-// Get liked users of a post given the postId
-// export const getLikedUsers = postId =>
-// 	dispatch => {
-		
-// 		// Make the axios call 
-		
-// 		axios.get(`/api/profiles/likedUsers/${postId}`)
-// 				.then(res => dispatch({
-//           type: GET_LIKED_USERS,
-//           payload: res.data
-//         }))
-// 				.catch(err => {
-// 				dispatch({
-// 					type: GET_ERRORS,
-// 					payload: err.response.data
-// 				})
-// 			})
-// 	}
-
-
 // Get a single Post
 export const getPost = id => dispatch => {
   dispatch(clearErrors());
-  dispatch(postLoading());
+  //dispatch(postLoading());
   axios.get(`/api/posts/id/${id}`)
       .then(res => {
           dispatch({
@@ -103,20 +83,6 @@ export const addLike = id => dispatch => {
         })
       });
 }
-
-// // Get liked post - write to redux
-// export const getLikedPost = postId => dispatch => {
-//   axios.post(`api/posts/id/${postId}`)
-//       .then(res => {
-
-//       })
-//       .catch(err => {
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: err.response.data
-//         });
-//       })
-// }
 
 // Remove Like
 export const removeLike = id => dispatch => {
@@ -168,7 +134,7 @@ export const deleteComment = (postId, commentId) => dispatch => {
 export const deletePost = (postId) => dispatch => {
   axios.delete(`/api/posts/id/${postId}`)
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         dispatch(getPosts());
       })
       .catch(err => {

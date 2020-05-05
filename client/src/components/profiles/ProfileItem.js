@@ -21,7 +21,7 @@ class ProfileItem extends Component {
             <p>
             {isEmpty(profile.bio) ? (<span></span>) : (<span>{profile.bio}</span>)}
             </p>            
-            <p>{profile.email}</p>           
+            <p>{profile.user.name}</p>           
             <Link to={`/profiles/${profile.handle}`} className="btn btn-info">
               View Profile
             </Link>

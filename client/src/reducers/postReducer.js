@@ -1,4 +1,4 @@
-import { ADD_POST, GET_POST, GET_POSTS, CLER_ERRORS, POST_LOADING, GET_LIKED_USERS } from '../action/dispatchTypes';
+import { ADD_POST, GET_POST, GET_POSTS, POST_LOADING } from '../action/dispatchTypes';
 
 const initialState = {
   post: {},

@@ -27,15 +27,10 @@ class PostForm extends Component{
 
   onSubmit(e){
     e.preventDefault();
-    //const { user } = this.props.auth;
     const newPost = {
       imageOrVideoLink: this.state.imageOrVideoLink,
       isImageOrVideo: this.state.isImageOrVideo,
       text: this.state.text,
-      
-      // name: user.name,
-      // handle: user.handle,
-      // avatar: user.avatar
     };
 
     this.props.addPost(newPost, this.props.history);
@@ -52,7 +47,7 @@ class PostForm extends Component{
       <div className="post-form mb-3">
         <div className="col-md-8 m-auto">
           <div className="card card-info">
-            <div className="card-header text-black">Ready to share a picture or a video? Enter details below...</div>
+            <div className="card-header text-black">Share your latest adventure</div>
             <div className="card-body">
               <form id="addPost-form" onSubmit={this.onSubmit}>
                 <div className="form-group">

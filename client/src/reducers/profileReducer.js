@@ -8,8 +8,12 @@ import {
 } from "../action/dispatchTypes";
 
 const initialState = {
-  profile: {},
-  profiles: [],
+  // profile: {},
+  // profiles: [],
+  // loading: false
+
+  profile: null,
+  profiles: null,
   loading: false
 };
 

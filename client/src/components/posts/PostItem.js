@@ -26,11 +26,6 @@ class PostItem extends Component{
     this.props.deletePost(postId);
   }
 
-  // getLikedPost(postId){
-  //   this.props.getPost(postId);
-  //   onClick={this.getLikedPost.bind(this, post._id)}
-  // }
-
   findUserLike(likes){
     const { auth } = this.props;
     //if(likes>0){
@@ -54,7 +49,7 @@ class PostItem extends Component{
                       src={post.imageOrVideoLink}/>
     }
     if(post.isImageOrVideo === 'Video'){
-      // the html tag should be a video tag
+      // the html tag should be a ReactPlayer
       postContent = <ReactPlayer 
                       controls 
                       url={post.imageOrVideoLink}/>

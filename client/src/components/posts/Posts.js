@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPosts } from '../../action/postActions';
-import PostForm from './PostForm';
+//import PostForm from './PostForm';
 import Spinner from '../common/Spinner';
 import PostItem from './PostItem';
-import { Link } from 'react-router-dom';
-import Post from './Post';
+//import { Link } from 'react-router-dom';
+//import Post from './Post';
 import isEmpty from '../../utils/isEmpty';
 
 class Posts extends Component {
 
   componentDidMount(){
-    // call getPost action
+    // call getPosts action
     this.props.getPosts();
   }
 
