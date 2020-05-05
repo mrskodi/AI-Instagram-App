@@ -33,6 +33,7 @@ export const addPost = (postData, history) => dispatch => {
 
 // Get all posts
 export const getPosts = () => dispatch => {
+  //dispatch(postLoading());
   axios.get('/api/posts')
       .then(res => {
         // add posts to redux store
@@ -52,8 +53,8 @@ export const getPosts = () => dispatch => {
 
 // Get a single Post
 export const getPost = id => dispatch => {
-  dispatch(clearErrors());
-  //dispatch(postLoading());
+  //dispatch(clearErrors());
+  dispatch(postLoading());
   axios.get(`/api/posts/id/${id}`)
       .then(res => {
           dispatch({

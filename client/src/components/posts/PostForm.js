@@ -51,18 +51,20 @@ class PostForm extends Component{
             <div className="card-body">
               <form id="addPost-form" onSubmit={this.onSubmit}>
                 <div className="form-group">
-                  <label style={{margin: '7px'}} for="imageOrVideo">Choose whether sharing a video or an image </label>
+                  <label style={{margin: '7px'}} htmlFor="imageOrVideo">Choose whether sharing a video or an image </label>
+
                   <select id="imageOrVideo" className={classnames("form-control form-control-lg", {'is-invalid': errors.isImageOrVideo})} name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}>
-                    <option>-----</option>
-                    <option>Video</option>
+                    <option>Select one</option>
                     <option>Image</option>
+                    <option>Video</option>
                   </select>
 
-                  {errors.isImageOrVideo && (<div className="invalid-feedback">{errors.isImageOrVideo}</div>)}
+                   {errors.isImageOrVideo && (<div className="invalid-feedback">{errors.isImageOrVideo}</div>)}
                   <br/>
                   <TextFieldGroup
-                    placeholder="Paste the url of your image/video"
+                    placeholder="url of your image/video"
                     name="imageOrVideoLink"
+                    type="text"
                     value={this.state.imageOrVideoLink}
                     onChange={this.onChange}
                     error={errors.imageOrVideoLink}
@@ -71,8 +73,9 @@ class PostForm extends Component{
 
                 <div className="form-group">  
                   <TextFieldGroup
-                    placeholder="add title or text for your post"
+                    placeholder="text for your post"
                     name="text"
+                    type="text"
                     value={this.state.text}
                     onChange={this.onChange.bind(this)}
                     error={errors.text}

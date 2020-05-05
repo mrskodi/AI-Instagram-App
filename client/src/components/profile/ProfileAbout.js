@@ -6,9 +6,6 @@ class ProfileAbout extends Component {
   render() {
     const { profile } = this.props;
 
-    // // Get first name
-    // const firstName = profile.name.trim().split(' ')[0];   
-
     // Hobbies List
     const hobbies = profile.hobbies.map((hobby, index) => (
       <div key={index} className="p-3">      
@@ -23,19 +20,19 @@ class ProfileAbout extends Component {
       </div>
     ));
 
-    //  // Favorite places
-    //  const places = profile.favorites.places.map((book, index) => (
-    //   <div key={index} className="p-3">
-    //     <i className="fa" /> {places}
-    //   </div>
-    // ));
-
-    // Favorite places
-    const places = profile.places.map((place, index) => (
-      <div key={index} className="profile-block">
-        {place}
+     // Favorite places
+     const places = profile.favorites.places.map((book, index) => (
+      <div key={index} className="p-3">
+        <i className="fa" /> {places}
       </div>
     ));
+
+    // Favorite places
+    // const places = profile.places.map((place, index) => (
+    //   <div key={index} className="profile-block">
+    //     {place}
+    //   </div>
+    // ));
   
 
     //  //  Favorite outdoor ativities
