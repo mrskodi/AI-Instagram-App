@@ -17,9 +17,8 @@ class CommentItem extends Component{
         <div className="row">
           <div className="col-md-2">
             <Link to={`/Profiles/${comment.handle}`}>
-              <img className="rounded-circle d-none d-md-inline"
+              <img className="rounded-circle d-none d-md-inline comment-avatar"
                     src={comment.avatar}
-                    style={{width: '50px'}}
                     alt="">
               </img>
               <span className="text-left text-dark comment-handle">{comment.handle}</span>

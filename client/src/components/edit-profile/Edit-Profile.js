@@ -90,7 +90,7 @@ class EditProfile extends Component {
         <div className="container">
           <div className="row">
             <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
-              <Link className="btn btn-light" to={`/profiles/${profile.handle}`}>
+              <Link className="btn btn-light" to={`/profiles/`}>
                 Go Back
               </Link>
               <h1 className="text-center">Edit Profile</h1>
@@ -151,7 +151,8 @@ class EditProfile extends Component {
                   value={this.state.places}
                   onChange={this.onChange}
                   error={errors.places}
-                  info="What are you favorite places?"
+                  info="What are you favorite places? Please use comma separated values, eg.
+                  Berlin,Paris,London"
                 />
                 <input
                   type="submit"

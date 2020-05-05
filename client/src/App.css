@@ -89,9 +89,20 @@ hr.charcoal {
 .comment-handle {
   padding-left: 10px;
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #1d1d1d;
   text-decoration: none;
+}
+
+.comment-avatar {
+  width: 50px;
+}
+
+.comment {
+  font-size: 1rem;
+  line-height: 1.25rem;
+  margin-bottom: 0;
+  vertical-align: middle;
 }
 
 .delete-cmt {
@@ -173,7 +184,7 @@ a.post-handle:hover {
 }
 
 .profile-block {
-  padding-right: 1rem;
+  padding-right: 2rem;
   display: inline;
 }
 
