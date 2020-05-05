@@ -7,8 +7,7 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   FOLLOW_USER,
-  UNFOLLOW_USER,
-  FOLLOWERS_LIST
+  UNFOLLOW_USER
 } from "./dispatchTypes"
 
 // Get current profile
@@ -121,19 +120,6 @@ export const unFollowUserByHandle = handle => dispatch => {
     .then(res =>
       dispatch({
         type: UNFOLLOW_USER,
-        payload: res.data,
-      }) 
-    )  
-};
-
-// Get the followers list provided user handle
-export const getFollowersListByHandle = handle => dispatch => { 
-  console.log('inside getFollowersListByHandle')
-  axios
-  .get(`/api/profiles/followers/handle/${handle}`)
-    .then(res =>
-      dispatch({
-        type: FOLLOWERS_LIST,
         payload: res.data,
       }) 
     )  

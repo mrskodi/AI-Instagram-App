@@ -4,8 +4,7 @@ import {
   PROFILE_LOADING, 
   CLEAR_CURRENT_PROFILE,
   FOLLOW_USER,
-  UNFOLLOW_USER,
-  FOLLOWERS_LIST
+  UNFOLLOW_USER
 } from "../action/dispatchTypes";
 
 const initialState = {
@@ -47,12 +46,7 @@ export default function(state = initialState, action){
       return{
         ...state,       
         loading: false
-      };
-      case FOLLOWERS_LIST:
-        return{
-          ...state,       
-          loading: false
-        };
+      };     
      default:
        return state;
   }

@@ -4,55 +4,29 @@ import { Link } from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
 import { connect } from 'react-redux';
 import { followUserByHandle } from '../../action/profileActions'; 
-import { unFollowUserByHandle } from '../../action/profileActions'; 
-import { getFollowersListByHandle } from '../../action/profileActions'; 
+import { unFollowUserByHandle } from '../../action/profileActions';
 
-
-class ProfileItem extends Component {  
-
-  constructor(props){
-    super(props);
-    this.state = {isUnFollow : false};
-  }
-   componentDidMount(){   
-        const loggedInUserHandle = this.props.loggedInUserHandle;
-        const allProfilesInDB = this.props.allProfilesInDB;
-        console.log(allProfilesInDB);
-        const followers = this.props.getFollowersListByHandle(this.props.profile.handle);
-        console.log('inside  componentDidMount.....')
-        console.log(this.props.profile.handle);
-        console.log(followers);
-
-      
-        }
+class ProfileItem extends Component {
     
-    onFollowClick(e){    
-      this.setState({isUnFollow: false});    
+    onFollowClick(e){  
+      console.log('follow.....');    
+      console.log(this.props.profile.handle);
       this.props.followUserByHandle(this.props.profile.handle);      
     }
 
-    onUnFollowClick(e){
-      this.setState({isUnFollow: true});  
+    onUnFollowClick(e){   
+      console.log('Unfollow.....')    
+      console.log(this.props.profile.handle); 
       this.props.unFollowUserByHandle(this.props.profile.handle);    
     }
   
   render() {
-    const { profile } = this.props;  
-    const isUnFollow = this.state.isUnFollow;
-    let button = null;
-    if (isUnFollow) {
-      button = <UnFollowUserButton onClick={this.onUnFollowClick.bind(this)} />;
-    } else {
-      button = <FollowUserButton onClick={this.onFollowClick.bind(this)} />;
-    }
-
+    const { profile } = this.props;     
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">
           <div className="col-2">
-
             <img src={profile.avatar} style={{width: '100px'}} alt="" className="rounded-circle" />
-
           </div>
           <div className="col-lg-6 col-md-4 col-8">
             <h3>{profile.name}</h3>
@@ -64,7 +38,8 @@ class ProfileItem extends Component {
               View Profile
             </Link>          
             <p>
-            {button}          
+            <span> <button className="btn btn-primary btn-info mr-3" onClick={this.onFollowClick.bind(this)}>Follow</button></span>  
+            <span><button className="btn btn-primary btn-info mr-1" onClick={this.onUnFollowClick.bind(this)}>Unfollow</button></span>      
             </p>
           </div>         
         </div>
@@ -73,45 +48,10 @@ class ProfileItem extends Component {
   }
 }
 
-
-class UnFollowUserButton extends React.Component{
-  constructor(props, context){
-    super(props, context)
-    console.log('created UnFollowUserButton button');
-  }
-  render(){
-    return (
-      <button onClick={this.props.onClick}>
-        Unfollow
-      </button>
-    );
-  }
-}
-
-class FollowUserButton extends React.Component{
-  constructor(props, context){
-    super(props, context)
-    console.log('created follow user button');
-  }
-  render(){
-    return (
-      <button onClick={this.props.onClick}>
-        Follow
-      </button>
-    );
-  }
-}
-
 ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired,
   followUserByHandle: PropTypes.func.isRequired,
-  unFollowUserByHandle: PropTypes.func.isRequired,
-  getFollowersListByHandle: PropTypes.func.isRequired
+  unFollowUserByHandle: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-    loggedInUserHandle: state.auth.user.handle,
-    allProfilesInDB: state.profile.profiles
-  });
-
-export default connect(mapStateToProps , { followUserByHandle, unFollowUserByHandle, getFollowersListByHandle })(ProfileItem);
+export default connect(null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);
