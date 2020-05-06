@@ -11,7 +11,7 @@ class DeleteAccount extends Component{
   render(){
     return(
       <div>
-
+        
       </div>
     )
   }
