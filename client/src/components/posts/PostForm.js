@@ -55,14 +55,20 @@ class PostForm extends Component{
                       <form id="addPost-form" onSubmit={this.onSubmit}>
                         <div className="form-group">
                           <label htmlFor="imageOrVideo" className="dropdown-text">Are you sharing an image or a video? </label>
-                          <select id="imageOrVideo" className="form-control dropdown-btn" name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}>
+                          <select id="imageOrVideo" className={classnames("form-control form-control-lg", {'is-invalid': errors.isImageOrVideo})} name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}>
+                          
+                          
+                          
+                          
+                          
+                          {/* className="form-control dropdown-btn" name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}> */}
                             <option>Select one:</option>
                             <option>Image</option>
                             <option>Video</option>
                           </select>
                           
                           {errors.isImageOrVideo && (<div className="invalid-feedback">{errors.isImageOrVideo}</div>)}
-                          
+                          <br/>
                           <TextFieldGroup
                             placeholder="Paste the url of your image/video"
                             name="imageOrVideoLink"
@@ -76,6 +82,7 @@ class PostForm extends Component{
                           <TextFieldGroup
                             placeholder="add title or text for your post"
                             name="text"
+                            type="text"
                             value={this.state.text}
                             onChange={this.onChange.bind(this)}
                             error={errors.text}
