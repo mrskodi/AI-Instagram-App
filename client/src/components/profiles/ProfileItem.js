@@ -28,7 +28,7 @@ class ProfileItem extends Component {
         <div className="row">
           <div className="col-2">
 
-            <img src={profile.avatar} alt="" className="rounded-circle avatar-100" />
+            <img src={profile.avatar} alt="" className="rounded-circle avatar-140" />
 
           </div>
           <div className="col-lg-6 col-md-4 col-8">
@@ -41,8 +41,8 @@ class ProfileItem extends Component {
               View Profile
             </Link>          
             <p>
-            <span> <button className="btn btn-primary btn-info mr-3" onClick={this.onFollowClick.bind(this)}>Follow</button></span>  
-            <span><button className="btn btn-primary btn-info mr-1" onClick={this.onUnFollowClick.bind(this)}>Unfollow</button></span>      
+            <span> <button className="btn btn-light mr-3" onClick={this.onFollowClick.bind(this)}><i class="fas fa-user-plus"></i></button></span>  
+            <span><button className="btn btn-light mr-1" onClick={this.onUnFollowClick.bind(this)}><i class="fas fa-user-minus"></i></button></span>      
             </p>
           </div>         
         </div>

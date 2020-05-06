@@ -7,6 +7,11 @@ h1 {
   font-weight: 300;
 }
 
+h4.ph {
+  font-size: .8rem;
+  font-weight: 300;
+}
+
 a {
   text-decoration: none;
   color: #408DBD;
@@ -176,6 +181,10 @@ a.post-handle:hover {
 
 .avatar-100 {
   width: 100px;
+}
+
+.avatar-140 {
+  width: 140px;
 }
 
 .handle-link:hover {
