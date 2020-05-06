@@ -52,7 +52,7 @@ class Navbar extends Component {
         />
         {console.log(this.state.handle)}
         <Link to={`/profiles/${this.state.handle}`} onClick={this.onSearchClick.bind(this, this.state.handle)}>
-          <i class="fas fa-search"></i>
+          <i className="fas fa-search"></i>
         </Link>
 
 

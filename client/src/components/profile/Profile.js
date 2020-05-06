@@ -8,6 +8,7 @@ import { GET_PROFILES } from '../../action/dispatchTypes';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfilePosts from './ProfilePosts';
+import isEmpty from '../../utils/isEmpty'
 
 class Profile extends Component {
   componentDidMount() {
@@ -24,8 +25,8 @@ class Profile extends Component {
 
   render() {
     const { profile, loading } = this.props.profile;  
+    const { errors } = this.props;
     let profileContent;
-
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else {
@@ -61,11 +62,13 @@ class Profile extends Component {
 
 Profile.propTypes = {
   getProfileByHandle: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  errors: state.errors
 });
 
 export default connect(mapStateToProps, { getProfileByHandle })(Profile);
