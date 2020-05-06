@@ -25,7 +25,8 @@ class Profile extends Component {
 
   render() {
     const { profile, loading } = this.props.profile;  
-    const { auth } = this.props; 
+    const { auth } = this.props;
+
     let profileContent;
     if (profile === null || loading) {
       profileContent = <Spinner />;
@@ -52,7 +53,17 @@ class Profile extends Component {
           </div>
           <ProfileAbout profile={profile} />
           <ProfilePosts profile={profile}/>
+          <div  className="row">  
+            <div className="col-md-12">
+              {profile.user === auth.user.id ? (
+                <Link to="/delete-account" className="btn btn-light float-right">
+                  <i className="fas fa-trash-alt" /> Delete Account
+                </Link>
+              ) : (null)}
+            </div>
+          </div>
         </div>
+        
 
       );
     }
@@ -78,7 +89,8 @@ Profile.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  profile: state.profile
+  profile: state.profile,
+  error: state.errors
 });
 
 export default connect(mapStateToProps, { getProfileByHandle })(Profile);

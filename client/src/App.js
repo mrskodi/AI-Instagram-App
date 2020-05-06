@@ -21,6 +21,7 @@ import Profiles from './components/profiles/Profiles';
 import EditProfile from './components/edit-profile/Edit-Profile';
 import LikesProfiles from './components/profiles/LikesProfiles';
 import ProfileNotFound from './components/profile/ProfileNotFound';
+import DeleteAccount from './components/auth/DeleteAccount';
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
@@ -64,6 +65,7 @@ class App extends Component {
             <Route exact path="/profiles" component={Profiles}></Route>
             <Route exact path="/likesProfiles/:id" component={LikesProfiles}></Route>
             <Route exact path="/not-found"component={ProfileNotFound}></Route>
+            <Route exact path="/delete-account" component={DeleteAccount}></Route>
             <Footer/>    
           </div>
         </Router>
