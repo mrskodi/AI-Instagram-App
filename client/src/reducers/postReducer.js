@@ -1,7 +1,8 @@
-import { ADD_POST, GET_POST, GET_POSTS, CLER_ERRORS, POST_LOADING } from '../action/dispatchTypes';
+import { ADD_POST, GET_POST, GET_POSTS, POST_LOADING } from '../action/dispatchTypes';
 
 const initialState = {
   post: {},
+  postLikes: [],
   posts: [],
   loading: false
 }
@@ -31,6 +32,11 @@ export default function(state = initialState, action){
         posts: action.payload,
         loading: false
       }
+    // case GET_LIKED_USERS:
+    //   return {
+    //     ...state,
+    //     postLikes: action.payload       
+    //   }
     default:
       return state
   }

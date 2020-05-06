@@ -15,7 +15,11 @@ const postSchema = new schema({
   handle: {
     type: String
   },
-  imageOrVideo: {
+  imageOrVideoLink: {
+    type: String,
+    required: true
+  },
+  isImageOrVideo: {
     type: String,
     required: true
   },
@@ -27,6 +31,15 @@ const postSchema = new schema({
     user: {
       type: schema.Types.ObjectId,
       ref: 'users'
+    },
+    name: {
+      type: String
+    },
+    handle: {
+      type: String
+    },
+    avatar: {
+      type: String
     }
   }],
   comments: [{

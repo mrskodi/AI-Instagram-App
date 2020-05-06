@@ -12,15 +12,20 @@ class ProfileHeader extends Component {
                 <div className="col-4 col-md-3 m-auto">
                   <img
                     className="rounded-circle"
-                    src={profile.user.avatar}
+                    src={profile.avatar}
                     alt=""
                   />
                 </div>
               </div>
               <div className="text-center">
-                <h1 className="text-center">{profile.user.name}</h1>           
+                <h1 className="text-center">{profile.name}</h1>           
                 <p>{profile.email}</p>
-                <p className="display-5"><span>Following : {profile.following.length}</span> <span>Followers : {profile.followers.length}</span></p>            
+                <p className="display-5">
+                  <span>
+                  Following : {profile.following ? profile.following.length : 0}
+                  Followers : {profile.followers ? profile.followers.length : 0}                
+                  </span>
+                </p>            
               </div>
             </div>
           </div>

@@ -6,7 +6,10 @@ import {
   SET_CURRENT_USER,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
+  FOLLOW_USER,
+  UNFOLLOW_USER
 } from "./dispatchTypes"
+//import { bindActionCreators } from "redux";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -29,6 +32,7 @@ export const getCurrentProfile = () => dispatch => {
 
 // Get profile by handle
 export const getProfileByHandle = handle => dispatch => {
+  
   dispatch(setProfileLoading());
   axios
   .get(`/api/profiles/handle/${handle}`)
@@ -62,6 +66,7 @@ export const editProfile = (profileData, history) => dispatch => {
 
 // Get all profiles
 export const getProfiles = () => dispatch => {
+  dispatch(clearCurrentProfile());
   dispatch(setProfileLoading());
   axios
     .get('/api/profiles/all')
@@ -112,3 +117,33 @@ export const clearCurrentProfile = () => {
     type: CLEAR_CURRENT_PROFILE
   };
 };
+
+// Follow user provided user handle
+export const followUserByHandle = handle => dispatch => { 
+  axios
+  .post(`/api/profiles/follow/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: FOLLOW_USER,
+        payload: res.data,
+      }) 
+    )  
+};
+
+// Unfollow user provided user handle
+export const unFollowUserByHandle = handle => dispatch => { 
+  axios
+  .post(`/api/profiles/unfollow/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: UNFOLLOW_USER,
+        payload: res.data,
+      }) 
+    )  
+};
+// // Clear current profiles[]
+// export const clearCurrentProfiles = () => {
+//   return {
+//     type: CLEAR_CURRENT_PROFILES
+//   }
+// }

@@ -2,16 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
+import { connect } from 'react-redux';
+import { followUserByHandle } from '../../action/profileActions'; 
+import { unFollowUserByHandle } from '../../action/profileActions';
+
 
 class ProfileItem extends Component {
-  render() {
-    const { profile } = this.props;
+    
+    onFollowClick(e){  
+      console.log('follow.....');    
+      console.log(this.props.profile.handle);
+      this.props.followUserByHandle(this.props.profile.handle);      
+    }
 
+    onUnFollowClick(e){   
+      console.log('Unfollow.....')    
+      console.log(this.props.profile.handle); 
+      this.props.unFollowUserByHandle(this.props.profile.handle);    
+    }
+  
+  render() {
+    const { profile } = this.props;     
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">
           <div className="col-2">
-            <img src={profile.user.avatar} alt="" className="rounded-circle" />
+            <img src={profile.avatar} style={{width: '100px'}} alt="" className="rounded-circle" />
           </div>
           <div className="col-lg-6 col-md-4 col-8">
             <h3>{profile.handle}</h3>
@@ -21,7 +37,11 @@ class ProfileItem extends Component {
             <p>{profile.user.name}</p>           
             <Link to={`/profiles/${profile.handle}`} className="btn btn-info">
               View Profile
-            </Link>
+            </Link>          
+            <p>
+            <span> <button className="btn btn-primary btn-info mr-3" onClick={this.onFollowClick.bind(this)}>Follow</button></span>  
+            <span><button className="btn btn-primary btn-info mr-1" onClick={this.onUnFollowClick.bind(this)}>Unfollow</button></span>      
+            </p>
           </div>         
         </div>
       </div>
@@ -30,7 +50,9 @@ class ProfileItem extends Component {
 }
 
 ProfileItem.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  followUserByHandle: PropTypes.func.isRequired,
+  unFollowUserByHandle: PropTypes.func.isRequired
 };
 
-export default ProfileItem;
+export default connect(null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);
