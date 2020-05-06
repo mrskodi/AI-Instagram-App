@@ -18,11 +18,8 @@ import PostForm from './components/posts/PostForm';
 import Post from './components/posts/Post';
 import Profile from './components/profile/Profile';
 import Profiles from './components/profiles/Profiles';
-<<<<<<< HEAD
 import EditProfile from './components/edit-profile/Edit-Profile';
-=======
 import LikesProfiles from './components/profiles/LikesProfiles';
->>>>>>> 7bf7ba289b8eac5dde0ab76514302b976f106927
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
