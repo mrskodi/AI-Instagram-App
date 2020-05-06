@@ -61,7 +61,7 @@ class Navbar extends Component {
             <ul className="navbar-nav mr-auto">
             
             </ul>
-            {isAuthenticated ? authLinks : guestLinks}   
+            {isAuthenticated ? authLinks : guestLinks}
           </div>
         </div>
       </nav>
