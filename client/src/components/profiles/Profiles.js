@@ -27,11 +27,11 @@ class Profiles extends Component {
     }
 
     return (
-      <div className="page-content profiles">
+      <div className="page-content">
         <div className="container">
           <div className="row">
             <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
-              <h1 className="display-5 text-center">Connect with other travelers.</h1>
+              <h1 className="display-5 text-center">Connect with other wanderers.</h1>
               <p className="lead text-center">
               Suggestions for you:
               </p>

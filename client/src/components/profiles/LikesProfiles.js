@@ -68,16 +68,16 @@ class LikesProfiles extends Component{
     }*/}
     
     return(
-      <div className="LikesProfile">
+      <div className="page-content">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
-              <h3 className="display-10 text-center">
-                {!isEmpty(postLikes) && (<div>Users who have liked the post you are viewing now...</div>)}
+            <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
+              <h3 className="text-center">
+                {!isEmpty(postLikes) && (<div>Wanderers who have liked this post.</div>)}
               </h3>
               <div className="col-md-12">
                 <Link to="/dashboard" className="btn btn-light mb-3">
-                  Back to dashboard
+                  Return <i class="fas fa-home"></i>
                 </Link>
                 <h4>{profileItems}</h4>
               </div>
