@@ -50,7 +50,7 @@ export const getProfileByHandle = handle => dispatch => {
 export const editProfile = (profileData, history) => dispatch => {
   axios
     .post('/api/profiles', profileData)
-    .then(res => history.push('/dashboard'))
+    .then(res => history.push(`/profiles/${res.data.handle}`))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

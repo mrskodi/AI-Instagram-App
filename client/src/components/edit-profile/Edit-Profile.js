@@ -85,12 +85,13 @@ class EditProfile extends Component {
 
   render() {
     const { errors } = this.state;
+    const { profile } = this.props.profile;
     return (
       <div className="page-content">
         <div className="container">
           <div className="row">
             <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
-              <Link className="btn btn-light" to={`/profiles/`}>
+              <Link className="btn btn-light" to={`/profiles/${profile.handle}`}>
                 Go Back
               </Link>
               <h1 className="text-center">Edit Profile</h1>
