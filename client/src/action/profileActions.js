@@ -1,6 +1,7 @@
 import axios from "axios"
 import { 
   GET_ERRORS,
+  CLEAR_ERRORS,
   GET_PROFILE,
   GET_PROFILES,
   SET_CURRENT_USER,
@@ -9,10 +10,10 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER
 } from "./dispatchTypes"
-//import { bindActionCreators } from "redux";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
+  dispatch(clearErrors());
   dispatch(setProfileLoading());
   axios
     .get('/api/profiles')
@@ -32,7 +33,7 @@ export const getCurrentProfile = () => dispatch => {
 
 // Get profile by handle
 export const getProfileByHandle = handle => dispatch => {
-  
+  dispatch(clearErrors());
   dispatch(setProfileLoading());
   axios
   .get(`/api/profiles/handle/${handle}`)
@@ -44,8 +45,8 @@ export const getProfileByHandle = handle => dispatch => {
     )
     .catch(err =>
       dispatch({
-        type: GET_PROFILE,
-        payload: [null]
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };
@@ -66,6 +67,7 @@ export const editProfile = (profileData, history) => dispatch => {
 
 // Get all profiles
 export const getProfiles = () => dispatch => {
+  dispatch(clearErrors());
   dispatch(clearCurrentProfile());
   dispatch(setProfileLoading());
   axios
@@ -78,8 +80,8 @@ export const getProfiles = () => dispatch => {
     )
     .catch(err =>
       dispatch({
-        type: GET_PROFILES,
-        payload: null
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };
@@ -103,6 +105,13 @@ export const deleteAccount = () => dispatch => {
       );
   }
 };
+
+// Clear errors
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
+}
 
 // Profile loading
 export const setProfileLoading = () => {

@@ -7,6 +7,8 @@ import { getProfileByHandle } from '../../action/profileActions';
 import { GET_PROFILES } from '../../action/dispatchTypes';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
+import ProfilePosts from './ProfilePosts';
+import isEmpty from '../../utils/isEmpty'
 
 class Profile extends Component {
   componentDidMount() {
@@ -25,7 +27,6 @@ class Profile extends Component {
     const { profile, loading } = this.props.profile;  
     const { auth } = this.props; 
     let profileContent;
-
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else {
@@ -50,6 +51,7 @@ class Profile extends Component {
             </div>
           </div>
           <ProfileAbout profile={profile} />
+          <ProfilePosts profile={profile}/>
         </div>
 
       );
@@ -70,7 +72,8 @@ class Profile extends Component {
 Profile.propTypes = {
   auth: PropTypes.object.isRequired,
   getProfileByHandle: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
