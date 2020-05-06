@@ -70,6 +70,25 @@ export const getPost = id => dispatch => {
       });
 }
 
+// Get all posts by a user when user handle is passed
+export const getPostsByHandle = handle => dispatch => {
+  //dispatch(clearErrors());
+  dispatch(postLoading());
+  axios.get(`/api/posts/handle/${handle}`)
+      .then(res => {
+          dispatch({
+            type: GET_POSTS,
+            payload: res.data
+          })
+      })
+      .catch(err => {
+          dispatch({
+            type: GET_ERRORS,
+            payload: [null]
+          })
+      });
+}
+
 // Add likes - adds a user to the likes array of a post and get the updated posts list
 export const addLike = id => dispatch => {
   axios.post(`/api/posts/like/${id}`)

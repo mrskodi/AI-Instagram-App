@@ -4,8 +4,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {logoutUser} from '../../action/authActions';
 import profileReducer from '../../reducers/profileReducer';
+import { getProfileByHandle } from '../../action/profileActions';
 
 class Navbar extends Component {
+  constructor(){
+    super();
+    this.state={
+      handle: '',
+      errors: {}
+    }
+  }
+
+  onChange(e){
+    this.setState({[e.target.name]: e.target.value});
+  }
+
+  onSearchClick(handle){
+    this.props.getProfileByHandle(handle);
+  }
+
   onLogoutClick(eventInfo){
     eventInfo.preventDefault();
     this.props.logoutUser();
@@ -24,7 +41,22 @@ class Navbar extends Component {
      </ul>);
 
     const authLinks = (
+      
+
       <ul className="navbar-nav ml-auto">
+        <input name="handle"
+               type="text" 
+               placeholder="search fellow travelers by handle"
+               value={this.state.handle}
+               onChange={this.onChange.bind(this)}
+        />
+        {console.log(this.state.handle)}
+        <Link to={`/profiles/${this.state.handle}`} onClick={this.onSearchClick.bind(this, this.state.handle)}>
+          <i class="fas fa-search"></i>
+        </Link>
+
+
+
         <li className="nav-item">      
           <Link className="nav-link" to="/profiles">Connect with people</Link>
         </li>      
@@ -72,7 +104,8 @@ class Navbar extends Component {
 //Define the component dependencies that should be available to load component and run successfully
 Navbar.propTypes = {
   logoutUser : PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired  
+  auth: PropTypes.object.isRequired,
+  getProfileByHandle: PropTypes.func.isRequired  
 }
 
 //Read the data from store and map it to props
@@ -80,4 +113,4 @@ const mapStateToProps = (state) =>({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser })(Navbar);
+export default connect(mapStateToProps, { logoutUser, getProfileByHandle })(Navbar);

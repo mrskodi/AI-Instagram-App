@@ -7,6 +7,7 @@ import { getProfileByHandle } from '../../action/profileActions';
 import { GET_PROFILES } from '../../action/dispatchTypes';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
+import ProfilePosts from './ProfilePosts';
 
 class Profile extends Component {
   componentDidMount() {
@@ -40,6 +41,7 @@ class Profile extends Component {
           </div>  
           <ProfileHeader profile={profile} />
           <ProfileAbout profile={profile} />
+          <ProfilePosts profile={profile}/>
         </div>
 
       );
