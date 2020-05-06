@@ -92,6 +92,7 @@ export const deleteAccount = () => dispatch => {
     axios
       .delete('/api/users/')
       .then(res =>{
+
         dispatch({
           type: SET_CURRENT_USER,
           payload: {}

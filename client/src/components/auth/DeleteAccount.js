@@ -7,11 +7,19 @@ class DeleteAccount extends Component{
   
   componentWillMount(){
     this.props.deleteAccount();
+    
   }
-  render(){
+
+  componentWillReceiveProps(nextProps){
+    if(!nextProps.auth.isAuthenticated){
+      this.props.history.push('/');
+    } 
+  }
+  render()
+  {
     return(
       <div>
-        
+        <h3>We are so glad you decided to stay back!</h3>
       </div>
     )
   }
