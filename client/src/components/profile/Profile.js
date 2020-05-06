@@ -23,6 +23,7 @@ class Profile extends Component {
 
   render() {
     const { profile, loading } = this.props.profile;  
+    const { auth } = this.props; 
     let profileContent;
 
     if (profile === null || loading) {
@@ -41,9 +42,11 @@ class Profile extends Component {
           <ProfileHeader profile={profile} />
           <div  className="row">  
             <div className="col-md-12">
-              <Link to="/edit-profile" className="btn btn-light float-right">
-              <i className="fas fa-user-edit mr-1" /> Edit Profile
-              </Link>
+              {profile.user === auth.user.id ? (
+                <Link to="/edit-profile" className="btn btn-light float-right">
+                  <i className="fas fa-user-edit mr-1" /> Edit Profile
+                </Link>
+              ) : (null)}
             </div>
           </div>
           <ProfileAbout profile={profile} />
@@ -65,11 +68,13 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
+  auth: PropTypes.object.isRequired,
   getProfileByHandle: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   profile: state.profile
 });
 
