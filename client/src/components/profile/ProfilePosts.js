@@ -20,15 +20,15 @@ class ProfilePosts extends Component{
     } else if(posts.length > 0){
         profilePostsContent = posts.map(post => <ProfilePostItem key={post._id} post={post}/>)
     } else{
-      profilePostsContent = <h3>No Posts made by the user</h3>
+      profilePostsContent = <h4 className="card-body"><strong>{profile.handle}</strong> doesn't have any posts yet.</h4>
     }
 
     return(
-      <div className="feed">
-        <div className="container">
-          {profilePostsContent}
-        </div>
-      </div>
+          <div className="card card-body mb-3">
+            <div className="row">
+              {profilePostsContent}
+            </div>
+          </div>
     )
   }
 }

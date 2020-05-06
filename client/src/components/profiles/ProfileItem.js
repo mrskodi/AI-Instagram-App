@@ -26,12 +26,12 @@ class ProfileItem extends Component {
     return (
       <div className="card card-body mb-3">
         <div className="row">
-          <div className="col-2">
+          <div className="col-xs-6 col-sm-5 col-md-2 col-lg-2 col-xl-2">
 
             <img src={profile.avatar} alt="" className="rounded-circle avatar-140" />
 
           </div>
-          <div className="col-lg-6 col-md-4 col-8">
+          <div className="col-xs-6 col-sm-7 col-md-8 col-lg-10 col-xl-10">
             <h3>{profile.name}</h3>
             <p>
             {isEmpty(profile.bio) ? (<span></span>) : (<span>{profile.bio}</span>)}

@@ -124,6 +124,34 @@ hr.charcoal {
   float: right;
 }
 
+.delete-post {
+  float: right;
+}
+
+.nav-item {
+  vertical-align: middle;
+}
+
+.search {
+  height: 1.6rem;
+}
+
+
+.search-bar {
+  padding-left: 15px;
+  margin: .5rem 0;
+}
+
+.search-icon {
+  display: inline;
+  margin-right: 3rem;
+}
+
+.search::placeholder {
+  font-size: .9rem;
+  padding-left: 20px;
+} 
+
 .post-handle {
   padding-left: 10px;
   font-weight: 600;
@@ -159,6 +187,10 @@ a.post-handle:hover {
   background-position: center;
 }
 
+.profile-post {
+  margin-bottom: 30px;
+}
+
 .profile-heading {
   font-size: 1.5rem;
 }
@@ -190,6 +222,7 @@ a.post-handle:hover {
 
 .avatar-140 {
   width: 140px;
+  max-width: 100%;
 }
 
 .handle-link:hover {

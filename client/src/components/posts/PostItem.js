@@ -98,13 +98,7 @@ class PostItem extends Component{
               Comments
             </Link>
             {/* If user is the publisher of a post, Delete Post option shown */}
-            {post.user === auth.user.id ? (
-              <button type="button"
-                      className="btn btn-danger mr-1"
-                      onClick={this.onDeleteClick.bind(this, post._id)}>
-                Delete
-              </button>
-            ) : (null)}
+           
 
             <br/>
             {errors && (<p className="text-danger badge dadge-light">{errors.likeError}</p>)}
@@ -117,6 +111,13 @@ class PostItem extends Component{
               <p className="badge badge-light">View {post.comments.length} comments</p>
               </Link>
             ): null }
+             {post.user === auth.user.id ? (
+              <button type="button"
+                      className="btn btn-danger mr-1 delete-post"
+                      onClick={this.onDeleteClick.bind(this, post._id)}>
+                <i className="fas fa-times"></i>
+              </button>
+            ) : (null)}
           </span>
           ) : null}
         </div>

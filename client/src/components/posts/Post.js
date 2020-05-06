@@ -33,12 +33,12 @@ class Post extends Component {
     }
 
     return(
-      <div className="post">
-        <div className="container"> 
+      <div className="page-content">
+        <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
               <Link to="/dashboard" className="btn btn-light mb-3">
-                Back to dashboard
+                Back <i class="fas fa-home"></i>
               </Link>
               {postContent}
             </div>

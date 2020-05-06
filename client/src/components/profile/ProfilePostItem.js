@@ -16,8 +16,8 @@ class ProfilePostItem extends Component{
 
     if(post.isImageOrVideo === 'Image'){
       // the html tag should be an image tag
-      profilePostContent = <img 
-                      src={post.imageOrVideoLink}/>
+      profilePostContent = 
+        <img src={post.imageOrVideoLink}/>
     }
     if(post.isImageOrVideo === 'Video'){
       // the html tag should be a ReactPlayer
@@ -26,15 +26,14 @@ class ProfilePostItem extends Component{
                       url={post.imageOrVideoLink}/>
     }
     return(
-      <div className="card card-body mb-3">
-        <div className="row">
-          <div className="col-md-3">
-            <Link to={`/post/id/${post._id}`} className="text-dark" onClick={this.onPostClick.bind(this, post._id)}>
+
+          <div className=".col-4 .col-sm-12 col-md-4 .col-lg-4 .col-xl-4">
+            <div className="profile-post">
+              <Link to={`/post/id/${post._id}`} className="text-dark" onClick={this.onPostClick.bind(this, post._id)}>
                 {profilePostContent}
               </Link>
+            </div>
           </div>
-        </div>
-      </div>
     )
   }
 }
