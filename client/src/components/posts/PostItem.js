@@ -74,7 +74,7 @@ class PostItem extends Component{
               </Link>
             </div>
           </div>
-          <Link className="post-caption" to={`/post/id/${post._id}`}>
+          <Link className="post-caption" to={`/post/id/${post._id}`} onClick={this.onClick.bind(this)}>
               {post.text}
           </Link>
           <br></br>

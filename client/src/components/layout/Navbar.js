@@ -72,7 +72,7 @@ class Navbar extends Component {
           <Link className="nav-link" to="/postForm"><i className="fas fa-plus"></i></Link>              
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/dashboard"><i class="fas fa-home"></i></Link>              
+          <Link className="nav-link" to="/dashboard"><i className="fas fa-home"></i></Link>              
         </li>
         <li className="nav-item">      
           <Link className="nav-link" to="/profiles"><i className="fas fa-user-friends"></i></Link>

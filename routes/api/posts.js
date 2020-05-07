@@ -41,7 +41,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   Post.find()
       .sort({date: -1})
       .then(posts => res.json(posts))
-      .catch(err => res.json({msg: 'No posts found'}));
+      .catch(err => res.status(404).json({msg: 'No posts found'}));
 })
 
 // @route   GET /api/posts/likedUsers/post_id

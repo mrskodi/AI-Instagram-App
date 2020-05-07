@@ -7,7 +7,6 @@ class DeleteAccount extends Component{
   
   componentWillMount(){
     this.props.deleteAccount();
-    
   }
 
   componentWillReceiveProps(nextProps){
@@ -18,8 +17,14 @@ class DeleteAccount extends Component{
   render()
   {
     return(
-      <div>
-        <h3>We are so glad you decided to stay back!</h3>
+      <div className="page-content">
+        <div className="container">
+          <div className="row">
+            <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
+              <h2>YAY!!! We are so glad you decided to stay back!</h2>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

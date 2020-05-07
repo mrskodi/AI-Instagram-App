@@ -21,7 +21,7 @@ import Profile from './components/profile/Profile';
 import Profiles from './components/profiles/Profiles';
 import EditProfile from './components/edit-profile/Edit-Profile';
 import LikesProfiles from './components/profiles/LikesProfiles';
-import ProfileNotFound from './components/profile/ProfileNotFound';
+import NotFound from './components/profile/NotFound';
 import DeleteAccount from './components/auth/DeleteAccount';
 import { deleteAccount } from './action/profileActions';
 
@@ -59,15 +59,6 @@ class App extends Component {
             <Route exact path="/" component= {Landing}></Route>
             <Route exact path="/register" component={Register} ></Route>
             <Route exact path="/login" component={Login} ></Route>
-            {/* <Route exact path="/postForm" component={PostForm}></Route> */}
-            {/* <Route exact path="/post/id/:id" component={Post}></Route> */}
-            {/* <Route exact path="/dashboard" component={Dashboard}></Route> */}
-            {/* <Route exact path="/profiles/:handle" component={Profile}></Route> */}
-            {/* <Route exact path="/edit-profile" component={EditProfile}></Route> */}
-            {/* <Route exact path="/profiles" component={Profiles}></Route> */}
-            {/* <Route exact path="/likesProfiles/:id" component={LikesProfiles}></Route> */}
-            {/* <Route exact path="/not-found"component={ProfileNotFound}></Route> */}
-            <Route exact path="/delete-account" component={DeleteAccount}></Route>
 
             <Switch>
               <PrivateRoute exact path='/dashboard' component={Dashboard}/>
@@ -77,9 +68,11 @@ class App extends Component {
               <PrivateRoute exact path='/postForm' component={PostForm}/>
             </Switch>
 
-            <Switch>
+            {/* <Switch>
               <PrivateRoute exact path='post/id/:id' component={Post}/>
-            </Switch>
+            </Switch> */}
+
+            <Route exact path="/post/id/:id" component={Post}></Route>
 
             <Switch>
               <PrivateRoute exact path='/profiles' component={Profiles}/>
@@ -98,7 +91,7 @@ class App extends Component {
             </Switch>
 
             <Switch>
-              <PrivateRoute exact path='/not-found' component={ProfileNotFound}/>
+              <PrivateRoute exact path='/not-found' component={NotFound}/>
             </Switch>
 
             <Switch>

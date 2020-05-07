@@ -164,7 +164,7 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
                   if((profile.followers.filter(item => item.handle === req.user.handle).length > 0) ||
                       (req.user.handle === req.params.handle)){
                     // Invalid addition to followers array of req.params.handle
-                    return res.json({invalid: 'invalid request'});
+                    return res.status(400).json({invalid: 'invalid request'});
                   }
 
                   profile.followers.unshift({handle: req.user.handle});
@@ -189,7 +189,7 @@ router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: f
           // Check if following[] of req.user has req.params.handle
           if(profile.following.filter(item => item.handle === req.params.handle).length === 0){
             // User not in the following array
-            return res.json({inValid: 'Invalid request'});
+            return res.status(400).json({inValid: 'Invalid request'});
           }
 
           // identify req.params index from the following[] array 
