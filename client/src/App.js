@@ -23,7 +23,6 @@ import EditProfile from './components/edit-profile/Edit-Profile';
 import LikesProfiles from './components/profiles/LikesProfiles';
 import NotFound from './components/profile/NotFound';
 import DeleteAccount from './components/auth/DeleteAccount';
-import { deleteAccount } from './action/profileActions';
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
@@ -95,7 +94,7 @@ class App extends Component {
             </Switch>
 
             <Switch>
-              <PrivateRoute exact path='/delete-account' component={deleteAccount}/>
+              <PrivateRoute exact path='/delete-account' component={DeleteAccount}/>
             </Switch>
             <Footer/>    
           </div>

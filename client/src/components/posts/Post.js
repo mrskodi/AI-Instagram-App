@@ -38,7 +38,7 @@ class Post extends Component {
           <div className="row">
             <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
               <Link to="/dashboard" className="btn btn-light mb-3">
-                Back <i class="fas fa-home"></i>
+                Back <i className="fas fa-home"></i>
               </Link>
               {postContent}
             </div>
