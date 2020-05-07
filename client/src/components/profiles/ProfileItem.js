@@ -13,21 +13,44 @@ class ProfileItem extends Component {
     constructor(){
       super();
       this.state = {
-        button: {}
+        button: ''
       }
     }
 
     componentDidMount(){
-      console.log('inside component did Mount...')
+      const { profile } = this.props;
+      const { loggedInUser } = this.props;
+
+      console.log('Component did Mount... getting started')
+
+      console.log(`Logged In User handle: ${loggedInUser.handle}`)
+      
       console.log(`ProfileItem handle: ${profile.handle}`);
-      console.log(`ProfileItem Followers: ${profile.handle.followers}`);
-      console.log(`Looged In User handle: ${this.props.user.handle}`)
+      console.log(`${profile.handle} Follower handles:`);
+
+      profile.followers.map(follower => console.log(follower.handle));
+
+      
+
+     
+
+      // Successfully mounted and all necessary infomation available
+      profile.followers.map(follower => {
+        console.log('Inside loop.... testing follow and unfollow logic')
+        console.log(`if(${follower.handle} === ${loggedInUser.handle}) `)
+          follower.handle === loggedInUser.handle ? this.setState({button: 'UNfollow'}) : this.setState({button: 'follow'});
+
+        console.log(`state of button: ${this.state.button}`);
+
+        console.log('-----------------------------------------------');
+      })
+
     }
 
     onFollowClick(e){  
       console.log('follow.....');    
       console.log(this.props.profile.handle);
-      this.props.followUserByHandle(this.props.profile.handle);      
+      this.props.followUserByHandle(this.props.profile.handle);
     }
 
     onUnFollowClick(e){   

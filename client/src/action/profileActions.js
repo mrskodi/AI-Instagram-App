@@ -137,7 +137,8 @@ export const followUserByHandle = handle => dispatch => {
         type: FOLLOW_USER,
         payload: res.data,
       }) 
-    )  
+    )
+      
 };
 
 // Unfollow user provided user handle
