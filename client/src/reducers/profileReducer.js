@@ -18,7 +18,9 @@ const initialState = {
   // loading: false
 
   profile: null,
+  //userFollowers: null,
   profiles: null,
+  //userFollowers: null,
   loading: false
 };
 
@@ -52,16 +54,18 @@ export default function(state = initialState, action){
        ...state,
        profile: null
      };
-     case FOLLOW_USER:
-      return{
-        ...state,       
-        loading: false
-      };
-      case UNFOLLOW_USER:
-      return{
-        ...state,       
-        loading: false
-      };     
+    //  case FOLLOW_USER:
+    //   return{
+    //     ...state,     
+    //     userFollowers: action.payload,  
+    //     loading: false
+    //   };
+    //   case UNFOLLOW_USER:
+    //   return{
+    //     ...state,
+    //     userFollowers: action.payload,
+    //     loading: false
+    //   };     
      case CLEAR_CURRENT_PROFILES:
        return {
          ...state,

@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, GET_ERRORS, CLEAR_ERRORS } from './dispatchTypes';
+import { SET_CURRENT_USER, GET_ERRORS, CLEAR_ERRORS, GET_USER_FOLLOWERS } from './dispatchTypes';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
@@ -52,6 +52,8 @@ export const loginUser = (userData) => dispatch => {
           type: SET_CURRENT_USER,
           payload: decoded
         })
+        // get user profile by handle and get the list of userFollowers - populate them in userFollowers in auth
+        
        }
       )
       .catch(err => {

@@ -140,21 +140,21 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 // @desc    Following a user whose userhandle is passed in route
 router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
 
-  // Add req.params.handle to following[] of req.user
-    Profile.findOne({email: req.user.email})
-         .then(profile => {
+//  Add req.params.handle to following[] of req.user
+    // Profile.findOne({email: req.user.email})
+    //      .then(profile => {
 
-          // Check if following[] of req.user has req.params.handle
-          if((profile.following.filter(item => item.handle === req.params.handle).length > 0) ||
-             (req.params.handle === req.user.handle)){
-            // User already following the handle
-            return res.status(400).json({error: 'invalid request'});
-          }
+    //       // Check if following[] of req.user has req.params.handle
+    //       if((profile.following.filter(item => item.handle === req.params.handle).length > 0) ||
+    //          (req.params.handle === req.user.handle)){
+    //         // User already following the handle
+    //         return res.status(400).json({error: 'invalid request'});
+    //       }
 
-          profile.following.unshift({handle: req.params.handle});
-          profile.save()
-                  .then(() => res.json(profile))
-                  .catch(err => console.log(err));
+    //       profile.following.unshift({handle: req.params.handle});
+    //       profile.save()
+    //               .then(() => res.json(profile))
+    //               .catch(err => console.log(err));
 
           // Add req.user to followers[] list of req.params.handle
           Profile.findOne({handle: req.params.handle})
@@ -174,8 +174,8 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
                  })
                  .catch(err => console.log(err));
         })
-         .catch(err => console.log(err));
-});
+//          .catch(err => console.log(err));
+// });
 
 // @router  api/profiles/unfollow/handle/:handle
 // @access  Private
@@ -183,26 +183,26 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
 router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
   
   // remove req.params.handle from following[] of req.user
-    Profile.findOne({email: req.user.email})
-         .then(profile => {
+    // Profile.findOne({email: req.user.email})
+    //      .then(profile => {
            
-          // Check if following[] of req.user has req.params.handle
-          if(profile.following.filter(item => item.handle === req.params.handle).length === 0){
-            // User not in the following array
-            return res.status(400).json({inValid: 'Invalid request'});
-          }
+    //       // Check if following[] of req.user has req.params.handle
+    //       if(profile.following.filter(item => item.handle === req.params.handle).length === 0){
+    //         // User not in the following array
+    //         return res.status(400).json({inValid: 'Invalid request'});
+    //       }
 
-          // identify req.params index from the following[] array 
-          // remove req.params from following[] of req.users
-          const removeIndex = profile.following.map(item => item.handle)
-                                               .indexOf(req.params.handle);
-          // Splice the array
-          profile.following.splice(removeIndex, 1);
+    //       // identify req.params index from the following[] array 
+    //       // remove req.params from following[] of req.users
+    //       const removeIndex = profile.following.map(item => item.handle)
+    //                                            .indexOf(req.params.handle);
+    //       // Splice the array
+    //       profile.following.splice(removeIndex, 1);
 
-          // Save
-          profile.save()
-                  .then(() => res.json(profile))
-                  .catch(err => console.log(err));
+    //       // Save
+    //       profile.save()
+    //               .then(() => res.json(profile))
+    //               .catch(err => console.log(err));
 
           // remove req.user from followers[] of req.params.handle
           Profile.findOne({handle: req.params.handle})
@@ -228,8 +228,28 @@ router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: f
                  })
                  .catch(err => console.log(err));
         })
-         .catch(err => console.log(err));
-});
+//          .catch(err => console.log(err));
+// });
+
+// @router  api/profiles/userFollowers
+// @access  Private
+// @desc    Get all followers of a handle
+router.get('/userFollowers', passport.authenticate('jwt', {session: false}), (req, res) => {
+  // Find the followers of req.params.handle
+  const errors = {};
+
+  Profile.findOne({handle: req.user.handle})
+        .then(profile => {
+          if(!profile){
+            errors. noProfile = 'There are no profiles.';
+            return res.status(400).json(errors);
+          }
+          return res.json(profile);
+        })
+        .catch()
+})
+  
+
 
 module.exports = router;
 
