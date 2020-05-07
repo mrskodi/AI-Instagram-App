@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import ProfileItem from '../profiles/ProfileItem';
 import { getPost } from '../../action/postActions';
-//import { getProfileByHandle } from '../../action/profileActions';
 import isEmpty from '../../utils/isEmpty';
 import LikeProfileItem from './LikeProfileItem';
 import { Link } from 'react-router-dom';
@@ -56,12 +55,7 @@ class LikesProfiles extends Component{
 }
 
 LikesProfiles.propTypes = {
-  //post: PropTypes.object.isRequired,
-  //postLikes: PropTypes.array.isRequired,
-  //profile: PropTypes.object.isRequired,
-  //auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  //getProfileByHandle: PropTypes.func.isRequired,
   getPost: PropTypes.func.isRequired
 }
 
@@ -70,7 +64,6 @@ const mapStateToProps = state => ({
   postLikes: state.post.post.likes,
   profile: state.profile,
   errors: state.errors,
-  //auth: state.auth
 });
 
 export default connect(mapStateToProps, { getPost })(LikesProfiles);

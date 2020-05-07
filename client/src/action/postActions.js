@@ -22,8 +22,6 @@ export const addPost = (postData, history) => dispatch => {
         history.push('/dashboard');
       })
       .catch(err => {
-        // postData addition to mongodb unsuccessful
-        // add err.response.data into store
         dispatch({
           type: GET_ERRORS,
           payload: err.response.data

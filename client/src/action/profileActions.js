@@ -151,9 +151,3 @@ export const unFollowUserByHandle = handle => dispatch => {
       }) 
     )  
 };
-// // Clear current profiles[]
-// export const clearCurrentProfiles = () => {
-//   return {
-//     type: CLEAR_CURRENT_PROFILES
-//   }
-// }

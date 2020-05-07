@@ -47,7 +47,6 @@ export const loginUser = (userData) => dispatch => {
         setAuthToken(token);
         // decode the token to get user id, name and avatar
         const decoded = jwt_decode(token);
-        // Dispatch SET_CURRENT_USER with payload = decoded user information
         dispatch({
           type: SET_CURRENT_USER,
           payload: decoded
@@ -55,8 +54,6 @@ export const loginUser = (userData) => dispatch => {
        }
       )
       .catch(err => {
-        // errors received as response from api call
-        // dispatch GET-ERRORS
         dispatch({
           type: GET_ERRORS,
           payload: err.response.data

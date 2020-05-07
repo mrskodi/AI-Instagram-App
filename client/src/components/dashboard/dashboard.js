@@ -15,7 +15,6 @@ class Dashboard extends Component{
       dashboardContent= <Posts/>
     }
     return(
-      // should load all posts
       <div className="page-content">
         <div className="container">
           <div className="row">

@@ -32,11 +32,6 @@ export default function(state = initialState, action){
         posts: action.payload,
         loading: false
       }
-    // case GET_LIKED_USERS:
-    //   return {
-    //     ...state,
-    //     postLikes: action.payload       
-    //   }
     default:
       return state
   }

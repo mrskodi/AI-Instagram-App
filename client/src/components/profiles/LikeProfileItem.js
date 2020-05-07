@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 class LikeProfileItem extends Component{
   render(){
-    // const {postLikeHandle, postLikeAvatar, postLikeName} = this.props;
     const { postLike } = this.props;
     return(
       <div className="card card-body bg-light mb-3">

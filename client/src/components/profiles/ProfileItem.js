@@ -27,9 +27,7 @@ class ProfileItem extends Component {
       <div className="card card-body mb-3">
         <div className="row">
           <div className="col-xs-6 col-sm-5 col-md-2 col-lg-2 col-xl-2">
-
             <img src={profile.avatar} alt="" className="rounded-circle avatar-140" />
-
           </div>
           <div className="col-xs-6 col-sm-7 col-md-8 col-lg-10 col-xl-10">
             <h3>{profile.handle}</h3>

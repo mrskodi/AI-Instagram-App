@@ -28,12 +28,10 @@ class PostItem extends Component{
 
   findUserLike(likes){
     const { auth } = this.props;
-    //if(likes>0){
+    
     if(likes.filter(like => like.user === auth.user.id).length > 0){
       return true;
-      }
-    //}
-    else{
+      } else{
       return false;
     }
   }
@@ -97,8 +95,6 @@ class PostItem extends Component{
             <Link to={`/post/id/${post._id}`} className="btn btn-light mr-1">
               Comments
             </Link>
-            {/* If user is the publisher of a post, Delete Post option shown */}
-           
 
             <br/>
             {errors && (<p className="text-danger badge dadge-light">{errors.likeError}</p>)}

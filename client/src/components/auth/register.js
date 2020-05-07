@@ -48,8 +48,6 @@ class Register extends Component {
 
   render() {
     const { errors } = this.state;     
-    // Another way to write above statement using deconstruction  
-    //const {errors} = this.state;
 
     return (
       <div className="register">

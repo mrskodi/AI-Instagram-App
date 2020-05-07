@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPostsByHandle } from '../../action/postActions';
 import Spinner from '../common/Spinner';
-import PostItem from '../posts/PostItem';
 import ProfilePostItem from './ProfilePostItem';
 
 class ProfilePosts extends Component{

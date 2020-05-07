@@ -57,10 +57,6 @@ class PostForm extends Component{
                           <label htmlFor="imageOrVideo" className="dropdown-text">Are you sharing an image or a video? </label>
                           <select id="imageOrVideo" className={classnames("form-control form-control-lg", {'is-invalid': errors.isImageOrVideo})} name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}>
                           
-                          
-                          
-                          
-                          
                           {/* className="form-control dropdown-btn" name="isImageOrVideo" form="addPost-form" value={this.state.isImageOrVideo} onChange={this.onChange}> */}
                             <option>Select one:</option>
                             <option>Image</option>
