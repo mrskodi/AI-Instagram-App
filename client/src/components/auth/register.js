@@ -53,7 +53,7 @@ class Register extends Component {
 
     return (
       <div className="register">
-        <div className="dark-overlay landing-inner text-light">
+        <div className="landing-inner text-light">
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
