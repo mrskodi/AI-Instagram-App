@@ -26,46 +26,12 @@ class LikesProfiles extends Component{
     }
     else if(!isEmpty(postLikes)){
       profileItems = postLikes.map(postLike => (
-        // Pass the profile handle to likeProfileItem
-        // <LikeProfileItem postLikeHandle= {postLike.handle}
-        //                  postLikeAvatar= {postLike.avatar} 
-        //                  postLikeName={postLike.name}>
-            
-        // </LikeProfileItem>
-        <LikeProfileItem postLike = {postLike}/>
-        
-        // Once you have the user profile, pass it onto profileItem
+        <LikeProfileItem key={postLike._id} postLike = {postLike}/>
       ))
      } 
     else{
-      profileItems = <h4>No one has liked this post yet...</h4>
+      profileItems = 'No one has liked this post yet...';
     }
-    
-    
-    
-    // else if(isEmpty(postLikes)){
-    //   profileItems = "No one has liked this post yet..."
-    // }else {
-    //   // There are valid users in the likes[]
-    //     profileItems = postLikes.map(postLike => (
-    //     // Pass the profile handle to likeProfileItem
-    //     <LikeProfileItem postLikeHandle= {postLike.handle}
-    //     postLikeAvatar= {postLike.avatar} postLikeName={postLike.name}/>
-    //     // Once you have the user profile, pass it onto profileItem
-    //   ))
-    // }
-    {/*else{
-      profileItem = <ProfileItem profile={profile}></ProfileItem>
-
-    if (profiles.length > 0) {
-        profileItems = profiles.map(profile => (
-          <ProfileItem key={profile._id} profile={profile} />
-        ));
-      }
-
-
-
-    }*/}
     
     return(
       <div className="page-content">
@@ -77,7 +43,7 @@ class LikesProfiles extends Component{
               </h3>
               <div className="col-md-12">
                 <Link to="/dashboard" className="btn btn-light mb-3">
-                  Return <i class="fas fa-home"></i>
+                  Return <i className="fas fa-home"></i>
                 </Link>
                 <h4>{profileItems}</h4>
               </div>
@@ -91,7 +57,7 @@ class LikesProfiles extends Component{
 
 LikesProfiles.propTypes = {
   //post: PropTypes.object.isRequired,
-  postLikes: PropTypes.array.isRequired,
+  //postLikes: PropTypes.array.isRequired,
   //profile: PropTypes.object.isRequired,
   //auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,

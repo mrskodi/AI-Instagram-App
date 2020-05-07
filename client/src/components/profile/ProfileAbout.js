@@ -8,25 +8,34 @@ class ProfileAbout extends Component {
     const { profile } = this.props; 
 
     // Hobbies List
-    const hobbies = profile.hobbies.map((hobby, index) => (
-      <div key={index} className="profile-block">      
-        {hobby}
-      </div>
-    ));
+    let hobbies;
+    if((profile.hobbies[0] !== "") && (profile.hobbies[0] !== undefined) && (profile.hobbies[0] !== null)){
+      hobbies = profile.hobbies.map((hobby, index) => (
+        <p key={index} className="profile-block">      
+          {hobby}
+        </p>
+      ));
+    }
 
      //  Countries visited
-     const countries = profile.countries.map((country, index) => (
-      <div key={index} className="profile-block">
-        {country}
-      </div>
-    ));
+    let countries; 
+    if((profile.countries[0] !== "") && (profile.countries[0] !== undefined) && (profile.countries[0] !== null)){
+      countries = profile.countries.map((country, index) => (
+        <p key={index} className="profile-block">
+          {country}
+        </p>
+      ));
+    }
 
      // Favorite places
-     const places = profile.places.map((place, index) => (
-      <div key={index} className="profile-block">
-        {place}
-      </div>
-    ));
+     let places; 
+      if((profile.places[0] !== "") && (profile.places[0] !== undefined) && (profile.places[0] !== null)){
+      places = profile.places.map((place, index) => (
+        <p key={index} className="profile-block">
+          {place}
+        </p>
+      ));
+    }
   
     return (
       <div className="row">
@@ -34,12 +43,18 @@ class ProfileAbout extends Component {
           <div className="card card-body mb-3">
             {isEmpty(profile.bio) ? (<p className="hide">{profile.bio}</p>) : (<p>{profile.bio}</p>) }
             <hr className="charcoal"/>
+
             {!isEmpty(profile.location) ? (<p><span className="profile-icon"><i className="fas fa-map-marker-alt fa-fw"></i></span> {profile.location}</p>) : (<p className="hide"></p>)}
+
             {!isEmpty(profile.phone) ? (<p><span className="profile-icon"><i className="fas fa-mobile-alt fa-fw"></i></span> {profile.phone}</p>) : (<p className="hide"></p>)}
+
             {!isEmpty(profile.website) ? (<p><span className="profile-icon"><i className="fas fa-globe fa-fw"></i></span> <a target="_blank" href={`${profile.website}`}>{profile.website}</a></p>) : (<p className="hide"></p>)}
-            {!isEmpty(profile.hobbies) ? (<p><span className="profile-icon"><i className="fas fa-heart fa-fw"></i></span> {hobbies}</p>) : (<p className="hide"></p>)}
-            {!isEmpty(profile.places) ? (<p><span className="profile-icon"><i className="fas fa-map-pin fa-fw"></i></span> {places}</p>) : (<p className="hide"></p>)}
-            {!isEmpty(profile.countries) ? (<p><span className="profile-icon"><i className="fas fa-atlas fa-fw"></i></span> {countries}</p>) : (<p className="hide"></p>)}
+
+            {(profile.hobbies[0] !== "") && (profile.hobbies[0] !== undefined) && (profile.hobbies[0] !== 'null') ? (<div><span className="profile-icon"><i className="fas fa-heart fa-fw"></i></span> {hobbies}</div>) : (<div className="hide"></div>)}
+
+            {(profile.places[0] !== "") && (profile.places[0] !== undefined) && (profile.places[0] !== null) ? (<div><br/><span className="profile-icon"><i className="fas fa-map-pin fa-fw"></i></span> {places}<br/></div>) : (<div className="hide"></div>)}
+
+            {(profile.countries[0] !== "") && (profile.countries[0] !== undefined) && (profile.countries[0] !== null) ? (<div><br/><span className="profile-icon"><i className="fas fa-atlas fa-fw"></i></span> {countries}<br/></div>) : (<div className="hide"></div>)}
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ class ProfileItem extends Component {
 
           </div>
           <div className="col-xs-6 col-sm-7 col-md-8 col-lg-10 col-xl-10">
-            <h3>{profile.name}</h3>
+            <h3>{profile.handle}</h3>
             <p>
             {isEmpty(profile.bio) ? (<span></span>) : (<span>{profile.bio}</span>)}
             </p>            
@@ -41,8 +41,8 @@ class ProfileItem extends Component {
               View Profile
             </Link>          
             <p>
-            <span> <button className="btn btn-light mr-3" onClick={this.onFollowClick.bind(this)}><i class="fas fa-user-plus"></i></button></span>  
-            <span><button className="btn btn-light mr-1" onClick={this.onUnFollowClick.bind(this)}><i class="fas fa-user-minus"></i></button></span>      
+            <span> <button className="btn btn-light mr-3" onClick={this.onFollowClick.bind(this)}><i className="fas fa-user-plus"></i></button></span>  
+            <span><button className="btn btn-light mr-1" onClick={this.onUnFollowClick.bind(this)}><i className="fas fa-user-minus"></i></button></span>      
             </p>
           </div>         
         </div>

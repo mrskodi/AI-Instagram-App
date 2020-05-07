@@ -42,16 +42,16 @@ class Navbar extends Component {
 
     const authLinks = (
       
-
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <input className="search-bar" name="handle"
-                type="text" 
-                placeholder="Search by handle"
-                value={this.state.handle}
-                onChange={this.onChange.bind(this)}
-          />
-          {console.log(this.state.handle)}
+        <input className="search-bar"
+              name="handle"
+               type="text" 
+               placeholder="Search by handle"
+               value={this.state.handle}
+               onChange={this.onChange.bind(this)}
+        />
+        {console.log(this.state.handle)}
           <Link className="nav-link search-icon" to={`/profiles/${this.state.handle}`} onClick={this.onSearchClick.bind(this, this.state.handle)}>
             <i className="fas fw fa-search"></i>
           </Link>
@@ -69,13 +69,13 @@ class Navbar extends Component {
         </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/postForm"><i className="fas fw fa-plus"></i></Link>              
+          <Link className="nav-link" to="/postForm"><i className="fas fa-plus"></i></Link>              
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/dashboard"><i class="fas fw fa-home"></i></Link>              
+          <Link className="nav-link" to="/dashboard"><i className="fas fa-home"></i></Link>              
         </li>
         <li className="nav-item">      
-          <Link className="nav-link" to="/profiles"><i className="fas fw fa-user-friends"></i></Link>
+          <Link className="nav-link" to="/profiles"><i className="fas fa-user-friends"></i></Link>
         </li>    
         <li className="nav-item">
          <a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">          

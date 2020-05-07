@@ -8,7 +8,7 @@ import { GET_PROFILES } from '../../action/dispatchTypes';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfilePosts from './ProfilePosts';
-import isEmpty from '../../utils/isEmpty'
+import isEmpty from '../../utils/isEmpty';
 
 class Profile extends Component {
   componentDidMount() {
@@ -18,7 +18,8 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.profile === null && this.props.profile.loading) {
+    
+    if(nextProps.profile.profile === null && this.props.profile.loading){
       this.props.history.push('/not-found');
     }
   }
@@ -56,15 +57,13 @@ class Profile extends Component {
           <div  className="row">  
             <div className="col-md-12">
               {profile.user === auth.user.id ? (
-                <Link to="/delete-account" className="btn btn-light float-right">
-                  <i className="fas fa-trash-alt" /> Delete Account
+                <Link to='/delete-account' className="btn btn-light float-right">
+                  <i className="fas fa-trash-alt"/> Delete Account
                 </Link>
               ) : (null)}
             </div>
           </div>
         </div>
-        
-
       );
     }
 
@@ -84,7 +83,6 @@ Profile.propTypes = {
   auth: PropTypes.object.isRequired,
   getProfileByHandle: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

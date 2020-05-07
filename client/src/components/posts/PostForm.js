@@ -72,6 +72,7 @@ class PostForm extends Component{
                           <TextFieldGroup
                             placeholder="Paste the url of your image/video"
                             name="imageOrVideoLink"
+                            type="text"
                             value={this.state.imageOrVideoLink}
                             onChange={this.onChange}
                             error={errors.imageOrVideoLink}

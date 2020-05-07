@@ -99,6 +99,7 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   placeholder="Bio"
                   name="bio"
+                  type="text"
                   value={this.state.bio}
                   onChange={this.onChange}
                   error={errors.bio}
@@ -107,6 +108,7 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   placeholder="Phone"
                   name="phone"
+                  type="text"
                   value={this.state.phone}
                   onChange={this.onChange}
                   error={errors.website}
@@ -115,6 +117,7 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   placeholder="Website"
                   name="website"
+                  type="text"
                   value={this.state.website}
                   onChange={this.onChange}
                   error={errors.website}
@@ -123,6 +126,7 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   placeholder="Location"
                   name="location"
+                  type="text"
                   value={this.state.location}
                   onChange={this.onChange}
                   error={errors.location}
@@ -131,6 +135,7 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   placeholder="Hobbies"
                   name="hobbies"
+                  type="text"
                   value={this.state.hobbies}
                   onChange={this.onChange}
                   error={errors.hobbies}
@@ -140,6 +145,7 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   placeholder="Countries you've visited"
                   name="countries"
+                  type="text"
                   value={this.state.countries}
                   onChange={this.onChange}
                   error={errors.countries}
@@ -149,6 +155,7 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   placeholder="Your favorite places"
                   name="places"
+                  type="text"
                   value={this.state.places}
                   onChange={this.onChange}
                   error={errors.places}

@@ -63,7 +63,7 @@ class Login extends Component {
                                   placeholder="Email" 
                                   value={this.state.email} 
                                   type="email" 
-                                  onChange={this.onChange.bind(this)} 
+                                  onChange={this.onChange.bind(this)}
                                   error={errors.email}
                   />
                 </div>                
