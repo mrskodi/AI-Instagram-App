@@ -9,20 +9,80 @@ import { unFollowUserByHandle } from '../../action/profileActions';
 
 class ProfileItem extends Component {
     
+   constructor() {
+        super();
+        this.state = {
+          showUnFollowButton: '',
+          showFollowButton : ''
+        };
+      }
+
+      componentDidMount () {      
+            console.log('inside componentDidMount.....')            
+            const loggedInUserHandle = this.props.loggedInUserHandle;
+            
+            this.props.profiles.map(profile => {      
+              if(profile.handle === this.props.profile.handle)
+              {         
+                console.log(profile.handle);
+              
+                const followersList = profile.followers; 
+                console.log(followersList);         
+                if(followersList.length > 0){
+                  followersList.map(follower => {
+                    console.log(follower.handle );
+                    console.log(loggedInUserHandle);
+                    if(follower.handle === loggedInUserHandle){               
+                      this.setState({showUnFollowButton: true});
+                    //showUnFollowButton = true;
+                    console.log('.................................')
+                    console.log(this.state.showUnFollowButton);                   
+                    }             
+                  })
+                  console.log('above if................')
+                  console.log(this.state.showUnFollowButton)
+                  
+                  if(!this.state.showUnFollowButton){
+                    this.setState({showFollowButton: true});
+                    console.log('this.showFollowButton = true');
+                  }                       
+                }
+                else{
+                  console.log('inside else...')
+                  this.setState({showFollowButton: 'true'});          
+                  console.log(this.state.showFollowButton);
+                }
+              }
+            })         
+            //const { profile } = this.props;  
+          }
+      
+    
     onFollowClick(e){  
       console.log('follow.....');    
       console.log(this.props.profile.handle);
-      this.props.followUserByHandle(this.props.profile.handle);      
+      this.props.followUserByHandle(this.props.profile.handle);
+      this.setState({showFollowButton: false}); 
+      this.setState({showUnFollowButton: true});        
     }
 
     onUnFollowClick(e){   
       console.log('Unfollow.....')    
       console.log(this.props.profile.handle); 
-      this.props.unFollowUserByHandle(this.props.profile.handle);    
+      this.props.unFollowUserByHandle(this.props.profile.handle);  
+      this.setState({showUnFollowButton: false});  
+      this.setState({showFollowButton: true});      
     }
   
   render() {
-    const { profile } = this.props;     
+    const { profile } = this.props;  
+    let button;
+    if(this.state.showFollowButton){
+      button = <button className="btn btn-light mr-3" onClick={this.onFollowClick.bind(this)}><i class="fas fa-user-plus"></i></button>
+    }else{
+      button = <button className="btn btn-light mr-1" onClick={this.onUnFollowClick.bind(this)}><i class="fas fa-user-minus"></i></button>
+    }
+   
     return (
       <div className="card card-body mb-3">
         <div className="row">
@@ -41,8 +101,7 @@ class ProfileItem extends Component {
               View Profile
             </Link>          
             <p>
-            <span> <button className="btn btn-light mr-3" onClick={this.onFollowClick.bind(this)}><i class="fas fa-user-plus"></i></button></span>  
-            <span><button className="btn btn-light mr-1" onClick={this.onUnFollowClick.bind(this)}><i class="fas fa-user-minus"></i></button></span>      
+              {button}    
             </p>
           </div>         
         </div>
@@ -54,7 +113,13 @@ class ProfileItem extends Component {
 ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired,
   followUserByHandle: PropTypes.func.isRequired,
-  unFollowUserByHandle: PropTypes.func.isRequired
+  unFollowUserByHandle: PropTypes.func.isRequired,
+  getUserFollowerList: PropTypes.func.isRequired
 };
 
-export default connect(null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);
+const mapStateToProps = state => ({
+    loggedInUserHandle: state.auth.user.handle,
+    profiles: state.profile.profiles
+  });
+  
+export default connect(mapStateToProps, { followUserByHandle, unFollowUserByHandle })(ProfileItem);

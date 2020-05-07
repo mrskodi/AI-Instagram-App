@@ -8,7 +8,8 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   FOLLOW_USER,
-  UNFOLLOW_USER
+  UNFOLLOW_USER,
+  FOLLOWING_LIST
 } from "./dispatchTypes"
 
 // Get current profile
@@ -157,3 +158,18 @@ export const unFollowUserByHandle = handle => dispatch => {
 //     type: CLEAR_CURRENT_PROFILES
 //   }
 // }
+
+// Unfollow user provided user handle
+export const getUserFollowerList = handle => dispatch => { 
+  axios
+  .get(`/api/profiles/followingusers/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: FOLLOWING_LIST,
+        payload: res.data,
+      }) 
+    )  
+    .catch(err =>
+     console.log(err)
+    );
+};

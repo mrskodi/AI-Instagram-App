@@ -8,7 +8,8 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   CLEAR_CURRENT_PROFILES,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  FOLLOWING_LIST
 
 } from "../action/dispatchTypes";
 
@@ -66,7 +67,12 @@ export default function(state = initialState, action){
        return {
          ...state,
          profiles: null
-       }
+       };
+      case FOLLOWING_LIST:
+        return{
+          ...state,       
+          loading: false
+      }; 
      default:
        return state;
   }

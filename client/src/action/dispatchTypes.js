@@ -13,6 +13,8 @@ export const GET_POST = 'GET_POST';
 export const POST_LOADING = 'POST_LOADING';
 export const FOLLOW_USER = 'FOLLOW_USER';
 export const UNFOLLOW_USER = 'UNFOLLOW_USER';
+export const FOLLOWING_LIST = 'FOLLOWING_LIST';
+
 
 
 
