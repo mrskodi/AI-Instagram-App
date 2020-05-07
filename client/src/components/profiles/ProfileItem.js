@@ -16,7 +16,7 @@ class ProfileItem extends Component {
         userFollowers: []
       }
 
-      this.props.getProfileByHandle(this.props.user.handle)
+      //this.props.getProfileByHandle(this.props.user.handle)
     }
 
     componentDidMount(){
