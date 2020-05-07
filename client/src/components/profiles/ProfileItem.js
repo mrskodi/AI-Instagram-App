@@ -5,10 +5,25 @@ import isEmpty from '../../validation/is-empty';
 import { connect } from 'react-redux';
 import { followUserByHandle } from '../../action/profileActions'; 
 import { unFollowUserByHandle } from '../../action/profileActions';
+import authReducer from '../../reducers/authReducer';
 
 
 class ProfileItem extends Component {
     
+    constructor(){
+      super();
+      this.state = {
+        button: {}
+      }
+    }
+
+    componentDidMount(){
+      console.log('inside component did Mount...')
+      console.log(`ProfileItem handle: ${profile.handle}`);
+      console.log(`ProfileItem Followers: ${profile.handle.followers}`);
+      console.log(`Looged In User handle: ${this.props.user.handle}`)
+    }
+
     onFollowClick(e){  
       console.log('follow.....');    
       console.log(this.props.profile.handle);
@@ -52,7 +67,12 @@ class ProfileItem extends Component {
 ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired,
   followUserByHandle: PropTypes.func.isRequired,
-  unFollowUserByHandle: PropTypes.func.isRequired
+  unFollowUserByHandle: PropTypes.func.isRequired,
+  loggedInUser: PropTypes.object.isRequired
 };
 
-export default connect(null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);
+const mapStateToProps = state => ({
+  loggedInUser: state.auth.user
+})
+
+export default connect(mapStateToProps, { followUserByHandle, unFollowUserByHandle })(ProfileItem);
