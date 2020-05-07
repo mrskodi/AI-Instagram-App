@@ -76,7 +76,7 @@ class Register extends Component {
                                   value={this.state.email}
                                   onChange={this.onChange.bind(this)}
                                   info="This site uses Gravatar. To upload a profile image please provide a Gravatar email."
-                                  error={errors.name}
+                                  error={errors.email}
                   />
                 </div>
                 <div className="form-group">
@@ -85,6 +85,7 @@ class Register extends Component {
                                   placeholder="Password"
                                   value={this.state.password}
                                   onChange={this.onChange.bind(this)}
+                                  info="Your password needs to have at least 1 digit, 1 lowercase, 1 uppercase and 1 special character."
                                   error={errors.password}
                   />
                 </div>
