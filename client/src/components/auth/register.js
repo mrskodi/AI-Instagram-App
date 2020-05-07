@@ -76,6 +76,7 @@ class Register extends Component {
                                   value={this.state.email}
                                   onChange={this.onChange.bind(this)}
                                   info="This site uses Gravatar. To upload a profile image please provide a Gravatar email."
+                                  error={errors.name}
                   />
                 </div>
                 <div className="form-group">
