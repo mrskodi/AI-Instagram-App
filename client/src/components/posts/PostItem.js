@@ -44,7 +44,9 @@ class PostItem extends Component{
     if(post.isImageOrVideo === 'Image'){
       // the html tag should be an image tag
       postContent = <img 
-                      src={post.imageOrVideoLink}/>
+                      src={post.imageOrVideoLink}
+                      alt=""
+                    />
     }
     if(post.isImageOrVideo === 'Video'){
       // the html tag should be a ReactPlayer

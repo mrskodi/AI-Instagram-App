@@ -11,13 +11,13 @@ class ProfilePostItem extends Component{
     this.props.getPost(id);
   } 
   render(){
-    const { post, errors } = this.props;
+    const { post } = this.props;
     let profilePostContent;
 
     if(post.isImageOrVideo === 'Image'){
       // the html tag should be an image tag
       profilePostContent = 
-        <img src={post.imageOrVideoLink}/>
+        <img src={post.imageOrVideoLink} alt=""/>
     }
     if(post.isImageOrVideo === 'Video'){
       // the html tag should be a ReactPlayer
@@ -40,13 +40,11 @@ class ProfilePostItem extends Component{
 
 ProfilePostItem.propTypes = {
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   getPost: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors,
 })
 
 export default connect(mapStateToProps, { getPost }) (ProfilePostItem);

@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 import { getProfileByHandle } from '../../action/profileActions';
-import { GET_PROFILES } from '../../action/dispatchTypes';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfilePosts from './ProfilePosts';
-import isEmpty from '../../utils/isEmpty';
+
 
 class Profile extends Component {
   componentDidMount() {

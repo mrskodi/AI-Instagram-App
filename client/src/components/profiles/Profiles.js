@@ -12,19 +12,20 @@ class Profiles extends Component {
 
   render() {
     const { profiles, loading } = this.props.profile;
+    const { auth } = this.props;
     let profileItems;
 
     if (profiles === null || loading) {
       profileItems = <Spinner />;
-    } else {
-      if (profiles.length > 0) {
+    } else if (profiles.length > 1) {
         profileItems = profiles.map(profile => (
-          <ProfileItem key={profile._id} profile={profile} />
+          (profile.handle !== auth.user.handle) ? (<ProfileItem key={profile._id} profile={profile} />) : 
+                                          (null)
         ));
       } else {
-        profileItems = <h4>No profiles found...</h4>;
+        profileItems = <h3 display-5 text-center>No profiles found...</h3>;
       }
-    }
+    
 
     return (
       <div className="page-content">
@@ -46,11 +47,13 @@ class Profiles extends Component {
 
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getProfiles })(Profiles);
