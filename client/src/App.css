@@ -21,6 +21,7 @@ a {
   text-decoration: none;
   color: #408DBD;
 }
+
 .hide {
   display: none;
 }
@@ -38,9 +39,9 @@ hr.charcoal {
   background: url('./img/2018-08-19.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  min-height: calc(100vh - 126px);
-  margin-top: -24px;
-  margin-bottom: -50px;
+  min-height: calc(100vh - 8rem);
+  margin-top: -1.5rem;
+  margin-bottom: -3rem;
 }
 
 .landing-inner {
@@ -49,7 +50,7 @@ hr.charcoal {
 }
 
 .page-content {
-  min-height: calc(100vh - 202.5px);
+  min-height: calc(100vh - 12.9rem);
   padding-top: 50px;
 }
 
@@ -67,23 +68,23 @@ hr.charcoal {
 }
 
 .login {
-  min-height: calc(100vh - 126px);
   position: relative;
-  background: url('./img/2016-09-16.jpg') no-repeat;
+  background: url('./img/2016-09-16_overlay.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  margin-top: -24px;
-  margin-bottom: -50px;
+  min-height: calc(100vh - 8rem);
+  margin-top: -1.5rem;
+  margin-bottom: -3rem;
 }
 
 .register {
-  min-height: calc(100vh - 126px);
   position: relative;
-  background: url('./img/2018-05-02.jpg') no-repeat;
+  background: url('./img/2018-05-02_overlay.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  margin-top: -24px;
-  margin-bottom: -50px;
+  min-height: calc(100vh - 8rem);
+  margin-top: -1.5rem;
+  margin-bottom: -3rem;
 }
 
 .lead {
