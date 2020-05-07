@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require('path')
 
-const port = 8010;
 const app = express();
 const db = require('./config/keys').mongoURI;
 const users = require('./routes/api/users');
@@ -20,13 +20,22 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Test the first route
-app.get('/', (req, res) => res.send({msg: 'Server works!'}));
+// app.get('/', (req, res) => res.send({msg: 'Server works!'}));
 
 // The routes
 app.use('/api/users', users);
 app.use('/api/profiles', profiles);
 app.use('/api/posts', posts);
 
+if(process.env.NODE_ENV === 'production'){
+        // Load static folder and run index.html
+        app.use(express.static('client/build'));
+        app.get('*', (req, res) => {
+                res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        });
+}
+
+const port = process.env.PORT || 8010;
 // Listening on port
 app.listen(port, () => console.log(`Successfully listening on port ${port}`));
 
