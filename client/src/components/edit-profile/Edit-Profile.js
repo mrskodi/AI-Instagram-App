@@ -11,7 +11,6 @@ class EditProfile extends Component {
     super(props);
     this.state = {
       bio: '',
-      phone: '',
       website: '',
       location: '',
       hobbies: '',
@@ -43,7 +42,6 @@ class EditProfile extends Component {
 
       // If profile field doesnt exist, make empty string
       profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
-      profile.phone = !isEmpty(profile.phone) ? profile.phone : '';
       profile.website = !isEmpty(profile.website) ? profile.website : '';
       profile.location = !isEmpty(profile.location) ? profile.location : '';
       profile.hobbies = !isEmpty(profile.hobbies) ? profile.hobbies  : '';
@@ -53,7 +51,6 @@ class EditProfile extends Component {
       // Set component fields state
       this.setState({
         bio: profile.bio,
-        phone: profile.phone,
         website: profile.website,
         location: profile.location,
         hobbies: hobbiesCSV,
@@ -68,7 +65,6 @@ class EditProfile extends Component {
   
     const profileData = {
       bio: this.state.bio,
-      phone: this.state.phone,
       website: this.state.website,
       location: this.state.location,
       hobbies: this.state.hobbies,
@@ -105,15 +101,6 @@ class EditProfile extends Component {
                   error={errors.bio}
                   info="Tell other wanderers something about yourself."
                 /> 
-                <TextFieldGroup
-                  placeholder="Phone"
-                  name="phone"
-                  type="text"
-                  value={this.state.phone}
-                  onChange={this.onChange}
-                  error={errors.website}
-                  info="Your phone number."
-                />
                 <TextFieldGroup
                   placeholder="Website"
                   name="website"
