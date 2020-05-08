@@ -7,6 +7,7 @@ import { getProfileByHandle } from '../../action/profileActions';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfilePosts from './ProfilePosts';
+import isEmpty from '../../utils/isEmpty';
 
 
 class Profile extends Component {
@@ -18,7 +19,7 @@ class Profile extends Component {
 
   componentWillReceiveProps(nextProps) {
     
-    if(nextProps.profile.profile === null && this.props.profile.loading){
+    if(isEmpty(nextProps.profile.profile) && this.props.profile.loading){
       this.props.history.push('/not-found');
     }
   }
@@ -90,4 +91,4 @@ const mapStateToProps = state => ({
   error: state.errors
 });
 
-export default connect(mapStateToProps, { getProfileByHandle })(Profile);
+export default connect(mapStateToProps, { getProfileByHandle, isEmpty })(Profile);

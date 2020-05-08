@@ -23,6 +23,8 @@ import EditProfile from './components/edit-profile/Edit-Profile';
 import LikesProfiles from './components/profiles/LikesProfiles';
 import NotFound from './components/profile/NotFound';
 import DeleteAccount from './components/auth/DeleteAccount';
+import ProfileFollowing from './components/profile/ProfileFollowing';
+import ProfileFollowers from './components/profile/ProfileFollowers';
 
 // Check for token in localStorage and route accordingly
 if(localStorage.jwtToken){
@@ -58,6 +60,9 @@ class App extends Component {
             <Route exact path="/" component= {Landing}></Route>
             <Route exact path="/register" component={Register} ></Route>
             <Route exact path="/login" component={Login} ></Route>
+
+            <Route exact path="/profiles/following/:handle" component={ProfileFollowing}></Route>
+            <Route exact path="/profiles/followers/:handle" component={ProfileFollowers}></Route>
 
             <Switch>
               <PrivateRoute exact path='/dashboard' component={Dashboard}/>

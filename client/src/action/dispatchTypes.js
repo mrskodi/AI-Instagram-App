@@ -13,6 +13,9 @@ export const GET_POST = 'GET_POST';
 export const POST_LOADING = 'POST_LOADING';
 export const FOLLOW_USER = 'FOLLOW_USER';
 export const UNFOLLOW_USER = 'UNFOLLOW_USER';
+export const GET_FOLLOWING = 'GET_FOLLOWING';
+export const GET_FOLLOWERS = 'GET_FOLLOWERS';
+export const GET_USER_PROFILE = 'GET_USER_PROFILE'
 
 
 

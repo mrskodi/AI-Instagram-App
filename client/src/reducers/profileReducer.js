@@ -6,13 +6,16 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   CLEAR_CURRENT_PROFILES,
-
+  GET_FOLLOWING,
+  GET_FOLLOWERS
 } from "../action/dispatchTypes";
 
 const initialState = {
   profile: null,
+  following: null,
+  followers: null,
   profiles: null,
-  loading: false
+  loading: false,
 };
 
 export default function(state = initialState, action){
@@ -39,17 +42,27 @@ export default function(state = initialState, action){
        ...state,
        profile: null
      };
-     case FOLLOW_USER:
+    case FOLLOW_USER:
       return{
-        ...state,       
+        ...state,
         loading: false
       };
-      case UNFOLLOW_USER:
+    case UNFOLLOW_USER:
       return{
-        ...state,       
+        ...state, 
         loading: false
       };     
-     case CLEAR_CURRENT_PROFILES:
+    case GET_FOLLOWING:
+      return {
+        ...state,
+        following: action.payload
+      };
+    case GET_FOLLOWERS:
+      return {
+        ...state,
+        followers: action.payload
+      }; 
+    case CLEAR_CURRENT_PROFILES:
        return {
          ...state,
          profiles: null

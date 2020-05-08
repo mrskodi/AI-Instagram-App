@@ -8,7 +8,10 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   FOLLOW_USER,
-  UNFOLLOW_USER
+  UNFOLLOW_USER,
+  GET_FOLLOWING,
+  GET_FOLLOWERS,
+  GET_USER_PROFILE
 } from "./dispatchTypes"
 
 // Get current profile
@@ -30,6 +33,22 @@ export const getCurrentProfile = () => dispatch => {
       })
     );
 };
+
+// Get userProfileByHandle
+export const getUserProfileByHandle = userHandle => dispatch => {
+  axios
+    .get(`/api/profiles/handle/${userHandle}`)
+    .then(res => 
+        dispatch({
+          type: GET_USER_PROFILE,
+          payload: res.data
+        }))
+    .catch(err => 
+        dispatch({
+          type: GET_ERRORS,
+          payload: null
+        }))
+}
 
 // Get profile by handle
 export const getProfileByHandle = handle => dispatch => {
@@ -86,6 +105,44 @@ export const getProfiles = () => dispatch => {
     );
 };
 
+// Get all people you are following when a user handle is given
+export const getFollowing = handle => dispatch => {
+  dispatch(clearErrors());
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profiles/following/handle/${handle}`)
+    .then(res => 
+      dispatch({
+        type: GET_FOLLOWING,
+        payload: res.data
+      })
+    )
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      }));
+}
+
+// Get all the followers of a user when userHandle is given
+export const getFollowers = handle => dispatch => {
+  dispatch(clearErrors());
+  dispatch(setProfileLoading());
+  axios
+    .get(`api/profiles/followers/handle/${handle}`)
+    .then(res => 
+      dispatch({
+        type: GET_FOLLOWERS,
+        payload: res.data
+      }))
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+      )
+}
+
 // Delete account & profile
 export const deleteAccount = () => dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
@@ -129,9 +186,9 @@ export const clearCurrentProfile = () => {
 };
 
 // Follow user provided user handle
-export const followUserByHandle = handle => dispatch => { 
+export const followUserByHandle = (handle, avatar) => dispatch => { 
   axios
-  .post(`/api/profiles/follow/handle/${handle}`)
+  .post(`/api/profiles/follow/handle/${handle}/${avatar}`)
     .then(res =>
       dispatch({
         type: FOLLOW_USER,

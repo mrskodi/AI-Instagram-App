@@ -6,6 +6,7 @@ import ProfileItem from './ProfileItem';
 import { getProfiles } from '../../action/profileActions';
 
 class Profiles extends Component {
+  
   componentDidMount() {
     this.props.getProfiles();
   }
@@ -13,14 +14,16 @@ class Profiles extends Component {
   render() {
     const { profiles, loading } = this.props.profile;
     const { auth } = this.props;
+    const { userProfile } = this.props.auth;
     let profileItems;
 
     if (profiles === null || loading) {
       profileItems = <Spinner />;
     } else if (profiles.length > 1) {
         profileItems = profiles.map(profile => (
-          (profile.handle !== auth.user.handle) ? (<ProfileItem key={profile._id} profile={profile} />) : 
-                                          (null)
+          (profile.handle !== auth.user.handle ) ? 
+          (<ProfileItem key={profile._id} profile={profile} />) : 
+          (null)
         ));
       } else {
         profileItems = <h3 display-5 text-center>No profiles found...</h3>;

@@ -12,7 +12,10 @@ class ProfileItem extends Component {
     onFollowClick(e){  
       console.log('follow.....');    
       console.log(this.props.profile.handle);
-      this.props.followUserByHandle(this.props.profile.handle);      
+      // Slice off 6 characters from this.props.profile.avatar
+      const slicedAvatar = this.props.profile.avatar.slice(26); 
+      this.props.followUserByHandle(this.props.profile.handle, slicedAvatar);
+      
     }
 
     onUnFollowClick(e){   
@@ -22,7 +25,8 @@ class ProfileItem extends Component {
     }
   
   render() {
-    const { profile } = this.props;     
+    const { profile } = this.props;
+
     return (
       <div className="card card-body mb-3">
         <div className="row">
@@ -52,7 +56,8 @@ class ProfileItem extends Component {
 ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired,
   followUserByHandle: PropTypes.func.isRequired,
-  unFollowUserByHandle: PropTypes.func.isRequired
+  unFollowUserByHandle: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
-export default connect(null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);
+export default connect( null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);

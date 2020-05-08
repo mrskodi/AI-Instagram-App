@@ -2,6 +2,7 @@ const express = require('express');
 const Profile = require('../../models/Profile');
 const passport = require('passport');
 const validateProfileInput = require('../../validations/profile');
+const isEmpty = require('../../validations/isEmpty');
 
 const router = express.Router();
 
@@ -137,8 +138,8 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
 // @router  api/profiles/follow/handle/:handle
 // @access  Private
-// @desc    Following a user whose userhandle is passed in route
-router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
+// @desc    Following a user whose userhandle + avatar is passed in route
+router.post('/follow/handle/:handle/:avatarId', passport.authenticate('jwt', {session: false}), (req, res) => {
 
   // Add req.params.handle to following[] of req.user
     Profile.findOne({email: req.user.email})
@@ -150,8 +151,16 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
             // User already following the handle
             return res.status(400).json({error: 'invalid request'});
           }
+          // Add the removed first characters(in UI) back into req.params.avatar
+          const stitchedAvatarLink = `//www.gravatar.com/avatar/${req.params.avatarId}`;
+          
+          // Add req.params.handle to following[] list of req.user
+          const newFollowing = {
+            handle: req.params.handle,
+            avatar: stitchedAvatarLink,
+          }
 
-          profile.following.unshift({handle: req.params.handle});
+          profile.following.unshift(newFollowing);
           profile.save()
                   .then(() => res.json(profile))
                   .catch(err => console.log(err));
@@ -167,7 +176,13 @@ router.post('/follow/handle/:handle', passport.authenticate('jwt', {session: fal
                     return res.status(400).json({invalid: 'invalid request'});
                   }
 
-                  profile.followers.unshift({handle: req.user.handle});
+                  const newFollower = {
+                    handle: req.user.handle,
+                    avatar: req.user.avatar,
+                    name: req.user.name
+                  }
+
+                  profile.followers.unshift(newFollower);
                   profile.save()
                          .then(() => res.json(profile))
                          .catch(err => console.log(err));
@@ -231,5 +246,36 @@ router.post('/unfollow/handle/:handle', passport.authenticate('jwt', {session: f
          .catch(err => console.log(err));
 });
 
+// @router  api/profiles/following/handle/:handle
+// @access  Private
+// @desc    Get the list of people whom the user is following given the userHandle
+router.get('/following/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
+  const errors = {}
+  Profile.findOne({handle: req.params.handle})
+        .then(profile => {
+          if(isEmpty(profile.following) && profile.following[0] !== "" ){
+          errors.followingNone = 'You are not following anyone.';
+          return res.status(400).json(errors)
+        }
+        return res.json(profile.following);
+      })
+        .catch(err => console.log(err));
+})
+
+// router api/profiles/followers/handle/:handle
+// @access Private
+// @desc Get the list of followers of a user given the userHandle
+router.get('/followers/handle/:handle', passport.authenticate('jwt', {session: false}), (req, res) => {
+  const errors = {}
+  Profile.findOne({handle: req.params.handle})
+        .then(profile => {
+          if(isEmpty(profile.followers) && profile.followers[0] !== "" ){
+            errors.noFollowers = 'You do not have any followers';
+            return res.status(400).json(errors);
+          }
+          return res.json(profile.followers);
+        })
+        .catch(err => console.log(err));
+})
 module.exports = router;
 

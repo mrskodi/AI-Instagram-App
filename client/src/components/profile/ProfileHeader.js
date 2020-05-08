@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { getFollowing, getFollowers } from '../../action/profileActions';
+import { connect } from 'react-redux';
 
 class ProfileHeader extends Component {
+
+  onFollowingClick(handle){
+    this.props.getFollowing(handle);
+  }
+
+  onFollowersClick(handle){
+    this.props.getFollowers(handle);
+  }
+
   render() {
     const { profile } = this.props;
     return (
@@ -20,7 +32,11 @@ class ProfileHeader extends Component {
                 <h1 className="text-center">{profile.handle}</h1>           
                 <h2>{profile.name}</h2>
                 <p>{profile.email}</p>
-                <p className="display-5"><span>Following : {profile.following.length}</span> <span className="divider">|</span> <span> Followers : {profile.followers.length}</span></p>            
+                <p className="display-5">
+                  <Link to={`/profiles/following/${profile.handle}`} onClick={this.onFollowingClick.bind(this, profile.handle)}><span>Following : {profile.following.length}</span></Link> 
+                  <span className="divider">|</span> 
+                  <Link to={`/profiles/followers/${profile.handle}`} onClick={this.onFollowersClick.bind(this, profile.handle)}><span> Followers : {profile.followers.length}</span></Link>
+                </p>            
               </div>
             </div>
           </div>
@@ -29,4 +45,5 @@ class ProfileHeader extends Component {
   }
 }
 
-export default ProfileHeader;
+
+export default connect(null, { getFollowing, getFollowers })(ProfileHeader);

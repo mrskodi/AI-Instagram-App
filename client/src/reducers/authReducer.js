@@ -1,9 +1,10 @@
-import { SET_CURRENT_USER } from '../action/dispatchTypes';
+import { SET_CURRENT_USER, GET_USER_PROFILE } from '../action/dispatchTypes';
 import isEmpty from '../utils/isEmpty';
 
 const initialState = {
   isAuthenticated: false,
-  user: {}
+  user: {},
+  userProfile: {}
 };
 
 export default function(state=initialState, action){
@@ -13,7 +14,12 @@ export default function(state=initialState, action){
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload
-      }
+      };
+    case GET_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload
+      };
     default:
       return state
   }

@@ -3,8 +3,14 @@ import Posts from '../posts/Posts';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
+import { getUserProfileByHandle } from '../../action/profileActions';
 
 class Dashboard extends Component{
+
+  componentDidMount(){
+    this.props.getUserProfileByHandle(this.props.auth.user.handle);
+  }
+
   render(){
     const { loading } = this.props;
     let dashboardContent;
@@ -29,11 +35,13 @@ class Dashboard extends Component{
 }
 
 Dashboard.propTypes = {
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  loading: state.post.loading
+  loading: state.post.loading,
+  auth: state.auth
 })
 
-export default connect(mapStateToProps, null) (Dashboard);
+export default connect(mapStateToProps, { getUserProfileByHandle }) (Dashboard);
