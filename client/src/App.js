@@ -61,9 +61,6 @@ class App extends Component {
             <Route exact path="/register" component={Register} ></Route>
             <Route exact path="/login" component={Login} ></Route>
 
-            <Route exact path="/profiles/following/:handle" component={ProfileFollowing}></Route>
-            <Route exact path="/profiles/followers/:handle" component={ProfileFollowers}></Route>
-
             <Switch>
               <PrivateRoute exact path='/dashboard' component={Dashboard}/>
             </Switch>
@@ -95,6 +92,14 @@ class App extends Component {
             </Switch>
 
             <Switch>
+              <PrivateRoute exact path='/profiles/following/:handle' component={ProfileFollowing}/>
+            </Switch>
+
+            <Switch>
+              <PrivateRoute exact path='/profiles/followers/:handle' component={ProfileFollowers}/>
+            </Switch>
+
+            <Switch>
               <PrivateRoute exact path='/not-found' component={NotFound}/>
             </Switch>
 
@@ -102,6 +107,8 @@ class App extends Component {
               <PrivateRoute exact path='/delete-account' component={DeleteAccount}/>
             </Switch>
             <Footer/>    
+
+
           </div>
         </Router>
       </Provider>
