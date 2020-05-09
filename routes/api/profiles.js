@@ -154,7 +154,7 @@ router.post('/follow/handle/:handle/:avatarId', passport.authenticate('jwt', {se
 
           // Add the removed first characters(in UI) back into req.params.avatar
           const stitchedAvatarLink = `//www.gravatar.com/avatar/${req.params.avatarId}s=300&r=g&d=mm`;
-          console.log(`Stitched Avatar link: ${stitchedAvatarLink}s=300&r=g&d=mm`)
+          console.log(`Stitched Avatar link: ${stitchedAvatarLink}`)
           // Add req.params.handle to following[] list of req.user
           const newFollowing = {
             handle: req.params.handle,

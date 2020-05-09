@@ -8,6 +8,8 @@ import isEmpty from '../../utils/isEmpty';
 class ProfileFollowing extends Component{
   render(){
     const { following, loading } = this.props.profile;
+    const { user } = this.props.auth;
+
     let profileFollowingItems;
 
     if( loading || following === null){
@@ -15,7 +17,7 @@ class ProfileFollowing extends Component{
     } else if(following.length > 0){
         profileFollowingItems = following.map(eachFollowing => <ProfileFollowingItem key={eachFollowing._id} eachFollowing={eachFollowing}/>)
     } else{
-        profileFollowingItems = <h3>You are not following anyone yet...</h3>
+        profileFollowingItems = <h3> {user.handle}, you are not following anyone yet...</h3>
     }
 
     return(
@@ -24,7 +26,7 @@ class ProfileFollowing extends Component{
           <div className="row">
             <div className=".col-12 .col-sm-12 col-md-12 .col-lg-8 .col-xl-6">
             <h3 className="text-center">
-                {!isEmpty(following) && (<div>Wanderers you are following...</div>)}
+                {!isEmpty(following) && (<div>{user.handle}, wanderers you are following...</div>)}
               </h3>
               {profileFollowingItems}
             </div>
@@ -36,11 +38,13 @@ class ProfileFollowing extends Component{
 }
 
 ProfileFollowing.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  profile: state.profile.profile
+  profile: state.profile.profile,
+  auth: state.auth
 })
 
 export default connect(mapStateToProps, null) (ProfileFollowing);
