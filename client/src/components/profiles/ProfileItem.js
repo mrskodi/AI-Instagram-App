@@ -14,6 +14,7 @@ class ProfileItem extends Component {
       console.log(this.props.profile.handle);
       // Slice off 6 characters from this.props.profile.avatar
       const slicedAvatar = this.props.profile.avatar.slice(26); 
+      console.log(slicedAvatar);
       this.props.followUserByHandle(this.props.profile.handle, slicedAvatar);
       
     }
@@ -57,7 +58,6 @@ ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired,
   followUserByHandle: PropTypes.func.isRequired,
   unFollowUserByHandle: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
 };
 
 export default connect( null, { followUserByHandle, unFollowUserByHandle })(ProfileItem);
